@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>The Templating Language | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ The Templating Language" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+				<h1>The Templating Language</h1>
+
+				<p>In this section you&#8217;ll learn how to use the templating language to get global- and page-variables onto your pages.</p>
+
+				<ul>
+					<li><a href="#syntax">The Syntax</a></li>
+					<li><a href="#conditional-statements">Conditional Statements</a></li>
+					<li><a href="#single-variables">Single Variables</a></li>
+					<li><a href="#tag-pairs">Tag Pairs</a></li>
+					<li><a href="#variable-modifiers">Variable Modifiers</a></li>
+					<li><a href="#list-helpers">List Helpers</a></li>
+					<li><a href="#core-template-tags">Core Template Tags</a></li>
+					<li><a href="#comments">Comments</a></li>
+					<li><a href="#prevent-tag-parsing">Prevent Tag Parsing</a></li>
+				</ul>
+      </div>
+    </article>
+
+<a id="syntax" name="//apple_ref/cpp/Section/1. The Syntax" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>The Syntax</h1>
+
+<p class="intro">What a tag looks like.</p>
+
+<p>All Statamic tags are delimited by double curly braces: <code>{{ }}</code>.
+Whitespace before or after the braces is allowed in most cases.
+The braces, however, must stay together.</p>
+
+<p>All of these are examples of valid Statamic tags:</p>
+
+<pre class="prettyprint statamic">{{ stag }}  # our favorite way
+{{stag}}
+{{stag }}
+{{ stag}}
+{{
+    stag
+}}
+</pre>
+
+<p>These tags are not valid:</p>
+
+<pre class="prettyprint statamic">{{ st ag }}  # don't use spaces within the tag name
+{ {stag} }   # curly braces *must* stay together
+</pre>
+
+<h2>Tags are Case Sensitive</h2>
+
+<p>Tags in Statamic are all <em>case sensitive</em>, meaning that <code>{{ title }}</code> and <code>{{ Title }}</code> are two completely separate tags.</p>
+
+<p>All of Statamic&#8217;s functionality where it uses variables that you&#8217;ve set to do something (for example, <code>title</code> to name your pages, or <code>_layout</code> and <code>_template</code> to change the look of your page) will be looking for all-lowercase names.</p>
+
+<p>When defining your tags, we recommend only using lowercase variable names so that you don&#8217;t get confused later on.</p>
+
+</div>
+
+<a id="conditional-statements" name="//apple_ref/cpp/Section/2. Conditional Statements" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Conditional Statements</h1>
+
+<p class="intro">Bring logic into your templates.</p>
+
+<p>Statamic supports <code>if</code>, <code>elseif</code>, <code>else</code>, <code>unless</code>, and <code>unlesselse</code> conditional statements.
+Only <strong>valid &amp; true</strong> conditions will be parsed, leaving you worry-free about page load demands.</p>
+
+<p><code>{{ if }}</code> blocks are closed with an <code>{{ endif }}</code>.</p>
+
+<blockquote>
+  <p>note There&#8217;s no <code>/</code> in the closing tag.</p>
+</blockquote>
+
+<p>Variables inside of conditionals should <em>not</em> use the tag delimiters.
+Using them will confuse the template parser and it will try to close your tag prematurely.
+For example, using the <code>segment_1</code> variable in an <code>if</code> statement looks like this:</p>
+
+<pre class="prettyprint statamic">{{ if segment_1 }}</pre>
+
+<p>Conditionals can use any of <a href="http://php.net/manual/language.operators.comparison.php">PHP&#8217;s standard comparison operators</a>:</p>
+
+<ul>
+	<li><code>==</code></li>
+	<li><code>!=</code></li>
+	<li><code>===</code></li>
+	<li><code>!==</code></li>
+	<li><code>&gt;</code></li>
+	<li><code>&lt;</code></li>
+	<li><code>&gt;=</code></li>
+	<li><code>&lt;=</code></li>
+</ul>
+
+<p>…as well as <a href="http://php.net/manual/language.operators.logical.php">PHP&#8217;s logical operators</a>:</p>
+
+<ul>
+	<li><code>!</code></li>
+	<li><code>||</code></li>
+	<li><code>&amp;&amp;</code></li>
+	<li><code>and</code></li>
+	<li><code>or</code></li>
+</ul>
+
+<h2>Checking if a Variable Exists</h2>
+
+<p>Statamic will return <code>null</code> for any variable that doesn&#8217;t exist.
+This lets you to use shorthand syntax (no comparison operator) to check for a variable:</p>
+
+<pre class="prettyprint statamic">{{ if bears }}
+    Bears? Oh we've got bears.
+{{ endif }}
+</pre>
+
+<p>Here&#8217;s a more complex example:</p>
+
+<pre class="prettyprint statamic">{{ if featured_article == "yes" }}
+    &lt;div class="featured sticky"&gt;
+        &lt;h1&gt;{{ title }}&lt;/h1&gt;
+        {{ content }}
+    &lt;/div&gt;
+{{ endif }}
+
+{{ if bear == "grizzly" }}
+    &lt;p&gt;Brace yourself, son. It's on.&lt;/p&gt;
+{{ elseif bear == "koala" }}
+    &lt;p&gt;It's okay to weep openly. They're adorable.&lt;/p&gt;
+{{ else }}
+    &lt;p&gt;At least it's a bear, I'll give you that.&lt;/p&gt;
+{{ endif }}
+</pre>
+
+<h2>Combining with Variable Modifiers</h2>
+
+<p><a href="#variable-modifiers">Variable modifiers</a> let you change the value of a variable on the fly.
+There are a couple of modifiers that check for variable conditions and will return a true-or-false answer that can also be used within conditionals.</p>
+
+<p>For example, the <code>in_future</code> modifier checks to see if a variable&#8217;s value is a date that&#8217;s in the future.
+Let&#8217;s assume that <code>{{ party_start_date }}</code> is text containing the starting time and date of our party.
+Using it in a conditional statement, we can check to see if things have started or not:</p>
+
+<pre class="prettyprint html">{{ if party_start_date|in_future }}
+    You still have time to RSVP!
+{{ else }}
+    Sorry, our socks have already been partied off.
+{{ endif }}
+</pre>
+
+</div>
+
+<a id="single-variables" name="//apple_ref/cpp/Section/3. Single Variables" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Single Variables</h1>
+
+<p class="intro">The simplest dynamic gets.</p>
+
+<p>Single variables are just that: a single tag containing a variable name.
+These variables may be site-wide global variables, page-specific variables, or content fields fetched through <a href="#tag-pairs">tag pairs</a>.</p>
+
+<pre class="prettyprint statamic">Dear {{ prefix_title }} {{ last_name }},
+
+We are delighted to inform you that you have been nominated for 
+a {{ bank }} credit card. With us, you can expect interest rates 
+as low as {{ interest_rate }}%.
+</pre>
+
+</div>
+
+<a id="tag-pairs" name="//apple_ref/cpp/Section/4. Tag Pairs" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Tag Pairs</h1>
+
+<p class="intro">Looping through values.</p>
+
+<p><em>Tag pairs</em> look similar to <a href="#single-variables">single variables</a>.
+They are used to fetch specific content and loop through the results, using single variables to control the output.
+Tag pairs may contain various parameters and must use a closing tag, indicated by repeating the tag name prefixed with a <code>/</code>.</p>
+
+<pre class="prettyprint statamic">{{ entries:listing from="blog" limit="3" }}
+    &lt;div class="post"&gt;
+        &lt;h2&gt;{{ title }}&lt;/h2&gt;
+        {{ content }}
+    &lt;/div&gt;
+{{ /entries:listing }}
+</pre>
+
+<p>The above example will loop through three entries from your blog folder.
+For each one, it will print out the <code>div</code> element between the <code>{{ entries:listing }}</code> and <code>{{ /entries:listing }}</code> tags, filling in the single tags with the variables defined in each entry.</p>
+
+<h2>With YAML Lists</h2>
+
+<p>You can create lists within your YAML.
+To display information within a YAML list, you will also use a tag pair.</p>
+
+<h3>Simple Lists</h3>
+
+<p>If you created a simple YAML list — that is, a bulleted, unnamed list — like this:</p>
+
+<pre class="prettyprint yaml">groceries:
+    - olives
+    - vermouth
+    - frilly toothpicks
+</pre>
+
+<p>Each of your list items will automatically be put in the <code>{{ name }}</code> tag.
+To get them out, you would do this:</p>
+
+<pre class="prettyprint statamic">&lt;ul&gt;
+    {{ groceries }}
+        &lt;li&gt;{{ name }}&lt;/li&gt;
+    {{ /groceries }}
+&lt;/ul&gt;
+</pre>
+
+<h3>Named Lists</h3>
+
+<p>You can also create a named-list in YAML, which might look something like this:</p>
+
+<pre class="prettyprint yaml">friends:
+    -
+        name: Jack
+        url: http://jackmcdade.com
+    -
+        name: Fred
+        url: http://fredhq.com
+    -
+        name: Mubs
+        url: http://mubashariqbal.com/
+</pre>
+
+<p>Note that each item in the list has a set of named variables.
+Displaying this list in a template would look like this:</p>
+
+<pre class="prettyprint statamic">&lt;ul&gt;
+    {{ friends }}
+        &lt;li&gt;&lt;a href="{{ url }}"&gt;{{ name }}&lt;/a&gt;&lt;/li&gt;
+    {{ /friends }}
+&lt;/ul&gt;
+</pre>
+
+</div>
+
+<a id="variable-modifiers" name="//apple_ref/cpp/Section/5. Variable Modifiers" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Variable Modifiers</h1>
+
+<p class="intro">Changing your tag's values on the fly.</p>
+
+<p>Ever have a variable that you want to display in all caps?
+Or have a decimal number in a variable that you want to round up to the closest whole number?
+You can do these things and more with Statamic&#8217;s <em>variable modifiers</em>.</p>
+
+<p>Modifiers let you <em>modify</em> your variable&#8217;s values.
+A simple modifier:</p>
+
+<pre class="prettyprint statamic">{{ warning|upper }}</pre>
+
+<p>The above will take the value of <code>{{ warning }}</code> and will display it in uppercase.
+It&#8217;s as simple as that. Note that there are no spaces between the tag name, the pipe, and the modifier.
+The template parser is strict here, you cannot use spaces in your modifiers.</p>
+
+<p>Some modifiers let you specify parameters.
+For example, <code>round</code> lets you choose how many decimal places you&#8217;d like to round your numbers to — <code>0</code> by default.</p>
+
+<p>Round to two decimal places:</p>
+
+<pre class="prettyprint statamic">{{ distance|round:2 }}</pre>
+
+<p>If the value of <code>{{ distance }}</code> was <code>3.1415</code>, this would render as <code>3.14</code>, rounding down to two decimal points.</p>
+
+<h2>Chaining Modifiers</h2>
+
+<p>Modifiers can be chained together, so that you can modify a variable multiple ways with one tag.
+For example, to convert a value to uppercase and then reverse the order of the string, you can do this:</p>
+
+<pre class="prettyprint statamic">{{ warning|upper|reverse }}</pre>
+
+<p>If the value of <code>{{ warning }}</code> is <code>look out</code>, the above tag will output <code>TUO KOOL</code>.
+Statamic starts at the left (with your variable&#8217;s current value), then applies each modifier left-to-right, down the chain.
+Each modification sticks along the way, letting you create chains as long as you&#8217;d like.</p>
+
+<p>Another example, this time with math:</p>
+
+<pre class="prettyprint statamic">{{ angle|+:5|sqrt|cos }}</pre>
+
+<p>This will display the cosine of the square-root of your <code>angle</code> tag&#8217;s value plus five.</p>
+
+<h2>Checking for Conditions</h2>
+
+<p>There are a couple of modifiers that will check for a condition in your variable and change the value to either <code>true</code> or <code>false</code> for use in template conditionals.
+For example:</p>
+
+<pre class="prettyprint statamic">{{ event_start_date|in_future }}</pre>
+
+<p>The above code assumes that your <code>{{ event_start_date }}</code> tag is a date (or text that we can convert into a date).
+The <code>in_future</code> modifier lets you check to see if a given variable&#8217;s date value is in the future or not.
+This comes in handy when you need to check for such things in your template.</p>
+
+<pre class="prettyprint statamic">{{ if event_start_date|in_future }}
+    {{# event hasn't started yet #}}
+{{ else }}
+    {{# event has already started #}}
+{{ endif }}
+</pre>
+
+<p>Statamic doesn&#8217;t care how you use modifiers or in what order, so remember that these modifiers that check for a condition <em>will</em> work in a modifier chain, but probably aren&#8217;t something you will want to chain with.
+Why?
+Because when a condition is true (in the above example, if <code>event_start_date</code> is in the future), these modifiers change the value to the literal string <code>true</code>, and when false, convert it to an empty string.
+Chaining with those values doesn&#8217;t make a whole lot of sense.</p>
+
+<h2>More About Modifiers</h2>
+
+<p>There are over 50 different variable modifiers available: some that work best with text, some that work best with dates, some that work best with numbers, and others that do checks for conditions.</p>
+
+<p>To learn more about what modifiers are available and how to use them, visit the <a href="documentation/variable-modifiers.html">variable modifiers reference</a> in the documentation.</p>
+
+</div>
+
+<a id="list-helpers" name="//apple_ref/cpp/Section/6. List Helpers" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>List Helpers</h1>
+
+<p class="intro">Shortcuts and helpers for working with tag pairs.</p>
+
+<p>Tag pairs have three different types of helpers available: helper parameters, helper variables, and output shortcuts.</p>
+
+<h2>Helper Parameters</h2>
+
+<p>Tag pairs have a number of helpers available to make a data-set more flexible and useful.
+They can be used in any combination with each other to manipulate and modify the display of your data.</p>
+
+<p>As an example, let&#8217;s say that you have a variable that looks like this:</p>
+
+<pre class="prettyprint yaml">variable:
+    -
+        item: Satchel
+        quantity: 250
+    -
+        item: Backpack
+        quantity: 5
+    -
+        item: Knapsack
+        quantity: 30
+</pre>
+
+<p>With helper parameters, you can sort this list when you display it by any of the values it contains:</p>
+
+<pre class="prettyprint html">{{ variable sort_by="item" }}
+{{# returns order: Backpack, Knapsack, Satchel #}}
+
+{{ variable sort_by="quantity" }}
+{{# returns order: Satchel, Knapsack, Backpack #}}
+
+{{ variable sort_by="random" }}
+{{# returns items in random order #}}
+</pre>
+
+<p>And remember that within your tag pairs, you can use single variable modifiers on each of the values when you display them.</p>
+
+<p>View the <a href="documentation/tag-pair-helper-parameters.html">complete list of helper parameters</a> available.</p>
+
+<h2>Helper Variables</h2>
+
+<p>Tag pairs loop through their data, rendering what&#8217;s between their tags on each pass through the loop.
+During each of these passes, all of your tag pair&#8217;s single variables are available, but Statamic also provides a couple of helpers as well.</p>
+
+<p>For example, the <code>{{ first }}</code> variable will be <code>true</code> during the first pass at the tag pair loop.
+If you want to display a header above your tag pair data, for example, you could do something like this:</p>
+
+<pre class="prettyprint html">{{ groceries }}
+    {{ if first }}
+        &lt;h2&gt;Grocery List&lt;/h2&gt;
+    {{ endif }}
+
+    Would you please grab some {{ name }}?&lt;br&gt;
+{{ /groceries }}
+</pre>
+
+<p>The <code>&lt;h2&gt;</code> will only be printed on the first pass through the loop.</p>
+
+<p>View the <a href="documentation/tag-pair-helper-variables.html">complete list of helper variables</a> available.</p>
+
+<h2 id="shortcuts">List Output Shortcuts</h2>
+
+<p>A lot of the time, all you&#8217;ll want to do with a list is list the items on the page with no frills.
+In those cases, Statamic has a couple of handy single-tag shortcuts that you can use with your tag pairs.</p>
+
+<p>For this example, let&#8217;s assume we have a variable that looks like this:</p>
+
+<pre class="prettyprint yaml">activities: [ fishing, hunting, trapping ]</pre>
+
+<p>This is a simple list in YAML. If we want to display these as a comma-separated list, we can do use the single tag <code>{{ variable_list }}</code>.</p>
+
+<pre class="prettyprint html">{{ activities_list }}
+{{# prints: fishing, hunting, trapping #}}
+</pre>
+
+<p>By adding <code>_list</code> onto the end of the name of our tag pair, it became a single variable that displays all of the items in our list.</p>
+
+<p>Using taxonomies and want a quick list of the <code>categories</code> used along with links to their respective pages? Simple.</p>
+
+<pre class="prettyprint html">{{ categories_url_list }}
+{{# prints a comma-separated list of links to content's categories #}}
+</pre>
+
+<p>View the <a href="documentation/list-shortcuts.html">complete list of output shortcuts</a> available.</p>
+
+</div>
+
+<a id="core-template-tags" name="//apple_ref/cpp/Section/7. Core Template Tags" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Core Template Tags</h1>
+
+<p class="intro">Pull content around your site.</p>
+
+<p>Core template tags are the tags that Statamic provides to let you do amazing things without a lot of work.
+You&#8217;ve learned about <a href="#single-variables">single variables</a> and <a href="#tag-pairs">tag pairs</a>, you&#8217;ve seen that even <a href="">static variables aren&#8217;t exactly static</a>, the core template tags are the third side of the triangle.</p>
+
+<p>If you can use <a href="#single-variables">single variables</a> and <a href="#tag-pairs">tag pairs</a>, you can use core template tags.
+They work the same way, except that they&#8217;re a bit more powerful.</p>
+
+<h2>An Example</h2>
+
+<p>The <code>{{ entries:listing }}</code> tag lets you grab a list of entries from any folder that you specify and print the list in your template.
+Let&#8217;s say that you have a <code>blog</code> content folder, within which are all of your blog entries.
+We want to pull a list of the five most recent blog entries onto our homepage. In the template that our homepage will use, we add this:</p>
+
+<pre class="prettyprint statamic">&lt;ul&gt;
+    {{ entries:listing folder="blog" limit="5" sort_dir="desc" }}
+        &lt;li&gt;&lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;&lt;/li&gt;
+    {{ /entries:listing }}
+&lt;/ul&gt;
+</pre>
+
+<p>This code does that. Between the start and end tags, you can use any of the variables in that entry&#8217;s YAML front matter, any tags available on your current page (including global settings), and any of the helpers (like <code>{{ noparse }}{{ url }}</code>) that the tag provides.</p>
+
+<h2>Using the Documentation</h2>
+
+<p>The core template tags are where you&#8217;ll want to dive into the <a href="documentation.html">documentation</a>.
+Among many other things, Statamic&#8217;s documentation provides a complete list of all the core template tags available, including a list of all of the parameters that each tag takes.</p>
+
+<p>View the <a href="documentation/tags.html">complete list of core template tags</a> available.</p>
+
+<p>{{/noparse}}</p>
+
+</div>
+
+<a id="comments" name="//apple_ref/cpp/Section/8. Comments" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Comments</h1>
+
+<p class="intro">Leave yourself notes within your templates.</p>
+
+<p>You can add comments to your templates by wrapping text in <code>{{# #}}</code>.
+Anything within the comment braces will not be shown at all in your rendered source code.</p>
+
+<p>For example:</p>
+
+<pre class="prettyprint statamic">{{# I'm a vegan that loves steak. No one can ever know. #}}</pre>
+
+</div>
+
+<a id="prevent-tag-parsing" name="//apple_ref/cpp/Section/9. Prevent Tag Parsing" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Prevent Tag Parsing</h1>
+
+<p class="intro">Printing Statamic tags on the screen.</p>
+
+<p>You can prevent the tag parser from parsing blocks of code by wrapping it within <code>{{ noparse }}</code> tags.
+For example:</p>
+
+<pre class="prettyprint statamic">{{ noparse }}
+    You'll want to use the {{ title }} tag.
+{{ ⁄noparse }}
+</pre>
+
+<p>These are helpful when documenting code.</p>
+
+<blockquote>
+  <p>note It isn&#8217;t possible to print a true closing <code>{{ noparse }}</code> tag to the screen.
+    We&#8217;ve used a &#8220;fraction-slash&#8221; above to give you the visual idea, but that <em>should</em> be a regular slash.
+    Luckily, you shouldn&#8217;t ever need to print that closing tag to the screen.</p>
+</blockquote>
+
+</div>
+
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;e&#110;&#x74;&#x6c;e&#109;&#x65;&#x6e;&#x40;&#x73;&#x74;&#x61;&#x74;am&#105;&#99;&#x2e;c&#111;&#109;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

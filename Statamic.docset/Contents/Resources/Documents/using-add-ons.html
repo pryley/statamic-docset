@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Using Add-Ons | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Using Add-Ons" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+				<h1>Using Add-Ons</h1>
+
+				<p>In this section you&#8217;ll learn how to install, configure, update, use, and remove add-ons.</p>
+
+				<ul>
+					<li><a href="what-add-ons-are">What Add-Ons Are</a></li>
+					<li><a href="finding">Finding Add-Ons</a></li>
+					<li><a href="installing">Installing Add-Ons</a></li>
+					<li><a href="updating">Updating Add-Ons</a></li>
+					<li><a href="using">Using Add-Ons</a></li>
+					<li><a href="removing">Removing Add-Ons</a></li>
+				</ul>
+      </div>
+    </article>
+
+<a id="what-add-ons-are" name="//apple_ref/cpp/Section/1. What Add-Ons Are" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>What Add-Ons Are</h1>
+
+<p class="intro">Extending Statamic's core power.</p>
+
+<p>Add-ons extend what Statamic is able to do.
+Whether they provide you with new tags for use in your templates or new ways to enter and save content in the Control Panel, Statamic&#8217;s add-on system makes it easy for anyone to install, update, and use add-ons.</p>
+
+<p>Most of the time, the add-ons you use will be one or both of the following:</p>
+
+<ul>
+<li><strong>Plugins</strong> create new tags for you to use within templates</li>
+<li><strong>Fieldtypes</strong> create new fieldtypes for you to use in your <a href="control-panel.html#fields-and-fieldsets">fieldsets</a></li>
+</ul>
+
+<p>One add-on can contain multiple new tags for you to use, <em>as well as</em> a fieldtype for the Control Panel.</p>
+
+<h2>What Add-Ons Can Do</h2>
+
+<p>Add-ons can do pretty much <em>anything</em> that&#8217;s possible with PHP.
+The add-on architecture is a couple of structured PHP objects, but within those objects developers can go crazy.</p>
+
+<p>Want to read and store RSS feeds for displaying on the site?
+No problem.
+Want to access content from within a database?
+Even that&#8217;s possible.</p>
+
+<p>While you&#8217;ll need to know PHP to <a href="creating-add-ons.html">build an add-on</a>, using them is just like all other things in Statamic: no PHP knowledge needed.
+Using and configuring tags created by plugins is done through Statamic template tags, while using and configuring fieldtypes is done through YAML.</p>
+
+<p>And even if you only know a little bit of PHP, you might be surprised how easy it is to <a href="creating-add-ons.html">create your own add-on</a>.</p>
+
+</div>
+
+<a id="finding" name="//apple_ref/cpp/Section/2. Finding Add-Ons" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Finding Add-Ons</h1>
+
+<p class="intro">Where to find third-party add-ons.</p>
+
+<p>There are quite a few developers out there creating add-ons for you to use on your site.
+Some add-ons are more polished than others, but people are already making some pretty great things.</p>
+
+<p>While there is no formal, centralized list yet, we recommend checking through the online communities, especially Twitter.
+Looking for something in particular? Send a request with the <code>#statamic</code> hash tag, there are quite a few people watching it, and they may be able to point you in the right direction.</p>
+
+<h2>Coming Soon: The Trading Post</h2>
+
+<p>We&#8217;re working hard to get the Trading Post up and running.
+The Trading Post will be our official marketplace for sharing and selling third-party add-ons, themes, and more.</p>
+
+</div>
+
+<a id="installing" name="//apple_ref/cpp/Section/3. Installing Add-Ons" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Installing Add-Ons</h1>
+
+<p class="intro">Getting add-ons onto your site.</p>
+
+<p>Add-ons come with up to two parts: the folder that contains the add-on code, and — optionally — a configuration file.
+An example folder structure for an add-on called <code>my-add-on</code> (that includes a configuration file) might look something like this:</p>
+
+<pre class="prettyprint sh">_add-ons/
+    my_add_on/
+        pi.my_add_on.php
+_config/
+    add-ons/
+        my_add_on/
+            my_add_on.yaml
+</pre>
+
+<p>Here&#8217;s how to install each part, both of which should be an easy task.</p>
+
+<h2>Installing the Add-On&#8217;s Folder</h2>
+
+<p>To install the add-on, grab the named folder inside of <code>_add-ons</code> and drop it into your site&#8217;s <code>_add-ons</code> folder.
+<strong>That&#8217;s it.</strong>
+There&#8217;s nothing to activate, and no installers to run.</p>
+
+<h2>Installing the Add-On&#8217;s Configuration File</h2>
+
+<p>If the add-on <em>did</em> come with a configuration file (like in the example above), you&#8217;ll need to install that too.
+This is almost as easy as installing the folder.</p>
+
+<p>First, check to make sure your copy of Statamic has an <code>add-ons</code> folder inside of its <code>_config</code> folder.
+If it doesn&#8217;t, make one.</p>
+
+<p>Next, grab the named folder inside of the add-on&#8217;s <code>_config/add-ons</code> and drop it into your site&#8217;s <code>_config/add-ons</code> folder.
+Done.</p>
+
+<h3>Why the Configuration File Isn&#8217;t Inside the Add-On&#8217;s Main Folder</h3>
+
+<p>We thought you might be curious.
+The only part of the add-on that you&#8217;ll be changing is its configuration file.
+If you ever need to <a href="#updating">update the add-on</a>, you&#8217;ll appreciate not accidentally overwriting your configuration settings with the default one that comes with the add-on.</p>
+
+<h2>That&#8217;s All, Folks</h2>
+
+<p>Once that&#8217;s in place, you should be all set.
+It&#8217;s good practice to double-check the add-on&#8217;s documentation to make sure you don&#8217;t need to do anything else; most of the time, you shouldn&#8217;t.</p>
+
+<p>Feel free to configure and play with your brand new add-on.</p>
+
+</div>
+
+<a id="updating" name="//apple_ref/cpp/Section/4. Updating Add-Ons" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Updating Add-Ons</h1>
+
+<p class="intro">Even easier than installing add-ons.</p>
+
+<p>You should find that updating an add-on is a simple process.
+What follows is how most add-on updates will work, but always consult the add-on’s documentation for any specifics.</p>
+
+<h2>Install the Update</h2>
+
+<p>Grab the named folder in the updated add-on’s <code>_add-ons</code> folder and drag it into your site’s <code>_add-ons</code> folder.
+You’ll probably be alerted that that folder already exists, and will be asked what to do.
+Replace it, and you’re done.</p>
+
+<h2>Check for Configuration Updates</h2>
+
+<p>If the add-on has a configuration file, double-check to make sure there aren’t any new settings that you should add to your copy.
+Not updating your settings shouldn’t break your add-on, but again, read the documentation.</p>
+
+</div>
+
+<a id="using" name="//apple_ref/cpp/Section/5. Using Add-Ons" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Using Add-Ons</h1>
+
+<p class="intro">General ways that add-ons are used.</p>
+
+<p>Each add-on will have its own goals and ways of doing things, but we can give you a general overview of what to expect.</p>
+
+<h2>Plugins</h2>
+
+<p>Plugins create new tags for you to use in your template.
+You&#8217;ll want to refer to the add-on&#8217;s documentation for the specific tags that can be used, as well as the parameters that can be used within those tags, but what follows it the general idea.</p>
+
+<p>As an example, let&#8217;s say you&#8217;ve installed the <code>animal</code> add-on.
+This add-on comes with a tag to display an animal at random, called <code>{{ animal:random }}</code>, which will be replaced with the name of a random animal.</p>
+
+<p>You might include this in your template like so:</p>
+
+<pre class="prettyprint html">&lt;p&gt;
+    I was walking through the woods, when all of a sudden I was
+    attacked. But this was no mere critter, this was a behemoth
+    of a beast. ’Twas a {{ animal:random }}!
+&lt;/p&gt;
+</pre>
+
+<p>Plugins can also be <a href="../templating/tag-pairs.html">tag-pairs</a>.
+Perhaps our <code>animal</code> add-on lets you display a list of all known animals with the <code>{{ animal:list_all }}</code> tag, along with a check to see if each animal eats people.
+Plugins can define variables that can be used between tag-pairs.
+For this example, let&#8217;s assume this tag has the name of the animal in the <code>{{ name }}</code> tag, and a boolean in the <code>{{ eats_people }}</code> tag.</p>
+
+<p>You could run through this list like so:</p>
+
+<pre class="prettyprint html">&lt;h2&gt;Known Animals&lt;/h2&gt;
+
+&lt;ul&gt;
+    {{ animals:list_all }}
+        &lt;li&gt;
+            {{ name }},
+            {{ if eats_people }}
+                eats people
+            {{ else }}
+                doesn't eat people
+            {{ endif }}
+        &lt;/li&gt;
+    {{ /animals:list_all }}
+&lt;/ul&gt;
+</pre>
+
+<h3>Setting Parameters</h3>
+
+<p>Plugins can also let you configure them by setting parameters on the tag itself.
+Perhaps we could limit the types of animals to list using a parameter on the <code>{{ animal:list_by_region }}</code> tag.</p>
+
+<p>That might look like this:</p>
+
+<pre class="prettyprint html">&lt;dl&gt;
+    &lt;dt&gt;Animals in the polar region&lt;/dt&gt;
+    &lt;dd&gt;
+        {{ animal:list_by_region region="polar" }}
+            {{ name }}{{ if !last }}, {{ endif }}
+        {{ /animal:list_by_region }}
+    &lt;/dd&gt;
+&lt;/dl&gt;
+</pre>
+
+<p>The only limit to the parameters used is the number of options given to you by the add-on developer.</p>
+
+<h2>Fieldtypes</h2>
+
+<p>Fieldtypes let you define new ways to enter content into the <a href="../control-panel.html">Control Panel</a>.
+Each fieldtype will come with its own list of configurations, and those configurations are generally customizable <em>per use</em> of the field.
+This lets you use the same fieldtype over and over again, and potentially vastly changing the way it&#8217;s displayed or used.</p>
+
+<p>To continue our example from above, let&#8217;s say that the <code>animal</code> add-on comes with its own fieldtype for designating animals.
+Using this fieldtype might look like this in a fieldset:</p>
+
+<pre class="prettyprint yaml">title: Species
+fields:
+    title:
+        instructions: Name this species.
+    animal:
+        type: animal
+        display: Animal
+        instructions: Name this animal, and assign it a region.
+    content:
+        type: hidden
+</pre>
+
+<p>How this field displays within your Control Panel is completely up to the developer.
+This fieldtype might display a text box for the name of your animal, along with a drop-down of allowed regions.</p>
+
+<p>As with Plugins, you&#8217;ll want to consult each add-on&#8217;s documentation to see if it has a fieldtype and if it does, how to use it in the control panel.</p>
+
+</div>
+
+<a id="removing" name="//apple_ref/cpp/Section/6. Removing Add-Ons" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Removing Add-Ons</h1>
+
+<p class="intro">Get rid of add-ons you're not using.</p>
+
+<p>Before diving into <em>how</em> to remove add-ons, it should be noted that aside from the disk-space the add-on files are using (which is normally pretty low), having extra add-ons in your <code>_add-ons</code> folders has very little effect on your site.
+That said, it&#8217;s nice to keep things streamlined and as small as possible, and thus, here is how you can do that.</p>
+
+<p>To completely uninstall an add-on, perform the following:</p>
+
+<ul>
+	<li>Delete its folder from your site&#8217;s <code>_add-ons</code> folder</li>
+	<li>Check in your <code>_cache</code> and <code>_cache/_add-ons</code> folder for any cached data from this add-on (it <em>should</em> be contained within a folder of the same name)</li>
+	<li>If the add-on you&#8217;re removing contained fieldtypes, check through your site&#8217;s fieldsets — found in <code>_config/fieldsets</code> — for any that are using the add-on&#8217;s fieldtype, you&#8217;ll need to change those to an acceptable replacement</li>
+</ul>
+
+<p>And that should be it.
+These steps assume that the add-on being removed has followed all of the suggested- and best-practices that we&#8217;ve put out there.
+You may want to consult the add-on&#8217;s documentation for any special removal instructions.</p>
+
+</div>
+
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#101;&#110;&#116;&#108;emen&#64;&#115;&#116;ata&#x6d;&#105;c&#x2e;co&#x6d;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

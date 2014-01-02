@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>The Control Panel | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ The Control Panel" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+				<h1>The Control Panel</h1>
+
+				<p>In this section you&#8217;ll learn about Statamic&#8217;s Control Panel as well as how to use and configure it.</p>
+
+				<ul>
+					<li><a href="#what-it-is">What It Is</a></li>
+					<li><a href="#fields-and-fieldsets">Fields & Fieldsets</a></li>
+					<li><a href="#fieldtypes">Fieldtypes</a></li>
+					<li><a href="#managing-content">Managing Content</a></li>
+					<li><a href="#managing-members">Managing Members</a></li>
+					<li><a href="#removing">Removing the Control Panel</a></li>
+					<li><a href="#dashboard">Using the Dashboard</a></li>
+				</ul>
+      </div>
+    </article>
+
+<a id="what-it-is" name="//apple_ref/cpp/Section/1. What It Is" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>What It Is</h1>
+
+<p class="intro">Update your site from anywhere.</p>
+
+<p>Statamic&#8217;s Control Panel lets you maintain content and update your site from a web-based interface.
+Your Control Panel is part of your site&#8217;s installation — it comes as part of Statamic&#8217;s core package.</p>
+
+<p>The Control Panel is also responsive, and has been tested to work with many different devices.
+If you&#8217;re using a phone, computer, or browser released within the last five years, you should be able to access the entire Control Panel without a problem.</p>
+
+<h2>Two Ways to Update Your Site</h2>
+
+<p>Statamic has been designed in a way that maintaining your content via text files should be easy and straight-forward.
+However, we understand that not everyone wants to be fiddling with files all the time, so the Control Panel is a nice secondary way to create content.</p>
+
+<p>The Control Panel is not required to use Statamic, and can be <a href="#removing">completely removed</a> without issue.</p>
+
+</div>
+
+<a id="fields-and-fieldsets" name="//apple_ref/cpp/Section/2. Fields & Fieldsets" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Fields & Fieldsets</h1>
+
+<p class="intro">Defining the fields you wish to use per folder.</p>
+
+<p>Statamic lets you define fields in arrangements called <em>fieldsets</em>.
+You then tell Statamic which content uses which fieldset, and the Control Panel builds out the appropriate form for you.</p>
+
+<h2>Fieldsets</h2>
+
+<p>A <em>fieldset</em> is a simple YAML file that defines a list of fields.
+Your fieldsets are kept in the <code>_config/fieldsets</code> folder.
+A fieldset file consists of a single top-level key (<code>fields</code>), and allows you to set and configure any number of content fields utilizing any combination of the available <a href="">fieldtypes</a>.</p>
+
+<p>An example of what a fieldset might look like:</p>
+
+<pre class="prettyprint yaml">fields:
+    description:               ## the template tag, i.e. {{ description }}
+        display: Description   ## the Control Panel field label (optional)
+        required: false        ## true/false for validation (optional)
+        default:               ## default value (optional)
+        type: redactor         ## fieldtype (optional, text by default)
+        instruction: Write!    ## instructional text
+    author:
+        display: Author
+        required: true
+        default: Bear Grylls
+        type: users
+</pre>
+
+<h3>Naming Fields</h3>
+
+<p>You can name your fields any way you choose but each field name needs to be unique and you can not use a hyphen to separate names, underscores are allowed.</p>
+
+<h3>Using Fieldsets</h3>
+
+<p>To assign a fieldset to a piece of content, use the <code>_fieldset</code> setting in your front matter.
+For example, want a page to use the fieldset located in <code>_config/fieldsets/page.yaml</code>?
+Add this to the front matter:</p>
+
+<pre class="prettyprint yaml">_fieldset: page</pre>
+
+<p>Additionally, you may use the Fieldset selector in the Control Panel by simply clicking <em>New Page</em> in the Pages view.</p>
+
+<h2>Fieldsets for Entries</h2>
+
+<p>Entries are unique in that they consist of an entire folder full of similarly structured content files, all sharing the same fields and defaults.
+In order to make a fieldset globally available for an entire Entry type, you place a <code>fields.yaml</code> file into the folder with either the desired fieldtype to use, or a one-off fields configuration.
+In other words, you can set your fieldset right on the spot, or re-use any set you&#8217;ve created already.</p>
+
+<h3>Entry Type</h3>
+
+<p>There are currently two types of entries: <em>date</em> and <em>number</em>. Date entries are date-based, with URLs beginning with a year-month-day datestamp (e.g. <code>2013-07-04-fireworks.md</code>).
+Number entries are entries that begin with a numeral, used to optionally indicate their manual sort order in any given listing.</p>
+
+<p>To determine the ordering mechanism for a folder&#8217;s entries, set the <code>type</code> setting in that folder&#8217;s <code>fields.yaml</code>.</p>
+
+<pre class="prettyprint yaml">type: date|number</pre>
+
+<h2>Advanced Fieldset Techniques</h2>
+
+<p>These are <em>advanced</em> in the sense that they take slightly more configuration.
+Advanced functionality, simple implementation.</p>
+
+<h3>Extending Fieldsets</h3>
+
+<p>Your fieldsets can also include other fieldsets.
+This becomes useful if you want to reuse a certain combination of fields (for example, meta-data) in multiple fieldsets.
+To do this, use the <code>include</code> setting at the root level of your fieldset:</p>
+
+<pre class="prettyprint yaml">fields:
+    ## fields you define
+include:
+    - meta-data
+</pre>
+
+<p>Additionally, you can set multiple fieldsets right in your content fields.
+This is an advanced solution, as fieldsets are not changeable in the Control Panel (as a measure to preserve your content).</p>
+
+<pre class="prettyprint yaml">---
+title: Bears! Bears Everywhere!
+_fieldset:
+    - meta
+    - main-content
+</pre>
+
+<h3>Naming Fieldsets</h3>
+
+<p>Your fieldset might need a better name than the filename you&#8217;ve chosen.
+In this situation, just add a <code>title</code> option to your fieldset&#8217;s root.</p>
+
+<pre class="prettyprint yaml">title: Standard Page</pre>
+
+<h3>Hiding Fieldsets</h3>
+
+<p>Sometimes you don&#8217;t want to show all fieldsets in your Control Panel (because remember, a content creator can choose from your fieldsets when they click <em>New Page</em> in the Control Panel).
+For this, you can hide a fieldset from the <em>New Page</em> list with the following:</p>
+
+<pre class="prettyprint yaml">hide: true</pre>
+
+</div>
+
+<a id="fieldtypes" name="//apple_ref/cpp/Section/3. Fieldtypes" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Fieldtypes</h1>
+
+<p class="intro">Create different types of fields.</p>
+
+<p>Statamic comes with a hearty set of fieldtypes that you can choose from when creating your <a href="#fields-and-fieldsets">fieldsets</a>.
+A <em>fieldtype</em> defines what a field will look like in the Control Panel, as well as how the data for that field will be saved in your content file&#8217;s <a href="core-concepts.html#content-files">YAML front-matter</a>.</p>
+
+<p>Each fieldtype comes with its own configuration options and instructions, so be sure to consult the complete list of first-party fieldtypes in the <a href="documentation/fieldtypes.html">documentation</a>.</p>
+
+<h2>Third-Party Fieldtypes</h2>
+
+<p>Fieldtypes are also one of the things that can be <a href="creating-add-ons.html">created as an add-on</a>.
+This means that if you can&#8217;t find a fieldtype that does what you want, you can always make your own.</p>
+
+</div>
+
+<a id="managing-content" name="//apple_ref/cpp/Section/4. Managing Content" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Managing Content</h1>
+
+<p class="intro">Update your site.</p>
+
+<p>All of the content in your site can be reached and managed in the &#8220;Content&#8221; area of the control panel.
+The initial view presents you with an easy-to-understand &#8220;Page Tree&#8221; of your site&#8217;s page structure.
+Each existing page can be clicked or tapped to edit its respective content.
+All listings are shown in-line with their parent page/section (as long as a <code>fields.yaml</code> file is configured in that folder), along with the options to either &#8220;List Entries&#8221; or &#8220;Create Entry.&#8221;</p>
+
+<p>You can also create Pages by clicking the &#8220;Add Page&#8221; button, and choosing from your available and configured <a href="#fields-and-fieldsets">fieldsets</a>.</p>
+
+<h2>List Entries</h2>
+
+<p>Each entries list will show you all the entries, their slug, status, and date or order, depending on the type of entry.
+Each column is sortable by clicking or tapping on the column header.
+Entries can be edited by clicking or tapping their title, or deleted with the trashcan icon.</p>
+
+<p>In order to gain access to the List Entries controls, a <code>fields.yaml</code> file is required to be set for that given folder.</p>
+
+<h3>Statuses</h3>
+
+<ul>
+	<li><strong>Live:</strong> URL is accessible on the site, visible in <code>{{ nav }}</code> tags</li>
+	<li><strong>Hidden:</strong> URL is accessible on the site, hidden from <code>{{ nav }}</code> tags</li>
+	<li><strong>Draft:</strong> URL is not accessible on the site, hidden from <code>{{ nav }}</code> tags</li>
+</ul>
+
+<h2>Create Entry</h2>
+
+<p>Creating an entry will publish a new entry in the desired section.
+You will have access to all the content fields in the section&#8217;s <code>fields.yaml</code> file.
+When creating new entries, a suggested slug will automatically be generated for you based on your <code>title</code> field, but feel free to change it.</p>
+
+<p>In order to gain access to the Create Entry controls, a <code>fields.yaml</code> file is required to be set for that given folder.</p>
+
+</div>
+
+<a id="managing-members" name="//apple_ref/cpp/Section/5. Managing Members" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Managing Members</h1>
+
+<p class="intro">Control who can use the Control Panel</p>
+
+<p>Each member account is simply a YAML file contained in the <code>/_config/users</code> folder.
+The username is the name the file (ending with <code>.yaml</code>), and all the member details are Content Fields (YAML Front Matter), followed by a Bio field, very much like Pages and Entries&#8217; content field.</p>
+
+<p>Your first account is already setup for you, but you can feel free to modify and remove it altogether.
+Simply rename the <code>admin.yaml.sample</code> file to admin.yaml.
+You&#8217;ll need to set a password and login to have the password encrypted automatically.</p>
+
+<pre class="prettyprint yaml">---
+first_name: User
+last_name: McAwesome
+roles: [admin]
+password:
+---
+User McAwesome is a secret agent, currently undercover as a wilderness
+survival guide.  We trust you will keep this information under wraps.
+</pre>
+
+<p>The fields inside your member accounts are completely up to you, though we&#8217;ve set a few defaults.</p>
+
+<p>Inside the control panel you have the ability to create member accounts, update information, change passwords, and so on.</p>
+
+<h2>Roles</h2>
+
+<p>Roles exist to limit what particular members have access to.
+At the moment, the only role you can choose from is &#8220;admin&#8221;.
+Members with the &#8220;admin&#8221; role will be able to access the control panel, and those without it will not.</p>
+
+<p>Members without the &#8220;admin&#8221; role can still log in on the front-end of the site, which is useful for protecting pages and/or content from the casual passer-by.</p>
+
+</div>
+
+<a id="removing" name="//apple_ref/cpp/Section/6. Removing the Control Panel" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Removing the Control Panel</h1>
+
+<p class="intro">Get rid of your Control Panel.</p>
+
+<p>The Control Panel is not required to use Statamic, and can be completely removed from your installation.
+To do so, you&#8217;ll want to delete the following from the root of your Statamic install:</p>
+
+<ul>
+<li>The <code>admin</code> folder</li>
+<li>The <code>admin.php</code> file</li>
+</ul>
+
+<p>Also, you should disable the admin interface all together via your <a href="../configuring/control-panel-settings.html">settings file</a>.
+Open <code>_config/settings.yaml</code>, and set <code>_admin_enabled</code> to <code>false</code>.</p>
+
+</div>
+
+<a id="dashboard" name="//apple_ref/cpp/Section/7. Using the Dashboard" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Using the Dashboard</h1>
+
+<p class="intro">Welcome your site administrators.</p>
+
+<p>The Control Panel comes with an optional and customizable <em>dashboard</em> that you can use to greet site admins.
+It&#8217;s turned off by default, but you can enable it, choose it as the start page, and add whatever HTML you&#8217;d like to it rather easily.</p>
+
+<h2>Turning It On</h2>
+
+<p>Open up your <a href="configuring.html#general-site-settings">general site settings</a> file, and follow these steps:</p>
+
+<ol>
+<li>Find the <code>_admin_nav</code> list</li>
+<li>Set <code>dashboard</code> to <code>true</code></li>
+</ol>
+
+<h2>Setting It as the Start Page</h2>
+
+<p>Open up your <a href="configuring.html#general-site-settings">general site settings</a> file, and follow this step:</p>
+
+<ol>
+<li>Set <code>_admin_start_page</code> to <code>dashboard</code></li>
+</ol>
+
+<h2>Editing Dashboard Content</h2>
+
+<p>In your <code>_config</code> folder you should find a <code>dashboard.yaml</code> file.
+Within this file are two variables: <code>dashboard_main_content</code> and <code>dashboard_sidebar_content</code>.
+Edit these with whatever HTML you&#8217;d like to show up on the dashboard.</p>
+
+</div>
+    
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:g&#x65;n&#116;l&#x65;&#109;en&#64;&#115;t&#97;&#x74;a&#109;i&#x63;.&#x63;&#111;&#109;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

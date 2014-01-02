@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Statamic Cheat Sheet</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- styles -->
+<link rel="stylesheet" href="_assets/css/main.css">
+
+<!-- scripts -->
+<script src="_assets/js/jquery.min.js"></script>
+
+</head>
+
+  <body class="expanded-header">
+		
+    <header role="banner">
+      <div class="container">
+          <h1>Statamic Cheat Sheet <small>on <a href="https://github.com/statamicthemes/statamic-cheat-sheet/tree/gh-pages">github</a></small></h1>
+          <nav>
+            <a data-scroll-nav="0" data-scroll-goto="0" title="tags">tags</a>
+            <a data-scroll-nav="1" data-scroll-goto="1" title="fieldtypes">fieldtypes</a>
+            <a data-scroll-nav="2" data-scroll-goto="2" title="reference">reference</a>
+          </nav>
+      </div><!-- END .container -->
+    </header>
+
+		<a name="//apple_ref/cpp/Section/Tags" class="dashAnchor"></a>
+
+    <div role="main" class="container">
+      <div class="area" id="tags" data-scroll-index="0">
+        <h1>Tags</h1>
+        <div class="blocks blocks-tags">
+          <section>
+            <h2><a href="documentation/tags/entries.html" title="{{ entries:listing }}">{{ entries:listing }}</a></h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>folder</li>
+                <li>taxonomy</li>
+                <li>show_hidden</li>
+                <li>since</li>
+                <li>until</li>
+                <li>show_past</li>
+                <li>show_future</li>
+                <li>conditions</li>
+                <li>sort_by</li>
+                <li>sort_dir</li>
+                <li>limit</li>
+                <li>offset</li>
+                <li>paginate</li>
+                <li>group_by_date</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2><a href="documentation/tags/entries.html" title="{{ entries:previous }}">{{ entries:previous }}</a></h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>current</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Variables</h3>
+                <ul>
+                  <li>has_next</li>
+                </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2><a href="documentation/tags/entries.html" title="{{ entries:next }}">{{ entries:next }}</a></h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>current</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Variables</h3>
+                <ul>
+                  <li>has_next</li>
+                </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ entries:pagination }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>folder</li>
+                <li>taxonomy</li>
+                <li>show_hidden</li>
+                <li>since</li>
+                <li>until</li>
+                <li>show_past</li>
+                <li>show_future</li>
+                <li>conditions</li>
+                <li>sort_by</li>
+                <li>sort_dir</li>
+                <li>limit</li>
+                <li>offset</li>
+                <li>paginate</li>
+                <li>group_by_date</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ entries:map }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>folder</li>
+                <li>center_point</li>
+                <li>locate_with</li>
+                <li>zoom</li>
+                <li>map_id</li>
+                <li>clusters</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ get:[variable] }}</h2>
+          </section>
+
+          <section>
+            <h2>{{ get_content }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>from</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ get_files }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>match</li>
+                <li>extension</li>
+                <li>in</li>
+                <li>not_in</li>
+                <li>file_size</li>
+                <li>file_date</li>
+                <li>depth</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ get:post[variable] }}</h2>
+          </section>
+
+          <section>
+            <h2>{{ member:login }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>return</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ member:logout }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>return</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ member:profile }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>member</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ member:listing }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>role</li>
+                <li>limit</li>
+                <li>offset</li>
+                <li>sort_by</li>
+                <li>sort_dir</li>
+                <li>username</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ nav }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>from</li>
+                <li>exclude</li>
+                <li>max_depth</li>
+                <li>include_entries</li>
+                <li>folders_only</li>
+                <li>include_content</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3>Variables</h3>
+              <ul>
+                <li>is_current</li>
+                <li>is_parent</li>
+                <li>url</li>
+                <li>title</li>
+                <li>children</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ nav:count }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>from</li>
+                <li>max_depth</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ nav:breadcrumbs }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>url</li>
+                <li>include_home</li>
+                <li>reverse</li>
+                <li>backspace</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ obfuscate }}</h2>
+          </section>
+
+          <section>
+            <h2>{{ pages:listing }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>folder</li>
+                <li>taxonomy</li>
+                <li>show_hidden</li>
+                <li>conditions</li>
+                <li>sort_by</li>
+                <li>sort_dir</li>
+                <li>limit</li>
+                <li>offset</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Available Tags</h3>
+              <ul>
+                <li>first</li>
+                <li>last</li>
+                <li>index</li>
+                <li>zero_index</li>
+                <li>total_results</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ path }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>post:[variable]</h2>
+          </section>
+
+          <section>
+            <h2>{{ redirect }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>url</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ switch }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>between</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ taxonomy:listing }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>type</li>
+                <li>folder</li>
+                <li>min_count</li>
+                <li>sort_by</li>
+                <li>sort_dir</li>
+                <li>limit</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Available Tags</h3>
+              <ul>
+                <li>name</li>
+                <li>url</li>
+                <li>slug</li>
+                <li>count</li>
+                <li>first</li>
+                <li>last</li>
+                <li>results</li>
+                <li>total_results</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ theme:partial }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ theme:asset }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ theme:js }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ theme:css }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ theme:img }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>{{ transform }}</h2>
+            <section>
+              <h3>Parameters</h3>
+              <ul>
+                <li>src</li>
+                <li>destination</li>
+                <li>quality</li>
+                <li>width</li>
+                <li>height</li>
+                <li>
+                  action (default:resize)
+                  <ul>
+                    <li>resize</li>
+                    <li>crop</li>
+                    <li>smart</li>
+                  </ul>
+                </li>
+                <li>ratio</li>
+                <li>upsize</li>
+                <li>pos_x</li>
+                <li>pos_y</li>
+                <li>rotate</li>
+                <li>flip</li>
+                <li>blur</li>
+                <li>pixelate</li>
+                <li>greyscale</li>
+                <li>
+                  type
+                  <ul>
+                    <li>jpg</li>
+                    <li>png</li>
+                    <li>gif</li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+          </section>
+        </div>
+      </div><!-- end .blocks -->
+
+			<a name="//apple_ref/cpp/Section/Fieldtypes" class="dashAnchor"></a>
+
+      <div class="area" id="fieldtypes" data-scroll-index="1">
+        <h1>Fieldtypes</h1>
+        <div class="blocks blocks-fieldtypes">
+
+          <section>
+            <h2>checkbox</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>color</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>cancel_text</li>
+                <li>choose_text</li>
+                <li>instructions</li>
+                <li>local_storage_key</li>
+                <li>max_selection_size</li>
+                <li>palette</li>
+                <li>preferred_format</li>
+                <li>select_on_page</li>
+                <li>show_alpha</li>
+                <li>show_palette</li>
+                <li>show_palette_only</li>
+                <li>show_initial</li>
+                <li>show_input</li>
+                <li>show_selection_palette</li>
+                <li>starting_color</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>date</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>file</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>allowed</li>
+                <li>destination</li>
+                <li>display</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>grid</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>fields
+                  <ul>
+                    <li>width</li>
+                  </ul>
+                </li>
+                <li>instructions</li>
+                <li>min_rows</li>
+                <li>max_rows</li>
+                <li>starting_rows</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>hidden</h2>
+          </section>
+
+          <section>
+            <h2>location</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>allow_geolocation</li>
+                <li>cloudmade_api_key</li>
+                <li>cloudmade_tile_set_id</li>
+                <li>detect_retina</li>
+                <li>float_precision</li>
+                <li>foursquare_client_id</li>
+                <li>foursquare_client_secret</li>
+                <li>foursquare_radius</li>
+                <li>geolocation_zoom</li>
+                <li>instructions</li>
+                <li>interaction
+                    <ul>
+                      <li>scroll_wheel_zoom</li>
+                      <li>double_click_zoom</li>
+                      <li>box_zoom</li>
+                      <li>touch_zoom</li>
+                      <li>draggable</li>
+                    </ul>
+                </li>
+                <li>max_zoom</li>
+                <li>min_zoom</li>
+                <li>starting_latitude</li>
+                <li>starting_logitude</li>
+                <li>starting_zoom</li>
+                <li>use_foursquare</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>markitup</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>default</li>
+                <li>height</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>radio</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>default</li>
+                <li>height</li>
+                <li>instructions</li>
+                <li>options</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>redactor</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>image_dir</li>
+                <li>instructions</li>
+                <li>resize
+                    <ul>
+                      <li>width</li>
+                      <li>height</li>
+                      <li>quality</li>
+                      <li>upsize</li>
+                    </ul>
+                </li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>section</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>select</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>options</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>suggest</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>create</li>
+                <li>display</li>
+                <li>
+                  content
+                  <ul>
+                    <li>conditions</li>
+                    <li>folder</li>
+                    <li>hide_selected</li>
+                    <li>label</li>
+                    <li>show_draft</li>
+                    <li>show_hidden</li>
+                    <li>show_future</li>
+                    <li>show_past</li>
+                    <li>since</li>
+                    <li>type</li>
+                    <li>sort_dir</li>
+                    <li>until</li>
+                    <li>value</li>
+                  </ul>
+                </li>
+                <li>create</li>
+                <li>instructions</li>
+                <li>max_items</li>
+                <li>persist</li>
+                <li>placeholder</li>
+                <li>
+                  taxonomy
+                  <ul>
+                    <li>folder</li>
+                    <li>type</li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>templates</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>default</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>text</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>default</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>textarea</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>code_formatting
+                  <ul>
+                    <li>true</li>
+                    <li>false <small>(default)</small></li>
+                  </ul>
+                </li>
+                <li>display</li>
+                <li>default</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>time</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+          <section>
+            <h2>users</h2>
+            <section>
+              <h3>Options</h3>
+              <ul>
+                <li>display</li>
+                <li>instructions</li>
+              </ul>
+            </section>
+          </section>
+
+        </div>
+      </div><!-- end .blocks -->
+
+			<a name="//apple_ref/cpp/Section/Reference" class="dashAnchor"></a>
+
+      <div class="area" id="reference" data-scroll-index="2">
+        <h1>Reference</h1>
+          <div class="blocks blocks-reference">
+
+            <section>
+              <h2>Conditionals</h2>
+              <section>
+                <h3>Statements</h3>
+                <ul>
+                  <li>if</li>
+                  <li>elseif</li>
+                  <li>else</li>
+                  <li>unless</li>
+                  <li>unlesselse</li>
+                </ul>
+                <h3>Comparison Operators:</h3>
+                <ul>
+                  <li>==</li>
+                  <li>!=</li>
+                  <li>===</li>
+                  <li>!==</li>
+                  <li>&gt;</li>
+                  <li>&lt;</li>
+                  <li>&gt;=</li>
+                  <li>&lt;=</li>
+                </ul>
+                <h3>Logical Operators</h3>
+                <ul>
+                  <li>!</li>
+                  <li>||</li>
+                  <li>&amp;&amp;</li>
+                  <li>and</li>
+                  <li>or</li>
+                </ul>
+              </section>
+            </section>
+
+            <section>
+              <h2>Date Formatting</h2>
+              <section>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Format</th>
+                      <th>Returned Values</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2"><a href="http://uk1.php.net/manual/en/function.date.php">Taken from the PHP Manual</a></td>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr>
+                      <th colspan="2" scope="rowgroup">Day</th>
+                    </tr>
+                    <tr>
+                      <td>d</td>
+                      <td>01 to 31</td>
+                    </tr>
+                    <tr>
+                      <td>D</td>
+                      <td>Mon through Sun</td>
+                    </tr>
+                    <tr>
+                      <td>L</td>
+                      <td>1 to 31</td>
+                    </tr>
+                    <tr>
+                      <td>l</td>
+                      <td>Sunday through Saturday</td>
+                    </tr>
+                    <tr>
+                      <td>N</td>
+                      <td>1 (Monday) to 7 (Sunday)</td>
+                    </tr>
+                    <tr>
+                      <td>S</td>
+                      <td>st, nd, rd or th</td>
+                    </tr>
+                    <tr>
+                      <td>W</td>
+                      <td>0 (Sunday) to 6 (Saturday)</td>
+                    </tr>
+                    <tr>
+                      <td>Z</td>
+                      <td>0 through 365</td>
+                    </tr>
+                    <tr>
+                      <th colspan="2" scope="rowgroup">Month</th>
+                    </tr>
+                    <tr>
+                      <td>F</td>
+                      <td>January through December</td>
+                    </tr>
+                    <tr>
+                      <td>m</td>
+                      <td>01 through 12</td>
+                    </tr>
+                    <tr>
+                      <td>M</td>
+                      <td>Jan through Dec</td>
+                    </tr>
+                    <tr>
+                      <td>n</td>
+                      <td>1 through 12</td>
+                    </tr>
+                    <tr>
+                      <td>t</td>
+                      <td>28 through 31</td>
+                    </tr>
+                    <tr>
+                      <th colspan="2" scope="rowgroup">Year</th>
+                    </tr>
+                    <tr>
+                      <td>Y</td>
+                      <td>1999 or 2013</td>
+                    </tr>
+                    <tr>
+                      <td>y</td>
+                      <td>99 or 13</td>
+                    </tr>
+                    <tr>
+                      <th colspan="2" scope="rowgroup">Time</th>
+                    </tr>
+                    <tr>
+                      <td>a</td>
+                      <td>am or pm</td>
+                    </tr>
+                    <tr>
+                      <td>A</td>
+                      <td>AM or PM</td>
+                    </tr>
+                    <tr>
+                      <td>g</td>
+                      <td>hour: 1 through 12</td>
+                    </tr>
+                    <tr>
+                      <td>G</td>
+                      <td>hour: 0 through 23</td>
+                    </tr>
+                    <tr>
+                      <td>h</td>
+                      <td>hour: 01 through 12</td>
+                    </tr>
+                    <tr>
+                      <td>H</td>
+                      <td>hour: 00 through 23</td>
+                    </tr>
+                    <tr>
+                      <td>i</td>
+                      <td>minutes: 00 to 59</td>
+                    </tr>
+                    <tr>
+                      <td>s</td>
+                      <td>seconds: 00 through 59</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </section>
+
+            <section>
+              <h2><a href="documentation/global-variables.html">Global Variables</a></h2>
+              <section>
+                <ul>
+                  <li>current_date</li>
+                  <li>current_url</li>
+                  <li>environment</li>
+                  <li>homepage</li>
+                  <li>is_admin</li>
+                  <li>is_{environment_name}</li>
+                  <li>last_modified</li>
+                  <li>last_segment</li>
+                  <li>logged_in</li>
+                  <li>next</li>
+                  <li>page_url</li>
+                  <li>permalink</li>
+                  <li>prev</li>
+                  <li>segment_x</li>
+                  <li>taxonomy_name</li>
+                  <li>taxonomy_slug</li>
+                  <li>theme_path</li>
+                  <li>username</li>
+                  <li>_site_name</li>
+                  <li>_site_root</li>
+                  <li>_site_url</li>
+                </ul>
+              </section>
+            </section>
+
+            <section>
+              <h2>List Shortcuts</h2>
+              <section>
+                <ul>
+                  <li><a href="documentation/list-shortcuts/list.html">_list</a></li>
+                  <li><a href="documentation/list-shortcuts/spaced-list.html">_spaced_list</a></li>
+                  <li><a href="documentation/list-shortcuts/option-list.html">_option_list</a></li>
+                  <li><a href="documentation/list-shortcuts/ordered-list.html">_ordered_list</a></li>
+                  <li><a href="documentation/list-shortcuts/unordered-list.html">_unordered_list</a></li>
+                  <li><a href="documentation/list-shortcuts/sentence-list.html">_sentence_list</a></li>
+                  <li><a href="documentation/list-shortcuts/ampersand-sentence-list.html">_ampersand_sentence_list</a></li>
+                  <li><a href="documentation/list-shortcuts/url-list.html">_url_list</a></li>
+                  <li><a href="documentation/list-shortcuts/spaced-url-list.html">_spaced_url_list</a></li>
+                  <li><a href="documentation/list-shortcuts/ordered-url-list.html">_ordered_url_list</a></li>
+                  <li><a href="documentation/list-shortcuts/unordered-url-list.html">_unordered_url_list</a></li>
+                  <li><a href="documentation/list-shortcuts/sentence-url-list.html">_sentence_url_list</a></li>
+                  <li><a href="documentation/list-shortcuts/ampersand-sentence-url-list.html">_ampersand_sentence_url_list</a></li>
+                </ul>
+              </section>
+            </section>
+
+            <section>
+              <h2>Markdown</h2>
+              <section>
+                <h3>Headers</h3>
+<pre><code># An &lt;h1&gt; tag
+## An &lt;h2&gt; tag
+###### An &lt;h6&gt; tag</code></pre>
+
+<h3>Text</h3>
+<pre><code>*This will be italic*
+_This will also be italic
+**This will be bold**
+__This will also be bold__</code></pre>
+
+<h3>Unordered Lists</h3>
+<pre><code>* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b</code></pre>
+
+<h3>Ordered Lists</h3>
+<pre><code>1. Item 1
+2. Item 2
+  * Item 2a
+  * Item 2b</code></pre>
+
+<h3>Images</h3>
+<pre><code>![Statamic Logo](/img/logo.png)</code></pre>
+
+<h3>Links</h3>
+<pre><code>&lt;http://statamic&gt;
+or
+[Statamic](http://statamic.com)</code></pre>
+
+<h3>Email Addresses</h3>
+<pre><code>&lt;email@example.com&gt;</code></pre>
+
+<h3>Blockquotes</h3>
+<pre><code>From the great Ron Swanson:
+
+  > Never half-ass two things, whole-ass one thing.</code></pre>
+
+<h3>Tables</h3>
+<pre><code>First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell</code></pre>
+
+<h3>Code Blocks</h3>
+<pre><code>~~~ {.add .classes .here}
+{{ loop }}
+  {{ variable }}
+{{ /loop }}
+~~~</code></pre>
+
+<h3>Inline Code</h3>
+<pre><code>Check out `{{ transform }}`.</code></pre>
+
+<h3>Mixing HTML</h3>
+<pre><code>You can write HTML inside Markdown, and even parse it like so:
+
+&lt;article markdown="1"&gt;
+  # Your Content
+&lt;/article&gt;
+</code></pre>
+              </section>
+            </section>
+
+            <section>
+              <h2>Variable Modifiers</h2>
+              <section>
+                <ul>
+                  <li><a href="documentation/variable-modifiers/subtract.html">- (Subtract)</a></li>
+                  <li><a href="documentation/variable-modifiers/add.html">+ (Add)</a></li>
+                  <li><a href="documentation/variable-modifiers/multiply.html">* (Multiply)</a></li>
+                  <li><a href="documentation/variable-modifiers/divide.html">/ (Divide)</a></li>
+                  <li><a href="documentation/variable-modifiers/exponent.html">^ (Exponent)</a></li>
+                  <li><a href="documentation/variable-modifiers/modulus.html">% (Modulus)</a></li>
+                  <li><a href="documentation/variable-modifiers/abs.html">abs</a></li>
+                  <li><a href="documentation/variable-modifiers/acos.html">acos</a></li>
+                  <li><a href="documentation/variable-modifiers/asin.html">asin</a></li>
+                  <li><a href="documentation/variable-modifiers/atan.html">atan</a></li>
+                  <li><a href="documentation/variable-modifiers/backspace.html">backspace</a></li>
+                  <li><a href="documentation/variable-modifiers/bindec.html">bindec</a></li>
+                  <li><a href="documentation/variable-modifiers/ceil.html">ceil</a></li>
+                  <li><a href="documentation/variable-modifiers/cos.html">cos</a></li>
+                  <li><a href="documentation/variable-modifiers/decbin.html">decbin</a></li>
+                  <li><a href="documentation/variable-modifiers/dechex.html">dechex</a></li>
+                  <li><a href="documentation/variable-modifiers/decoct.html">decoct</a></li>
+                  <li><a href="documentation/variable-modifiers/deg2rad.html">deg2rad</a></li>
+                  <li><a href="documentation/variable-modifiers/deslugify.html">deslugify</a></li>
+                  <li><a href="documentation/variable-modifiers/distance-in-km-from.html">distance_in_km_from</a></li>
+                  <li><a href="documentation/variable-modifiers/distance-in-mi-from.html">distance_in_mi_from</a></li>
+                  <li><a href="documentation/variable-modifiers/empty.html">empty</a></li>
+                  <li><a href="documentation/variable-modifiers/floor.html">floor</a></li>
+                  <li><a href="documentation/variable-modifiers/format.html">format</a></li>
+                  <li><a href="documentation/variable-modifiers/format-number.html">format_number</a></li>
+                  <li><a href="documentation/variable-modifiers/hexdec.html">hexdec</a></li>
+                  <li><a href="documentation/variable-modifiers/img.html">img</a></li>
+                  <li><a href="documentation/variable-modifiers/in-future.html">in_future</a></li>
+                  <li><a href="documentation/variable-modifiers/in-past.html">in_past</a></li>
+                  <li><a href="documentation/variable-modifiers/length.html">length</a></li>
+                  <li><a href="documentation/variable-modifiers/link.html">link</a></li>
+                  <li><a href="documentation/variable-modifiers/log.html">log</a></li>
+                  <li><a href="documentation/variable-modifiers/log10.html">log10</a></li>
+                  <li><a href="documentation/variable-modifiers/lower.html">lower</a></li>
+                  <li><a href="documentation/variable-modifiers/markdown.html">markdown</a></li>
+                  <li><a href="documentation/variable-modifiers/not-empty.html">not_empty</a></li>
+                  <li><a href="documentation/variable-modifiers/numeric.html">numeric</a></li>
+                  <li><a href="documentation/variable-modifiers/obfuscate.html">obfuscate</a></li>
+                  <li><a href="documentation/variable-modifiers/octdec.html">octdec</a></li>
+                  <li><a href="documentation/variable-modifiers/rad2deg.html">rad2deg</a></li>
+                  <li><a href="documentation/variable-modifiers/repeat.html">repeat</a></li>
+                  <li><a href="documentation/variable-modifiers/reverse.html">reverse</a></li>
+                  <li><a href="documentation/variable-modifiers/rot13.html">rot13</a></li>
+                  <li><a href="documentation/variable-modifiers/round.html">round</a></li>
+                  <li><a href="documentation/variable-modifiers/scramble.html">scramble</a></li>
+                  <li><a href="documentation/variable-modifiers/sin.html">sin</a></li>
+                  <li><a href="documentation/variable-modifiers/slugify.html">slugify</a></li>
+                  <li><a href="documentation/variable-modifiers/smartypants.html">smartypants</a></li>
+                  <li><a href="documentation/variable-modifiers/sqrt.html">sqrt</a></li>
+                  <li><a href="documentation/variable-modifiers/striptags.html">striptags</a></li>
+                  <li><a href="documentation/variable-modifiers/tan.html">tan</a></li>
+                  <li><a href="documentation/variable-modifiers/textile.html">textile</a></li>
+                  <li><a href="documentation/variable-modifiers/title.html">title</a></li>
+                  <li><a href="documentation/variable-modifiers/trim.html">trim</a></li>
+                  <li><a href="documentation/variable-modifiers/truncate.html">truncate</a></li>
+                  <li><a href="documentation/variable-modifiers/upper.html">upper</a></li>
+                  <li><a href="documentation/variable-modifiers/urldecode.html">urldecode</a></li>
+                  <li><a href="documentation/variable-modifiers/urlencode.html">urlencode</a></li>
+                  <li><a href="documentation/variable-modifiers/widont.html">widont</a></li>
+                  <li><a href="documentation/variable-modifiers/word-count.html">word_count</a></li>
+                </ul>
+              </section>
+            </section>
+
+            <section>
+              <h2>Tag Pair Helper Parameters</h2>
+              <section>
+                <ul>
+                  <li>sort_by</li>
+                  <li>sort_dir</li>
+                  <li>first</li>
+                  <li>last</li>
+                  <li>offset</li>
+                  <li>index</li>
+                  <li>limit</li>
+                  <li>exclude</li>
+                  <li>include</li>
+                </ul>
+              </section>
+            </section>
+
+            <section>
+              <h2>Tag Pair Helper Variables</h2>
+              <section>
+                <ul>
+                  <li>first</li>
+                  <li>last</li>
+                  <li>index</li>
+                  <li>zero_index</li>
+                  <li>total_results</li>
+                  <li>key</li>
+                  <li>name &amp; value </li>
+                </ul>
+              </section>
+            </section>
+
+            <section>
+              <h2>YAML</h2>
+              <section>
+<h3>Strings</h3>
+<pre><code>myName: Davey Crocket
+protectedBy: "Quote marks >&'":"</code></pre>
+<h3>String blocks</h3>
+<pre><code>myHTML1: >
+  &lt;p>Use a greater symbol to strip new lines&lt;/p>
+
+myHTML2: |
+  &lt;p>Or a pipe to perserve them&lt;/p></code></pre>
+<h3>Lists (Arrays)</h3>
+<pre><code>shoppingList1:
+  - scotch
+  - beard trimmer
+  - flowers
+
+shoppingList2: [scotch, flowers]
+</code></pre>
+<h3>Named Lists (String Key Arrays)</h3>
+<pre><code>details:
+  firstName: Ned
+  lastName: Stark
+  hometown: Winterfell</code></pre>
+<h3>Associative Arrays</h3>
+<pre><code>myList:
+  -
+    name: Abed
+    school: Greendale
+  -
+    name: Troy
+    school: Greendale</code></pre>
+<h3>Associative Arrays with Named Keys</h3>
+<pre><code>places:
+  vacation:
+    - Ireland
+    - Australia
+  work:
+    - San Francisco
+    - Atlanta
+</code></pre>
+<h3>Comment</h3>
+<pre><code>#status: live
+</code></pre>
+              </section>
+            </section>
+
+
+          </div>
+        </div>
+      </div><!-- end .blocks -->
+    </div><!-- END .container -->
+
+    <footer role="contentinfo">
+      <div class="container">
+        <small>A joint project between <a href="http://garethredfern.com">Gareth Redfern</a>, <a href="http://lou.pe">Philip Meissner</a> &amp; <a href="http://jackmcdade.com">Jack McDade</a>.</small>
+      </div><!-- END .container -->
+    </footer>
+    <script src="_assets/js/site.js"></script>
+  </body>
+</html>

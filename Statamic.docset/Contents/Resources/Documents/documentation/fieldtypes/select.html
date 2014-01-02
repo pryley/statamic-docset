@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Select | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>Select</h1>
+
+        
+        <p>The select fieldtype respects the <code>option</code> parameter, allowing you to set a list of possible default values for the user to pick from.</p>
+
+<pre class="prettyprint yaml">dinner:
+  display: Dinner Choices
+  type: select
+  options:
+    - Beans
+    - Fish
+    - Tree Bark
+    - Elk
+</pre>
+
+<p>You can customize the <strong>value</strong> and <strong>label</strong> separately by using named keys, as shown below:</p>
+
+<pre class="prettyprint yaml">dinner:
+  display: Dinner Choices
+  options:
+    beans: Baked Beans
+    fish: Delicious Bass
+    bark: Redwood Bark
+    elk: Reindeer
+</pre>
+      </div>
+    </article>
+
+    
+<div class="block content">
+	<h1>Fieldtypes</h1>
+	<p>Fieldtypes let you create different types of fields to collect data in the Control Panel.</p>
+	<ul>
+		<li><a href="checkbox.html">Checkbox</a></li>
+		<li><a href="color.html">Color</a></li>
+		<li><a href="date.html">Date</a></li>
+		<li><a href="file.html">File</a></li>
+		<li><a href="grid.html">Grid</a></li>
+		<li><a href="hidden.html">Hidden</a></li>
+		<li><a href="location.html">Location</a></li>
+		<li><a href="markitup.html">Markitup</a></li>
+		<li><a href="radio.html">Radio</a></li>
+		<li><a href="redactor.html">Redactor</a></li>
+		<li><a href="section.html">Section</a></li>
+		<li><a href="select.html">Select</a></li>
+		<li><a href="suggest.html">Suggest</a></li>
+		<li><a href="tags.html">Tags</a></li>
+		<li><a href="templates.html">Templates</a></li>
+		<li><a href="text.html">Text</a></li>
+		<li><a href="textarea.html">Textarea</a></li>
+		<li><a href="time.html">Time</a></li>
+		<li><a href="users.html">Users</a></li>
+	</ul>
+</div>
+    
+    <p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:g&#x65;&#110;&#x74;&#108;e&#x6d;&#101;n&#x40;&#115;&#x74;a&#x74;&#x61;&#109;i&#x63;&#46;co&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/fieldtypes/select">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>transform | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>transform</h1>
+
+          		  <p class="intro">Manipulate your images to your heart's desire <span class="muted">(new in 1.5.3)</span></p>
+  		  
+        <p></p>
+
+<h2>{{ transform }}</h2>
+
+<p>The Transform tag is used for resizing, cropping, and manipulating your images on the fly, right from your templates.</p>
+
+<p>It is used as a single tag and returns the URL to your final image, so you&#8217;ll want to use it inside an <code>img</code> tag. It&#8217;s also smart enough to know if the image has been created before and won&#8217;t reprocess the transformations.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;img src="{{ transform src="/img/hat.jpg" width="600" flip="h" }}" /&gt;
+</pre>
+
+<h3>Save Location</h3>
+
+<p>By default, Transform will save your transformed images to the same location as the input image. The filename will include markers for the parameters used so transforms won&#8217;t be run more than once.</p>
+
+<p>You can use a global setting to change this behavior, which can then be overridden on a per-tag level with the <code>destination</code> parameter.</p>
+
+<p><code>_transform_destination: /_assets/</code></p>
+
+<hr />
+
+<h3>Parameters</h3>
+
+<h4 class="param">src</h4>
+
+<p>The path to the image you wish to process. This can be a variable.</p>
+
+<p>Example: <code>src="/_assets/img/mountain.jpg"</code></p>
+
+<h4 class="param">destination</h4>
+
+<p>Overwrite the default location (and <code>_transform_destination</code> system setting) to save this tag&#8217;s files somewhere specific. Be careful of prefix and trailing slashes (hint: you probably want them) as they may result in undesired file locations.</p>
+
+<p>Example: <code>destination="/_assets/{{segment_1}}/"</code></p>
+
+<h4 class="param">quality</h4>
+
+<p>Define optionally the quality of the image. It is normalized for all file types to a range from <code>0</code> (poor quality, small file) to <code>100</code> (best quality, big file).</p>
+
+<p>Default: <code>75</code></p>
+
+<h4 class="param">width</h4>
+
+<p>The desired width of the image in pixels, if cropping or resizing.</p>
+
+<p>Example: <code>width="800"</code></p>
+
+<h4 class="param">height</h4>
+
+<p>The desired height of the image in pixels, if cropping or resizing.</p>
+
+<p>Example: <code>height="600"</code></p>
+
+<h4 class="param">action</h4>
+
+<p>Available options:</p>
+
+<ul>
+<li><code>resize</code> Will resize to the shortest given side based on given height and width</li>
+<li><code>crop</code> Will crop the image based on your given width and height</li>
+<li><code>smart</code> Combines resize and crop to find the best fitting aspect ratio of your given width and height</li>
+</ul>
+
+<p>Default: <code>resize</code></p>
+
+<h4 class="param">ratio</h4>
+
+<p>If ratio is set to <code>yes</code> the aspect ratio of the image will be preserved during the resize process.</p>
+
+<p>Default: <code>yes</code></p>
+
+<h4 class="param">upsize</h4>
+
+<p>Determines whether the image can be upsized.</p>
+
+<p>Default: <code>yes</code></p>
+
+<h4 class="param">pos_x</h4>
+
+<p>X-Coordinate of the top-left corner when cropping.</p>
+
+<p>Default: <code>0</code></p>
+
+<h4 class="param">pos_y</h4>
+
+<p>Y-Coordinate of the top-left corner when cropping.</p>
+
+<p>Default: <code>0</code></p>
+
+<h4 class="param">rotate</h4>
+
+<p>Rotate the current image by a given <em>angle</em>, specified in degrees.</p>
+
+<p>Example: `rotate=&#8221;-90&#8221;</p>
+
+<h4 class="param">flip</h4>
+
+<p>Mirror the current image <em>horizontally</em> or <em>vertically</em>.</p>
+
+<p>Available options:</p>
+
+<ul>
+<li><code>h</code> for horizontal</li>
+<li><code>v</code> for vertical</li>
+</ul>
+
+<p>Example: <code>flip="h"</code></p>
+
+<h4 class="param">blur</h4>
+
+<p>Apply a Gaussian blur filter with a specified <strong>amount</strong> of strength. Usually values between <code>1</code> and <code>15</code> will suffice.</p>
+
+<p>Example: <code>blur="5"</code></p>
+
+<h4 class="param">pixelate</h4>
+
+<p>Applies a pixelation effect to the current image with a given <strong>size</strong> of pixels. <em>Note: turns on the advanced mode of the <a href="http://php.net/manual/en/book.image.php">GD Library</a>.</em></p>
+
+<p>Example: <code>pixelate="10"</code></p>
+
+<h4 class="param">greyscale</h4>
+
+<p>Turns your image into a greyscale version of its former self.</p>
+
+<p>Example: <code>greyscale="yes"</code></p>
+
+<h4 class="param">type</h4>
+
+<p>The type of image you want saved.</p>
+
+<p>Available options:</p>
+
+<ul>
+<li><code>jpg</code></li>
+<li><code>png</code></li>
+<li><code>gif</code></li>
+</ul>
+
+<p>Default: Whatever type the original image was</p>
+
+<hr />
+
+<h2>Use Cases</h2>
+
+<p>For these examples, we&#8217;ll assume your image is in a variable called <code>{{ photo }}</code>. That makes everything easier!</p>
+
+<h4 class="param">Case 1</h4>
+
+<p>You want to resize an image to fit a specific width but don&#8217;t care about height. Easy.</p>
+
+<pre class="prettyprint yaml">&lt;img src="{{ transform src="{ photo }" width="600" }}" /&gt;
+</pre>
+
+<h4 class="param">Case 2</h4>
+
+<p>You want a specific width and height but don&#8217;t want to mess with the aspect ratio (good call). It&#8217;s time for &#8220;smart&#8221; mode. This will resize the image to the shortest edge and then smart crop to finish the job.</p>
+
+<pre class="prettyprint yaml">&lt;img src="{{ transform
+  src="{ photo }"
+  width="600"
+  height="300"
+  action="smart"
+}}" /&gt;
+</pre>
+
+<h4 class="param">Case 3</h4>
+
+<p>Let&#8217;s say you want to leave your original image intact, create a thumbnail, and open the original in a lightbox. We&#8217;ll leave the lightbox implementation specifics to your imagination, but in general it would look something like this:</p>
+
+<pre class="prettyprint html">&lt;a href="{{ photo }}" class="lightbox"&gt;
+  &lt;img src="{{ transform
+    src="{ photo }"
+    width="150"
+    height="150"
+    action="smart"
+  }}" alt="Big Image!" /&gt;
+&lt;/a&gt;
+</pre>
+
+<p>Got a complicated use case you want to see documented? <a href="mailto:gentlemen@statamic.com?subject=Show Me The Images!">Ask away!</a></p>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#x65;&#x6e;&#116;l&#101;&#109;e&#110;&#64;&#115;&#x74;&#97;&#x74;a&#109;&#105;&#x63;&#x2e;c&#111;&#109;?subject=Found an issue on http://statamic.com/learn/documentation/tags/transform">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

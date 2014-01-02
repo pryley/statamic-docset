@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Suggest | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>Suggest</h1>
+
+        
+        <p>The Suggest fieldtype is a one-stop-solution for managing select/multi-select options. You can populate the options with an explicitly defined list, values and labels from any content folder, any taxonomy type, or all three if you really wanted to.</p>
+
+<pre class="prettyprint yaml">related:
+  display: Related Articles
+  type: suggest
+  create: true
+  max_items: 3
+  content:
+    folder: blog
+    label: title
+    value: url
+</pre>
+
+<h2>General Options</h2>
+
+<h4><code>create</code></h4>
+
+<p>Allow the creation of <strong>new</strong> options in addition to the populated list</p>
+
+<p><strong>Default:</strong> false</p>
+
+<pre class="prettyprint yaml">create: true|false
+</pre>
+
+<h4><code>hide_selected</code></h4>
+
+<p>If true, the items that are currently selected will not be shown in the dropdown list of available options.</p>
+
+<p><strong>Default:</strong> true</p>
+
+<pre class="prettyprint yaml">hide_selected: true|false
+</pre>
+
+<h4><code>persist</code></h4>
+
+<p>If false, items created by the user will not show up as available options once they are unselected.</p>
+
+<p><strong>Default:</strong> true</p>
+
+<pre class="prettyprint yaml">persist: true|false
+</pre>
+
+<h4><code>max_items</code></h4>
+
+<p>Limit the number of items that can be selected. If set to <code>1</code>, the field becomes a simple select input.</p>
+
+<p><strong>Default:</strong> 1000</p>
+
+<pre class="prettyprint yaml">max_items: 1|100|1000
+</pre>
+
+<h4><code>sort_dir</code></h4>
+
+<p>Sort direction (&#8220;asc&#8221; or &#8220;desc&#8221;).</p>
+
+<p><strong>Default:</strong> asc</p>
+
+<pre class="prettyprint yaml">sort_dir: asc|desc
+</pre>
+
+<h2>Explicit Options Mode</h2>
+
+<p>Use the options key to define your list of explicitly defined options.</p>
+
+<p>In the simple list mode your labels and values will be exactly the same.</p>
+
+<pre class="prettyprint yaml">options:
+  - Steak
+  - Pork
+  - Bacon wrapped shrimp
+</pre>
+
+<p>You can also define your values and labels separately by using named keys:</p>
+
+<pre class="prettyprint yaml">options:
+  steak: Steak
+  pork: Pork
+  shimp: Bacon wrapped shrimp
+</pre>
+
+<h2>Content Mode</h2>
+
+<p>The Content mode works very much like an Entries Listing tag, and has many of the same options. This is especially useful when combined with Entries Listing conditions to create relationships. Use the content key to define your configuration. Simple example:</p>
+
+<pre class="prettyprint yaml">content:
+  folder: blog
+  label: title
+  value: url
+</pre>
+
+<h3>Options</h3>
+
+<h4><code>folder</code></h4>
+
+<p>Specify the folder you wish to fetch content from. You can fetch from multiple folders by pipe delimiting the folder names.</p>
+
+<pre class="prettyprint yaml">folder: blog|news
+</pre>
+
+<h4><code>label</code></h4>
+
+<p>Specify which custom field you want to use as the label.</p>
+
+<p><strong>Default:</strong> title</p>
+
+<pre class="prettyprint yaml">label: title
+</pre>
+
+<h4><code>value</code></h4>
+
+<p>Specify which custom field you want to use as the stored value.</p>
+
+<p><strong>Default:</strong> url</p>
+
+<pre class="prettyprint yaml">value: url
+</pre>
+
+<h3>Filters</h3>
+
+<h4><code>type</code></h4>
+
+<p>Show pages or entries.</p>
+
+<p><strong>Default:</strong> entries</p>
+
+<pre class="prettyprint yaml">type: entries|pages
+</pre>
+
+<h4><code>show_draft</code></h4>
+
+<p>Allow entries with draft status to show in the dropdown.</p>
+
+<p><strong>Default:</strong> false</p>
+
+<pre class="prettyprint yaml">show_draft: true|false
+</pre>
+
+<h4><code>show_hidden</code></h4>
+
+<p>Allow entries with hidden status to show in the dropdown.</p>
+
+<p><strong>Default:</strong> false</p>
+
+<pre class="prettyprint yaml">show_hiddedn: true|false
+</pre>
+
+<h4><code>since</code></h4>
+
+<p>Filter entries starting at a specified date.</p>
+
+<pre class="prettyprint yaml">since: July 1st 2013
+</pre>
+
+<h4><code>until</code></h4>
+
+<p>Filter entries ending at a specified date.</p>
+
+<pre class="prettyprint yaml">until: 2014
+</pre>
+
+<h4><code>conditions</code></h4>
+
+<p>Filter results by field conditions. Works just the like <code>entries:listing</code> tag.</p>
+
+<pre class="prettyprint yaml">conditions: "featured_post: true,author:jack"
+</pre>
+
+<h2>Taxonomy Mode</h2>
+
+<p>The Taxonomy mode is useful for displaying a list of all taxonomies used in a specified folder. Use the content key to define your configuration. Simple example:</p>
+
+<pre class="prettyprint yaml">taxonomy:
+  folder: blog
+  type: tags
+</pre>
+
+<h3>Options</h3>
+
+<h4><code>folder</code></h4>
+
+<p>Specify the folder you wish to fetch used taxonomies from.</p>
+
+<pre class="prettyprint yaml">folder: blog
+</pre>
+
+<h4><code>type</code></h4>
+
+<p>Specify the type of taxonomy you wish to you fetch (e.g. categories, tags, author, etc). Must be defined in your settings.yaml file.</p>
+
+<pre class="prettyprint yaml">type: categories
+</pre>
+      </div>
+    </article>
+
+    
+<div class="block content">
+	<h1>Fieldtypes</h1>
+	<p>Fieldtypes let you create different types of fields to collect data in the Control Panel.</p>
+	<ul>
+		<li><a href="checkbox.html">Checkbox</a></li>
+		<li><a href="color.html">Color</a></li>
+		<li><a href="date.html">Date</a></li>
+		<li><a href="file.html">File</a></li>
+		<li><a href="grid.html">Grid</a></li>
+		<li><a href="hidden.html">Hidden</a></li>
+		<li><a href="location.html">Location</a></li>
+		<li><a href="markitup.html">Markitup</a></li>
+		<li><a href="radio.html">Radio</a></li>
+		<li><a href="redactor.html">Redactor</a></li>
+		<li><a href="section.html">Section</a></li>
+		<li><a href="select.html">Select</a></li>
+		<li><a href="suggest.html">Suggest</a></li>
+		<li><a href="tags.html">Tags</a></li>
+		<li><a href="templates.html">Templates</a></li>
+		<li><a href="text.html">Text</a></li>
+		<li><a href="textarea.html">Textarea</a></li>
+		<li><a href="time.html">Time</a></li>
+		<li><a href="users.html">Users</a></li>
+	</ul>
+</div>
+    
+    <p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#x65;&#110;t&#x6c;e&#109;&#x65;&#x6e;&#64;&#115;&#x74;a&#116;&#x61;&#x6d;i&#x63;&#x2e;&#x63;&#x6f;&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/fieldtypes/suggest">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

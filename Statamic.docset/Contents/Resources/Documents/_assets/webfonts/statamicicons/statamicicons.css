@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'StatamicIcons';
+  src: url('http://statamic.com/_assets/webfonts/statamicicons/statamicicons/statamicicons-regular.eot');
+  src: url('http://statamic.com/_assets/webfonts/statamicicons/statamicicons/statamicicons-regular.eot?#iefix') format('embedded-opentype'),
+       url('http://statamic.com/_assets/webfonts/statamicicons/statamicicons/statamicicons-regular.woff') format('woff'),
+       url('http://statamic.com/_assets/webfonts/statamicicons/statamicicons/statamicicons-regular.ttf') format('truetype'),
+       url('http://statamic.com/_assets/webfonts/statamicicons/statamicicons/statamicicons-regular.svg#statamic_iconsregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

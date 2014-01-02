@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>entries | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>entries</h1>
+
+          		  <p class="intro">Display sets of entries in various ways.</p>
+  		  
+        <p></p>
+
+<h2 id="listing">{{ entries:listing }}</h2>
+
+<p>Fetches a list of entries from one or more folders and allows you to sort, filter, and group them in various ways.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;ul&gt;
+    {{ entries:listing }}
+        &lt;li&gt;
+            &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+        &lt;/li&gt;
+    {{ /entries:listing }}
+&lt;/ul&gt;
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts the following parameters:</p>
+
+<h4><code>folder</code></h4>
+
+<p>The folder from which to pull entries.</p>
+
+<p>You can specify multiple folders by pipe delimiting them, or use use a wildcard <code>*</code> character at the end of the folder name will let you traverse through all subfolders.</p>
+
+<p><strong>Default:</strong> the current folder</p>
+
+<pre class="prettyprint html">{{ entries:listing folder="blog|news*" }}
+</pre>
+
+<h4><code>taxonomy</code></h4>
+
+<p>Boolean setting to use the current URL to filter taxonomies automatically.</p>
+
+<p><strong>Default:</strong> false</p>
+
+<pre class="prettyprint html">{{ entries:listing taxonomy="true" }}
+</pre>
+
+<h4><code>show_hidden</code></h4>
+
+<p>Boolean setting to show hidden files or not</p>
+
+<p><strong>Default:</strong> <code>false</code></p>
+
+<pre class="prettyprint html">{{ entries:listing show_hidden="false" }}
+</pre>
+
+<h4><code>since</code></h4>
+
+<p>If set, limits the date the earliest point in time from which date-based entries should be fetched. Uses PHP&#8217;s <a href="http://php.net/manual/en/function.strtotime.php">strtotime</a> method allowing you to use plain English to specify the date.</p>
+
+<p><strong>Default:</strong> <code>null</code></p>
+
+<pre class="prettyprint html">{{ entries:listing since="Last Sunday" }}
+{{ entries:listing since="January 15th, 2013" }}
+{{ entries:listing since="Yesterday" }}
+</pre>
+
+<h4><code>until</code></h4>
+
+<p>If set, limits the date to the latest point in time from which date-based entries should be fetched. Uses PHP&#8217;s <a href="http://php.net/manual/en/function.strtotime.php">strtotime</a> method allowing you to use plain English to specify the date.</p>
+
+<pre class="prettyprint html">{{ entries:listing until="Next Saturday" }}
+{{ entries:listing until="Midnight" }}
+{{ entries:listing until="Nov 25" }}
+</pre>
+
+<h4><code>show_past</code></h4>
+
+<p>Boolean setting to enable date-based entries that have dates in the past.</p>
+
+<p><strong>Default:</strong> <code>true</code></p>
+
+<pre class="prettyprint html">{{ entries:listing show_past="true" }}
+</pre>
+
+<h4><code>show_future</code></h4>
+
+<p>Boolean setting to enable date-based entries that have dates in the future.</p>
+
+<p><strong>Default:</strong> <code>false</code></p>
+
+<pre class="prettyprint html">{{ entries:listing show_future="true" }}
+</pre>
+
+<h4><code>conditions</code></h4>
+
+<p>Conditions let you filter on and and every custom field in your entry data with the use a comma-separated string of <code>key:value</code> pairs.</p>
+
+<pre class="prettyprint html">{{ entries:listing conditions="author:jack" }}
+{{ entries:listing conditions="type:beef|pork|bacon" }}
+</pre>
+
+<p>You can also string together multiple conditions by separating them with commas:</p>
+
+<pre class="prettyprint html">conditions="author:jack,featured:yes"
+</pre>
+
+<p>You can even perform &#8220;not&#8221; conditions by adding a <code>!</code> mark:</p>
+
+<pre class="prettyprint html">conditions="author:!jack"
+</pre>
+
+<h4><code>sort_by</code></h4>
+
+<p>Allows you to specify the field to sort the entries list on. In addition to any custom field, you can also sort by <code>date</code>, <code>numeric</code>, and <code>random</code>.</p>
+
+<p><strong>Default:</strong> <code>date</code> or <code>numeric</code>, depending on entry type.</p>
+
+<pre class="prettyprint html">{{ entries:listing sort_by="author" }}
+{{ entries:listing sort_by="title" }}
+{{ entries:listing sort_by="random" }}
+</pre>
+
+<h4><code>sort_dir</code></h4>
+
+<p>Sets the direction all sorting should following, either ascending (<code>asc</code>) or descending (<code>desc</code>), by default this is dependant on <code>sort_by</code>. Numericly ordered entries will ascend and date-based will descent. It&#8217;s a good idea to always set this parameter.</p>
+
+<pre class="prettyprint html">{{ entries:listing sort_dir="desc" }}
+</pre>
+
+<h4><code>limit</code></h4>
+
+<p>If set, limits the the maximum number of entries to display.</p>
+
+<pre class="prettyprint html">{{ entries:listing limit="10" }}
+</pre>
+
+<h4><code>offset</code></h4>
+
+<p>If set, skips over the specified number of entries after sorting has been applied.</p>
+
+<pre class="prettyprint html">{{ entries:listing offset="1" }}
+</pre>
+
+<h4><code>paginate</code></h4>
+
+<p>Boolean setting to respect any pagination rules from the URL or not. Generally used in conjunction with the <code>{{ entries:pagination }}</code> tag.</p>
+
+<p><strong>Default:</strong> <code>false</code></p>
+
+<pre class="prettyprint html">{{ entries:listing paginate="true" }}
+</pre>
+
+<h4 id="group_by_date"><code>group_by_date</code></h4>
+
+<p>Allows loose grouping on any repeating date-based structure when sorting entries by date. Accepts a <a href="http://php.net/date">PHP date format string</a> to specify the group type. For example, to group by month and date, use <code>group_by_date="F Y"</code>.</p>
+
+<p>Inside your tag pair, the <code>grouped_date</code> variable will be enabled and filled in with the entry&#8217;s date, formatted as specified, if different from the previous entry. The <code>grouped_date</code> will only be filled in when its value is different from the loop before, and otherwise it will be empty. This means that you can check for it with conditional statements and act accordingly.</p>
+
+<pre class="prettyprint html">{{ entries:listing folder="blog" group_by_date="F Y" }}
+    {{ if grouped_date }}
+        {{ if !first }}
+            &lt;/ul&gt;
+        {{ endif }}
+
+        &lt;h3&gt;{{ grouped_date }}&lt;/h3&gt;
+        &lt;ul&gt;
+    {{ endif }}
+
+    &lt;li&gt;
+        &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+    &lt;/li&gt;
+
+    {{ if last }}
+        &lt;/ul&gt;
+    {{ endif }}
+{{ /entries:listing }}
+</pre>
+
+<h3 id="single-variables">Single Variables</h3>
+
+<p>In addition to your entry&#8217;s variables, the following single variables are available inside your <code>entries:listing</code> tag.</p>
+
+<h4 id="count"><code>count</code></h4>
+
+<p>Current count of the entry being displayed.</p>
+
+<h4 id="date"><code>date</code></h4>
+
+<p>Your entry&#8217;s date (if a date-based entry) formatted by your <code>_date_format</code> system setting. Accepts the <code>format</code> parameter.</p>
+
+<h4 id="datestamp"><code>datestamp</code></h4>
+
+<p>Your entry&#8217;s full datestamp Accepts the <code>format</code> parameter.</p>
+
+<h4 id="first"><code>first</code></h4>
+
+<p>TRUE if the first entry in the list</p>
+
+<h4 id="grouped_date"><code>grouped_date</code></h4>
+
+<p>Available if using the <a href="entries.html#group_by_date">group by date</a> feature</p>
+
+<h4 id="last"><code>last</code></h4>
+
+<p>TRUE if the last entry in the list</p>
+
+<h4 id="permalink"><code>permalink</code></h4>
+
+<p>The fully qualified URL of your current page. Example: <code>http://example.com/blog/check-out-my-blog-yo</code></p>
+
+<h4 id="total_found"><code>total_found</code></h4>
+
+<p>The total number of entries in the specified folder.</p>
+
+<h4 id="total_results"><code>total_results</code></h4>
+
+<p>The total number of entries fetched by the entries:listing tag (as affected by limit, offset, conditions, etc).</p>
+
+<h4 id="url"><code>url</code></h4>
+
+<p>The URL of the entry being output.</p>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2 id="pagination">{{ entries:pagination }}</h2>
+
+<p>Displays information about paginating over a set of entries.
+This tag is designed to be used in conjunction with <code>{{ entries:listing }}</code> and should be given the same exact set of parameters.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ entries:pagination }}
+    {{ if previous_page }}
+        &lt;a href="{{ previous_page }}"&gt;Previous Page&lt;/a&gt;
+    {{ endif }}
+    {{ if next_page }}
+        &lt;a href="{{ next_page }}"&gt;Next Page&lt;/a&gt;
+    {{ endif }}
+{{ /entries:pagination }}
+</pre>
+
+<h3>Parameters</h3>
+
+<p>The Paginate tag accepts all the same parameters as Listing, and should in fact mirror those used to display entries. Paginate does not automatically pick up the parameters of the primary Listing tag as there may be more than one rendering in a given template. This gives <strong>you</strong> the control.</p>
+
+<h3>Available Tags</h3>
+
+<p>Pagination also has access to all standard <a href="../tag-pair-helper-variables.html">Tag Pair Helper Variables</a></p>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2 id="map">{{ entries:map }}</h2>
+
+<p>Displays a map with matching entries as markers.
+Used in conjunction with the <code>location</code> add-on.
+Note that this tag will only work with entries containing <code>location</code> fields.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ entries:map }}
+    {{ pop_up }}
+        &lt;h2&gt;{{ title }}&lt;/h2&gt;
+        {{ description }}
+    {{ /pop_up }}
+{{ /entries:map }}
+
+{{ location:start_maps }}
+</pre>
+
+<h3>Parameters</h3>
+
+<p>The Entries:Map tag accepts all the standard Listing parameters and the following <strong>additional</strong> parameters:</p>
+
+<h4><code>center_point</code> <strong>required</strong></h4>
+
+<p>Coordinates of the map&#8217;s center point in the format <code>[latitude],[longitude]</code>.</p>
+
+<pre class="prettyprint html">{{ entries:map center_point="44.33,-68.21" }}
+</pre>
+
+<h4><code>locate_with</code> <strong>required</strong></h4>
+
+<p>The name of the field containing location data.</p>
+
+<pre class="prettyprint html">{{ entries:map locate_with="where" }}
+</pre>
+
+<h4><code>zoom</code></h4>
+
+<p>The starting zoom level of the map.</p>
+
+<p><strong>Default:</strong> <code>12</code></p>
+
+<pre class="prettyprint html">{{ entries:map zoom="8" }}
+</pre>
+
+<h4><code>map_id</code></h4>
+
+<p>The value of the HTML <code>id</code> attribute used in map generation.</p>
+
+<p><strong>Default:</strong> a random string</p>
+
+<pre class="prettyprint html">{{ entries:map map_id="home-office" }}
+</pre>
+
+<h4><code>clusters</code></h4>
+
+<p>Boolean on whether markers that are near each other should be clustered together at zoomed-out levels.</p>
+
+<p><strong>Default:</strong> <code>true</code></p>
+
+<pre class="prettyprint html">{{ entries:map clusters="false" }}
+</pre>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2 id="map">{{ entries:next }} <small>Added in v1.6.6</small></h2>
+
+<p>Displays the next entry that would show up in the listing.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ entries:next folder="blog" }}
+    {{ if !no_results }}
+        Next up: &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+    {{ endif }}
+{{ /entries:next }}
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts all of the standard listing parameters and the following <strong>additional</strong> parameters:</p>
+
+<h4><code>current</code></h4>
+
+<p>The URL for the piece of content that is considered to be &#8220;current.&#8221;
+(This tag will display the <em>next</em> entry in the listing after the <em>current</em> one if one exists.)</p>
+
+<p><strong>Default:</strong> the current URL</p>
+
+<h3>Available Tags</h3>
+
+<p>All tags from the next piece of content are available, as well as one special tag:</p>
+
+<h4><code>{{ has_previous }}</code></h4>
+
+<p>Will return <code>true</code> if this tag&#8217;s <em>current</em> content within the list also has <em>previous</em> content.
+This can be helpful for printing extra stylizing features, such as only putting a hyphen between next and previous links if they both exist.</p>
+
+<pre class="prettyprint html">{{ entries:next folder="blog" }}
+    {{ if !no_results }}
+        {{ if has_previous }}
+            &lt;span class="delimiter"&gt;-&lt;/span&gt;
+        {{ endif }}
+
+        Next up: &lt;a href="{{ url }}"&gt;{{ title }&lt;/a&gt;
+    {{ endif }}
+{{ /entries:next }}
+</pre>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2 id="map">{{ entries:previous }} <small>Added in v1.6.6</small></h2>
+
+<p>Displays the next entry that would show up in the listing.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ entries:previous folder="blog" }}
+    {{ if !no_results }}
+        Previously on Blog: &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+    {{ endif }}
+{{ /entries:previous }}
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts all of the standard listing parameters and the following <strong>additional</strong> parameters:</p>
+
+<h4><code>current</code></h4>
+
+<p>The URL for the piece of content that is considered to be &#8220;current.&#8221;
+(This tag will display the <em>previous</em> entry in the listing before the <em>current</em> one if one exists.)</p>
+
+<p><strong>Default:</strong> the current URL</p>
+
+<h3>Available Tags</h3>
+
+<p>All tags from the next piece of content are available, as well as one special tag:</p>
+
+<h4><code>{{ has_next }}</code></h4>
+
+<p>Will return <code>true</code> if this tag&#8217;s <em>current</em> content within the list also has <em>next</em> content.
+This can be helpful for printing extra stylizing features, such as only putting a hyphen between next and previous links if they both exist.</p>
+
+<pre class="prettyprint html">{{ entries:previous folder="blog" }}
+    {{ if !no_results }}
+        Previously on Blog: &lt;a href="{{ url }}"&gt;{{ title }&lt;/a&gt;
+
+        {{ if has_next }}
+            &lt;span class="delimiter"&gt;-&lt;/span&gt;
+        {{ endif }}
+    {{ endif }}
+{{ /entries:previous }}
+</pre>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on December 31st, 2013. Find an error? <a href="mailto:&#103;&#101;&#110;&#116;l&#101;m&#x65;n&#64;s&#116;&#97;&#116;a&#109;&#x69;c&#46;&#99;&#x6f;&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/tags/entries">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>pages | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>pages</h1>
+
+          		  <p class="intro">Display sets of pages in various ways.</p>
+  		  
+        <p></p>
+
+<h2>{{ pages:listing }}</h2>
+
+<p>Displays a list of pages from one or more folders.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;ul&gt;
+    {{ pages:listing }}
+        &lt;li&gt;
+            &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+        &lt;/li&gt;
+    {{ /pages:listing }}
+&lt;/ul&gt;
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts the following parameters:</p>
+
+<ul>
+<li><code>folder</code> — a folder (or pipe-separated list of folders) from which to pull pages, the current folder by default; <strong>as of v1.5.3:</strong> you can use a <code>*</code> character at the end of your folder to select any page whose folder starts with the text before the <code>*</code>, this will let you look in all subfolders easily</li>
+<li><code>taxonomy</code> — a boolean of whether to use the current URL as a taxonomy URL or not, only pulling pages of taxonomy matches when <code>true</code>, <code>false</code> by default</li>
+<li><code>show_hidden</code> — a boolean of whether to show hidden files or not, <code>false</code> by default</li>
+<li><code>conditions</code> — a comma-separated string of <code>key:value</code> pairs limiting results of the pages pulled back, <code>null</code> by default</li>
+<li><code>sort_by</code> — the field to sort the pages list on, <code>order_key</code> by default (<em>order_key</em> being either slug-based or number-based, automatically detected)</li>
+<li><code>sort_dir</code> — the direction the sorting should happen, either <code>asc</code> or <code>desc</code>, by default this is dependant on <code>sort_by</code>, it&#8217;s a good idea to always set this</li>
+<li><code>limit</code> — the maximum number of pages to display, <code>null</code> (no limit) by default</li>
+<li><code>offset</code> — the number of pages to skip over (after sorting has been applied) before displaying the first pages in a listing, <code>0</code> by default</li>
+</ul>
+
+<h3>Available Tags</h3>
+
+<p>Aside from any variable set in your settings, global variables, theme, and content front-matter, the following tags also become available:</p>
+
+<ul>
+<li><code>first</code> — a boolean of whether this is the first page in the listing that will be looped over</li>
+<li><code>last</code> — a boolean of whether this is the last page in the listing that will be looped over</li>
+<li><code>index</code> — a 1-based iterator counting the number of times the listing has been looped over</li>
+<li><code>zero_index</code> — a 0-based iterator counting the number of times the listing has been looped over</li>
+<li><code>total_results</code> — the number of results that the listing will print</li>
+</ul>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2 id="map">{{ pages:next }} <small>Added in v1.6.6</small></h2>
+
+<p>Displays the next page that would show up in the listing.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ pages:next folder="about/team" }}
+    {{ if !no_results }}
+        Next up: &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+    {{ endif }}
+{{ /pages:next }}
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts all of the standard listing parameters and the following <strong>additional</strong> parameters:</p>
+
+<h4><code>current</code></h4>
+
+<p>The URL for the piece of content that is considered to be &#8220;current.&#8221;
+(This tag will display the <em>next</em> page in the listing after the <em>current</em> one if one exists.)</p>
+
+<p><strong>Default:</strong> the current URL</p>
+
+<h3>Available Tags</h3>
+
+<p>All tags from the next piece of content are available, as well as one special tag:</p>
+
+<h4><code>{{ has_previous }}</code></h4>
+
+<p>Will return <code>true</code> if this tag&#8217;s <em>current</em> content within the list also has <em>previous</em> content.
+This can be helpful for printing extra stylizing features, such as only putting a hyphen between next and previous links if they both exist.</p>
+
+<pre class="prettyprint html">{{ pages:next folder="about/team" }}
+    {{ if !no_results }}
+        {{ if has_previous }}
+            &lt;span class="delimiter"&gt;-&lt;/span&gt;
+        {{ endif }}
+
+        Next up: &lt;a href="{{ url }}"&gt;{{ title }&lt;/a&gt;
+    {{ endif }}
+{{ /pages:next }}
+</pre>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2 id="map">{{ pages:previous }} <small>Added in v1.6.6</small></h2>
+
+<p>Displays the next page that would show up in the listing.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ pages:previous folder="about/team" }}
+    {{ if !no_results }}
+        Another Team Member: &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+    {{ endif }}
+{{ /pages:previous }}
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts all of the standard listing parameters and the following <strong>additional</strong> parameters:</p>
+
+<h4><code>current</code></h4>
+
+<p>The URL for the piece of content that is considered to be &#8220;current.&#8221;
+(This tag will display the <em>previous</em> page in the listing before the <em>current</em> one if one exists.)</p>
+
+<p><strong>Default:</strong> the current URL</p>
+
+<h3>Available Tags</h3>
+
+<p>All tags from the next piece of content are available, as well as one special tag:</p>
+
+<h4><code>{{ has_next }}</code></h4>
+
+<p>Will return <code>true</code> if this tag&#8217;s <em>current</em> content within the list also has <em>next</em> content.
+This can be helpful for printing extra stylizing features, such as only putting a hyphen between next and previous links if they both exist.</p>
+
+<pre class="prettyprint html">{{ pages:previous folder="about/team" }}
+    {{ if !no_results }}
+        Another Team Member: &lt;a href="{{ url }}"&gt;{{ title }&lt;/a&gt;
+
+        {{ if has_next }}
+            &lt;span class="delimiter"&gt;-&lt;/span&gt;
+        {{ endif }}
+    {{ endif }}
+{{ /pages:previous }}
+</pre>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on December 3rd, 2013. Find an error? <a href="mailto:gen&#x74;&#108;&#x65;me&#110;&#64;s&#x74;a&#116;&#97;&#109;&#x69;&#99;.c&#111;m?subject=Found an issue on http://statamic.com/learn/documentation/tags/pages">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

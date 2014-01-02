@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+<key>CFBundleIdentifier</key>
+<string>statamic</string>
+<key>CFBundleName</key>
+<string>Statamic</string>
+<key>DocSetPlatformFamily</key>
+<string>statamic</string>
+<key>dashIndexFilePath</key>
+<string>index.html</string>
+<key>DashDocSetFamily</key>
+<string>dashtoc</string>
+<key>isDashDocset</key><true/>
+<key>isJavaScriptEnabled</key><true/>
+</dict>
+</plist>
+

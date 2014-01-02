@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Configuring | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Configuring" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+
+<h1>Configuring</h1>
+
+<p>All of Statamic&#8217;s configuration takes place within YAML files.
+If this is your first time hearing about YAML, don&#8217;t worry.
+It&#8217;s easier to pick up than one might expect.</p>
+
+<ul>
+	<li><a href="#using-yaml">Using YAML</a></li>
+	<li><a href="#adding-your-license-key">Adding Your License Key</a></li>
+	<li><a href="#general-site-settings">General Site Settings</a></li>
+	<li><a href="#development-settings">Development Settings</a></li>
+	<li><a href="#control-panel-settings">Control Panel Settings</a></li>
+</ul>
+
+</div>
+</article>
+
+<a id="using-yaml" name="//apple_ref/cpp/Section/1. Using YAML" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Using YAML</h1>
+
+<p class="intro">Rhymes with "camel."</p>
+
+<p>All configuration files for Statamic — whether for your site settings, themes you&#8217;re using, add-on configuration, or even site-specific variables — is done in YAML.
+You&#8217;ll need to at least know the basics to configure your Statamic site successfully, but don&#8217;t worry, it&#8217;s pretty easy.</p>
+
+<p>And as with most things, the more you learn about YAML and how Statamic works with it, the more you&#8217;ll be able to do, and the more enjoyable your experience will be.</p>
+
+<h2>What is YAML?</h2>
+
+<p>YAML is a recursive acronym that stands for <em>YAML Ain&#8217;t Markup Language</em>.
+Its aim is to provide a clean, human-readable way to store data that can easily be used elsewhere.</p>
+
+<p>Below is a small sample of YAML.</p>
+
+<pre class="prettyprint yaml">name: "GOB Bluth"
+occupation: Magician
+venue: Gothic Castle
+siblings:
+    - Michael
+    - Lindsay
+    - Buster
+    - Annyong
+</pre>
+
+<p>Even without knowing YAML, you might be able to grasp how data is being stored here.
+The above code stores four variables: <code>name</code>, <code>occupation</code>, <code>venue</code>, and <code>siblings</code>.
+The values of the first three variables are simple strings.
+The last one is a simple list.</p>
+
+<h2>How Statamic Uses YAML</h2>
+
+<p>Statamic uses YAML in a couple of different ways.</p>
+
+<h3>Configuring Things</h3>
+
+<p>Statamic uses YAML to configure your main site settings, system-wide features (like <a href="advanced-features.html#routes">routes</a> and <a href="advanced-features.html#vanity-urls">vanity URLs</a>), theme-specific settings, and <a href="using-add-ons.html">add-on</a> settings.
+While you probably <em>won&#8217;t</em> use them this way, all of the variables set in your site- and theme-settings become available for use as <em>tags</em> within your <a href="templating.html">templates</a>.</p>
+
+<h3>Creating <a href="core-concepts.html#global-variables">Global Variables</a></h3>
+
+<p>You can create any number of additional YAML files within your <code>_config</code> folder to define global variables.
+These variables also are available for use as <em>tags</em> within your <a href="templating.html">templates</a>.</p>
+
+<h3>Page-Specific Variables &amp; Settings</h3>
+
+<p>In Statamic, the top of every content file starts with a block of YAML.
+In this block (called <a href="core-concepts.html#content-files">front matter</a>), you can define page-specific variables that can be used as <em>tags</em> within your <a href="templating.html">templates</a>.</p>
+
+<h3>Defining Fieldsets for the Control Panel</h3>
+
+<p>You can create <em>fieldsets</em> for use in Statamic&#8217;s Control Panel so that it knows what fields each piece of content should contain, and can create an interface to let you add and edit content on the fly.</p>
+
+<h2>Learn More About YAML</h2>
+
+<p>Even if you don&#8217;t learn YAML, this guide will try to walk you through things as best it can, but <strong>we recommend that you learn YAML</strong>, at least a little bit.
+It&#8217;s good for you, and you&#8217;ll be able to understand <em>why</em> things work, rather than just copying and pasting from our examples.
+In turn, you&#8217;ll be able to do a lot more with Statamic, and you&#8217;ll have a lot more fun.</p>
+
+<p>Here are some helpful links on YAML:</p>
+
+<ul>
+	<li><a href="http://www.yaml.org">YAML: The Official Spec</a> is official, but not the most exciting read.</li>
+	<li><a href="http://wikipedia.org/wiki/YAML">Wikipedia&#8217;s article on YAML</a> is surprisingly great.</li>
+	<li><a href="http://tapestry.is/YajFz">YAML: The Basics</a> is a little primer we put together.</li>
+</ul>
+
+</div>
+
+<a id="adding-your-license-key" name="//apple_ref/cpp/Section/2. Adding Your License Key" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Adding Your License Key</h1>
+
+<p class="intro">Applying your license to Statamic.</p>
+
+<p>Open your site&#8217;s <code>_config/settings.yaml</code> file.
+Inside here you will see the following:</p>
+
+<pre class="prettyprint yaml"># Enter your license key
+_license_key:
+</pre>
+
+<p>Add your license key after <code>_license_key:</code>.
+Save this file and upload it to your web server.</p>
+
+<p>Statamic has now been licensed.</p>
+
+</div>
+
+<a id="general-site-settings" name="//apple_ref/cpp/Section/3. General Site Settings" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>General Site Settings</h1>
+
+<p class="intro">Make your install yours.</p>
+
+<p>All of Statamic&#8217;s general site settings are found at the top of your site&#8217;s <code>_config/settings.yaml</code> file.
+These settings control how Statamic acts site-wide.</p>
+
+<h2>Settings</h2>
+
+<p>Listed in the order in which you&#8217;ll find them in your settings file.</p>
+
+<h3>_license_key</h3>
+
+<p>This is how you&#8217;ll <a href="#adding-your-license-key">apply your license to Statamic</a>.</p>
+
+<h3>_language</h3>
+
+<p>This sets which translation to use for your Control Panel.</p>
+
+<h3>_site_root</h3>
+
+<p>This is the path to where Statamic is installed relative to your website&#8217;s document root.</p>
+
+<h3>_site_name</h3>
+
+<p>This is the name of your site.
+Although nothing specifically relies on this setting, it’s often used in your <em>layouts</em> or <em>templates</em>.</p>
+
+<h3>_content_root</h3>
+
+<p>The path containing your content files.</p>
+
+<h3>_site_url</h3>
+
+<p>This is the full URL to your Statamic install. This is used by Statamic create to permalinks to your content.</p>
+
+<h3>_theme</h3>
+
+<p>This tells Statamic which theme folder to use for displaying your content.</p>
+
+<h3>_entry_timestamps</h3>
+
+<p>You can choose if you want to use dates <em>and</em> times for entry filenames, or just dates.</p>
+
+<h3>_date_format</h3>
+
+<p>This sets the default date format for date tags throughout your site.</p>
+
+<h3>_time_format</h3>
+
+<p>This sets the default time format for date tags throughout your site.</p>
+
+<h3>_timezone</h3>
+
+<p>This tells PHP and Statamic which timezone your site is located in.
+Must be one of the values from PHP&#8217;s <a href="http://php.net/manual/en/timezones.php">timezone lists</a>.</p>
+
+<h3>_taxonomy</h3>
+
+<p>This is a list of the fields that Statamic should consider to be <a href="core-concepts.html#taxonomies">taxonomies</a>.</p>
+
+<h3>_taxonomy_slugify</h3>
+
+<p>When set to <code>true</code>, this will convert spaces in your taxonomy values to hyphens.</p>
+
+<h3>_taxonomy_case_sensitive</h3>
+
+<p>This will determine if capitalization matters for your taxonomy values.</p>
+
+<h3>_taxonomy_force_lowercase</h3>
+
+<p>This will force all taxonomy values to be lowercase when displayed.</p>
+
+<h3>_content_type</h3>
+
+<p>This is how your content will be written (<a href="http://daringfireball.net/projects/markdown/">Markdown</a>, <a href="http://txstyle.org/">Textile</a>, etc.).</p>
+
+<h3>_enable_smartypants</h3>
+
+<p>This will automatically convert your straight quotes (&apos; and &quot;) into curly quotes (&rsquo; and &rdquo;)</p>
+
+<h3>_allow_php</h3>
+
+<p>This will let you write PHP into your templates.
+It&#8217;s best to leave this set to <code>false</code> unless you absolutely need it.</p>
+
+<h3>_yaml_mode</h3>
+
+<p>This can be either <code>strict</code>, <code>transitional</code> or <code>loose</code> based on which YAML spec to parse with.</p>
+
+<h3>_parse_order</h3>
+
+<p>This determines which order Statamic parses content and tags.</p>
+
+<h3>_fix_out_of_range_pagination</h3>
+
+<p>This will automatically fix pagination values that are too high or too low.</p>
+
+</div>
+
+<a id="development-settings" name="//apple_ref/cpp/Section/4. Development Settings" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Development Settings</h1>
+
+<p class="intro">Develop & debug more efficiently.</p>
+
+<p>The second section of Statamic&#8217;s <code>_config/settings.yaml</code> file contains toggles for debugging and development.</p>
+
+<h2>Settings</h2>
+
+<p>Listed in the order in which you&#8217;ll find them in your settings file.</p>
+
+<h3>_environments</h3>
+
+<p>This allows you to define all of your site&#8217;s possible <a href="advanced-features.html#environments">environments</a>.
+This setting expects a named list, each key of which contains a simple list of URL patterns.</p>
+
+<h3>_log_enabled</h3>
+
+<p>Setting this to <code>true</code> will enable <a href="advanced-features.html#message-logging">message logging</a> on your site.</p>
+
+<h3>_log_level</h3>
+
+<p>Determines the least-serious level of message that should be written to the log.</p>
+
+<h3>_log_file_path</h3>
+
+<p>This is the path to where you want to store your log files.
+If you start this path with a <code>/</code>, you can define your path to be anywhere on your server.
+Otherwise, this path will be relative to the document root.</p>
+
+<h3>_log_file_prefix</h3>
+
+<p>This is the prefix used as the filename for each of your log files.
+If you run multiple Statamic installs on one server, it may be helpful to store all of your logs for all sites in one folder.
+If you do that, changing this value will become useful so that you can identify each site&#8217;s log file.</p>
+
+</div>
+
+<a id="control-panel-settings" name="//apple_ref/cpp/Section/5. Control Panel Settings" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Control Panel Settings</h1>
+
+<p class="intro">Change how your Control Panel behaves.</p>
+
+<p>Statamic comes with a fully-responsive Control Panel to let you manage your site on the go.
+These settings change how it looks and acts.</p>
+
+<h2>Settings</h2>
+
+<p>Listed in the order in which you&#8217;ll find them in your settings file.</p>
+
+<h3>_admin_enabled</h3>
+
+<p>Should the Control Panel be enabled?
+Setting this to <code>false</code> will disable the Control Panel, but you can also <a href="control-panel.html#removing">remove it entirely</a>.</p>
+
+<h3>_admin_path</h3>
+
+<p>This is the path to your admin directory.
+If you change the name of your admin folder for your install, be sure to also change this setting to match.</p>
+
+<h3>_admin_nav</h3>
+
+<p>This setting lets you show and hide pages of the Control Panel navigation.</p>
+
+<h3>_admin_start_page</h3>
+
+<p>This chooses which page users land on by default after logging into the Control Panel.</p>
+
+<h3>_enable_add_section</h3>
+
+<p>Enable/Disable the ability to add new top level pages via the Control Panel.</p>
+
+<h3>_enable_add_child_page</h3>
+
+<p>Enable/Disable the ability to add new child pages via the Control Panel.</p>
+
+<h3>_cookies.secret_key</h3>
+
+<p>This is used to encyrpt cookie data, you should always change this from the default.</p>
+
+<h3>_cookies.lifetime</h3>
+
+<p>This is a plain English representation of how long cookies should exist</p>
+
+<h3>_cookies.cipher &amp; _cookies.cipher_mode</h3>
+
+<p>This is the cipher and mode used for encrypting data.</p>
+
+</div>
+
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:g&#101;nt&#x6c;&#101;m&#x65;&#110;&#64;st&#97;&#116;a&#109;&#105;&#x63;&#46;&#x63;&#111;&#109;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

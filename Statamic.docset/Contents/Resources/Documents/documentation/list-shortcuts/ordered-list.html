@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>_ordered_list | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>_ordered_list</h1>
+
+          		  <p class="intro">Create an HTML ordered-list of values.</p>
+  		  
+        <p></p>
+
+<p>The <code>_ordered_list</code> shortcut will turn a simple YAML list into an HTML ordered list.</p>
+
+<h3>Sample Usage</h3>
+
+<h4>Input</h4>
+
+<pre class="prettyprint yaml">tools:
+  - hammer
+  - pick axe
+  - mallet
+  - pocket knife
+</pre>
+
+<h4>Tag</h4>
+
+<pre class="prettyprint html">{{ tools_ordered_list }}
+</pre>
+
+<h4>Displayed Result</h4>
+
+<pre class="prettyprint html">&lt;ol&gt;
+    &lt;li&gt;hammer&lt;/li&gt;
+    &lt;li&gt;pick axe&lt;/li&gt;
+    &lt;li&gt;mallet&lt;/li&gt;
+    &lt;li&gt;pocket knife&lt;/li&gt;
+&lt;/ol&gt;
+</pre>
+
+<p></p>
+      </div>
+    </article>
+
+    
+<div class="block content">
+	<h1>List Shortcuts</h1>
+	<p><a href="../../templating.html#shortcuts">List shortcuts</a> allow you to display variable lists into common structures for quick display.</p>
+	<ul>
+		<li><a href="list.html">_list</a></li>
+		<li><a href="spaced-list.html">_spaced_list</a></li>
+		<li><a href="option-list.html">_option_list</a></li>
+		<li><a href="ordered-list.html">_ordered_list</a></li>
+		<li><a href="unordered-list.html">_unordered_list</a></li>
+		<li><a href="sentence-list.html">_sentence_list</a></li>
+		<li><a href="ampersand-sentence-list.html">_ampersand_sentence_list</a></li>
+		<li><a href="url-list.html">_url_list</a></li>
+		<li><a href="spaced-url-list.html">_spaced_url_list</a></li>
+		<li><a href="ordered-url-list.html">_ordered_url_list</a></li>
+		<li><a href="unordered-url-list.html">_unordered_url_list</a></li>
+		<li><a href="sentence-url-list.html">_sentence_url_list</a></li>
+		<li><a href="ampersand-sentence-url-list.html">_ampersand_sentence_url_list</a></li>
+	</ul>
+</div>
+
+    <p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:g&#x65;&#x6e;&#x74;&#x6c;&#101;&#109;e&#110;&#x40;s&#x74;&#x61;&#x74;a&#x6d;&#x69;c&#x2e;&#x63;o&#109;?subject=Found an issue on http://statamic.com/learn/documentation/list-shortcuts/ordered-list">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

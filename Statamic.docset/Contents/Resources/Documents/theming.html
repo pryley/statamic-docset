@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Theming | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Theming" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+				<h1>Theming</h1>
+
+				<p>In this section you&#8217;ll learn how to put together a theme for your site.</p>
+
+				<ul>
+					<li><a href="#anatomy-of-a-theme">Anatomy of a Theme</a></li>
+					<li><a href="#installing-a-theme">Installing a Theme</a></li>
+					<li><a href="#conventions">Conventions</a></li>
+					<li><a href="#partials">Partials</a></li>
+					<li><a href="#layouts">Layouts</a></li>
+					<li><a href="#templates">Templates</a></li>
+					<li><a href="#theme-helpers">Theme Helpers</a></li>
+					<li><a href="#theme-configuration">Theme Configuration</a></li>
+					<li><a href="#best-practices">Best Practices</a></li>
+				</ul>
+      </div>
+    </article>
+
+<a id="anatomy-of-a-theme" name="//apple_ref/cpp/Section/1. Anatomy of a Theme" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Anatomy of a Theme</h1>
+
+<p class="intro">The things a theme will contain.</p>
+
+<p>A <em>theme</em> is a small collection of files that dictate the look and feel for a Statamic site.
+These files are organized into specifically-named folders.</p>
+
+<h2>Folder Structure</h2>
+
+<p>A typical theme will have these folders:</p>
+
+<pre class="prettyprint text">_themes/
+    your-theme/
+        css/
+        img/
+        js/
+        layouts/
+        partials/
+        templates/
+        theme.yaml
+</pre>
+
+<h2>What Goes Into Each Folder</h2>
+
+<h3>css</h3>
+
+<p>This is where your theme&#8217;s CSS files go.
+Although this folder isn&#8217;t required to use Statamic, using it will let you use the <a href="#css">theme CSS helper</a>.</p>
+
+<h3>img</h3>
+
+<p>This is where theme-specific image files live.
+We don&#8217;t suggest that you put content-related images in here.
+The ultimate goal is to keep your content separated from the theme as much as possible.
+Only images that are a part of your design should be placed here.</p>
+
+<h3>js</h3>
+
+<p>Your theme&#8217;s JavaScript files go here.
+Like the <code>css</code> folder, this folder isn&#8217;t required, but files within it will become available through the <a href="#js">theme JS helper</a>.</p>
+
+<h3>layouts</h3>
+
+<p>This folder contains your site&#8217;s <a href="#layouts">layouts</a>.
+A theme must have at least one layout file to work.
+Most themes will only need one or two layouts at the most.</p>
+
+<h3>partials</h3>
+
+<p>Partials are small, reusable chunks of code (think <em>embeds</em> or <em>includes</em> in other systems).
+All of those live here.
+You can access your theme&#8217;s partials through the <a href="#partials">theme partial helper</a>.</p>
+
+<h3>templates</h3>
+
+<p>This folder is where your theme&#8217;s <a href="#templates">templates</a> files live.
+A theme must have at least one template file to work.</p>
+
+<h3>theme.yaml</h3>
+
+<p>Themes can optionally include a YAML file for configuring the theme.
+The settings within will vary from theme to theme, and don&#8217;t be surprised if a lot of themes don&#8217;t come with this file at all.
+If it&#8217;s here, Statamic will use it.</p>
+
+<h2>Other Folders</h2>
+
+<p>A theme can contain any number of other folders as well.
+There is no limit to how you organize a theme, although there are a couple of <a href="#conventions">naming conventions</a> you should consider.
+Your theme folder should contain all files needed to render your design.</p>
+
+<p>Other folders you might see in a theme from time to time: <code>scss</code>, <code>fonts</code>, <code>assets</code>, etc.</p>
+
+</div>
+
+<a id="installing-a-theme" name="//apple_ref/cpp/Section/2. Installing a Theme" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Installing a Theme</h1>
+
+<p class="intro">How to install a theme.</p>
+
+<p>Installing a theme that someone else has created is easy.
+Once you have the theme files on your machine, do the following:</p>
+
+<ol>
+	<li>Drop the theme folder into your site&#8217;s <code>_themes</code> directory</li>
+	<li>Open <code>_config/settings.yaml</code> and change the value of <code>_theme</code> to the name of the new theme</li>
+	<li>Optionally, if your theme came with a <code>theme.yaml</code> file, change any settings you feel need changing</li>
+</ol>
+
+<p>Refresh your site and you should see the new theme.</p>
+
+<h2>When Switching Themes</h2>
+
+<p>A theme contains all of the layouts and templates that your content will use.
+They&#8217;re mostly plug-and-play, but if you&#8217;re switching your site from one theme to another, there&#8217;s something you must remember: Statamic is open-ended on what you name things.
+The templates that come with a new theme might not match those of your old theme.</p>
+
+<p>If that&#8217;s the case, you have two options:</p>
+
+<ul>
+	<li>Update your content files to use the correct new theme name</li>
+	<li>Change the theme&#8217;s template file names to match the ones used by your content</li>
+</ul>
+
+</div>
+
+<a id="conventions" name="//apple_ref/cpp/Section/3. Conventions" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Conventions</h1>
+
+<p class="intro">Follow our naming conventions for best results.</p>
+
+<p>
+Aside from the <code>layouts</code> and <code>templates</code> folders, you can create as many folders as you&#8217;d like within your theme&#8217;s directory, and you can name them whatever you&#8217;d like.
+However, we&#8217;ve set up a couple of naming conventions with <a href="#theme-helpers">theme helpers</a> for you to more easily use your theme&#8217;s files.</p>
+
+<p>Unless you have a specific reason to do your own thing, it&#8217;s a <a href="#best-practices">best practice</a> to follow the following conventions.</p>
+
+<h2>CSS and JavaScript</h2>
+
+<p>Your stylesheets and scripts should be placed into a <code>css</code> folder and a <code>js</code> folder (respectively) at the root of your theme&#8217;s folder.
+Stylesheets and scripts placed within these directories will be easily accessed via <a href="#theme-helpers">theme helpers</a>.</p>
+
+<h3>Your Main Stylesheet</h3>
+
+<p>Your main stylesheet should be named the same thing as your theme.
+If your theme is called <em>Flannel</em> and comes in a <code>flannel</code> folder, your main stylesheet should be <code>flannel.css</code> in your theme&#8217;s <code>css</code> folder.
+Again, this makes using the <a href="#theme-helpers">theme helpers</a> easier.</p>
+
+<h3>Your Main JavaScript File</h3>
+
+<p>Your main script file should be named the same thing as your theme.
+Continuing the example above, you would name your main script file <code>flannel.js</code>, and it would live in your theme&#8217;s <code>js</code> folder.</p>
+
+<h2>Includes, Embeds, or Partials</h2>
+
+<p>If you&#8217;ve used other systems before Statamic (and you probably have), you have a name for &#8220;small, reusable chunks of code.&#8221; 
+It&#8217;s probably either an &#8220;include,&#8221; an &#8220;embed,&#8221; or a &#8220;partial.&#8221;
+Statamic calls them <em><a href="#partials">partials</a>,</em> and we recommend that for building Statamic sites, you do too.</p>
+
+<h2>Doing Your Own Thing</h2>
+
+<p>If you choose to not use our naming convention (and thus, rendering the <a href="#theme-helpers">theme helpers</a> useless), you can find the path to your theme with <code>{{ theme_path }}</code>.
+This tag will dynamically find your theme&#8217;s folder relative to the site&#8217;s web root, allowing you access to any of your theme files.
+</p>
+
+</div>
+
+<a id="partials" name="//apple_ref/cpp/Section/4. Partials" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Partials</h1>
+
+<p class="intro">Small, reusable chunks of code.</p>
+
+<p>Partials are little sections of code that can be quickly added into one or more templates.
+They&#8217;re great when you want to add things to a couple of templates, but don&#8217;t want to repeat yourself.
+Move what you want everywhere into a <em>partial</em>, use the appropriate <a href="#theme-helpers">theme helper</a> to pull it in where you want.
+When you need to change that content within, you only have to update it in one spot.</p>
+
+<p>Each file in your theme&#8217;s <code>partials</code> folder is one <em>partial</em>.
+These files will be HTML files, and only contain the chunk of code you&#8217;ll want to use around your site.
+Partials will be parsed for Statamic the same way a template does.</p>
+
+<h2>Creating a Partial</h2>
+
+<p>As an example, let&#8217;s say that you want to include a tagline within some of your templates.
+Follow these steps to create your partial:</p>
+
+<ol>
+	<li>Check for a <code>partials</code> folder within your theme&#8217;s directory, if it&#8217;s not there, create it</li>
+	<li>In this <code>partials</code> folder, create <code>tagline.html</code></li>
+	<li>Edit <code>tagline.html</code> to include the HTML that you&#8217;ll want to include within your templates</li>
+</ol>
+
+<p>We called our partial <code>tagline.html</code>, but we could have named it anything.
+You can create any number of partials for use around your site.</p>
+
+<h2>Using Partials</h2>
+
+<p>To use a partial within your template, you&#8217;ll want to use Statamic&#8217;s <em>theme helper</em> for partials.
+This theme helper is a small template tag that tells Statamic where to place the contents of a particular partial.</p>
+
+<p>In practice, it looks something like this:</p>
+
+<pre class="prettyprint html">&lt;!-- sample template html --&gt;
+&lt;aside class="sidebar"&gt;
+    {{ theme:partial src="tagline" }}
+&lt;/aside&gt;
+</pre>
+
+<p>Statamic will use the above code to look for <code>tagline.html</code> within your current theme&#8217;s <code>partials</code> folder.
+If it finds it, it will replace the <code>{{ theme:partial }}</code> tag with the contents of that file.</p>
+
+<p>If your partial contains other template tags, Statamic will also replace those with their appropriate values as well.</p>
+
+<h2>Passing Variables into Partials</h2>
+
+<p>If you need to pass data into your partial, you can add them as parameters onto the partial helper tag itself.
+For example, the <code>{{ side }}</code> tag will become available within the <code>sidebar</code> partial (with the value <code>left</code>) in this code:</p>
+
+<pre class="prettyprint statamic">{{ theme:partial src="sidebar" side="left" }}</pre>
+
+</div>
+
+<a id="layouts" name="//apple_ref/cpp/Section/5. Layouts" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Layouts</h1>
+
+<p class="intro">The foundation of your site's design.</p>
+
+<p>A <em>layout</em> is the base of your theme.
+When you create a site, there are generally pieces that are on every page, no matter what page you&#8217;re on: the <code>&lt;head&gt;</code> tag, the <code>&lt;body&gt;</code> tag, your site&#8217;s styles &amp; scripts, maybe your site&#8217;s header and/or footer.
+In Statamic, these all go in your layout.</p>
+
+<h2>If You Think in Headers &amp; Footers</h2>
+
+<p>Some other systems have you create a header file containing your header, a footer file containing your footer, and then you somehow include them onto each page template throughout your site.
+Layouts works similarly in concept, but rather than needing to call for your header and footer on every page, layouts works in reverse.</p>
+
+<p>You place all of that stuff that gets used on every page in one file (your layout), and then you tell Statamic where to put the content that changes page to page.</p>
+
+<h2>Placing Page Content</h2>
+
+<p>You tell Statamic where to put your page&#8217;s content with the <code>{{ layout_content }}</code> tag.
+Statamic will replace this tag with your page&#8217;s content inside of the currently selected <a href="#templates">template</a>.
+A simplified example for your site&#8217;s default layout might look like this:</p>
+
+<pre class="prettyprint html">&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;My Page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;img src="logo.png" alt="Logo"&gt;
+            &lt;h1&gt;My Wonderful Site&lt;/h1&gt;
+        &lt;/header&gt;
+
+        {{ layout_content }}
+
+        &lt;footer&gt;
+            &lt;h2&gt;My name is John and this is my page.&lt;/h2&gt;
+            &lt;h3&gt;Copyright as such&lt;/h3&gt;
+        &lt;/footer&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h2>Naming Layouts</h2>
+
+<p>By default, Statamic will load the <code>default</code> layout.
+This will be the code contained in <code>default.html</code> within your currently chosen theme&#8217;s <code>layouts</code> folder.
+You can name your layouts whatever you&#8217;d like, but if you choose a name other than <code>default</code> for your default layout, you&#8217;ll need to set that on every page (or within every folder as the default for each page within that folder).</p>
+
+<h2>Choosing a Layout</h2>
+
+<h3>Per Page</h3>
+
+<p>To tell one page of your site to use a specific layout, you just need to set <code>_layout</code> in your page&#8217;s <a href="core-concepts.html#content-files">front-matter</a>.
+For example, if you&#8217;re using the <code>default</code> layout in most spots, but want to do something different for your 404 page, that page&#8217;s front-matter might look like this:</p>
+
+<pre class="prettyprint yaml">---
+title: Page Not Found
+_layout: my_404
+---
+Sorry, I can't find what you're looking for.
+</pre>
+
+<p>This will use the code from <code>my_404.html</code> within your current theme&#8217;s <code>layouts</code> folder.
+If that file doesn&#8217;t exist, Statamic will display an error.</p>
+
+<h3>Per Folder</h3>
+
+<p>If you want to change the layout for an entire folder of your site, you can set <code>_default_folder_layout</code> on the <code>page</code> file of that folder.
+Your folder&#8217;s page file might look something like this:</p>
+
+<pre class="prettyprint yaml">---
+title: Upside Down Pages
+_default_folder_layout: upsidedown
+---
+The pages within are upside-down! Craaaazy!
+</pre>
+
+<p>Note that you can then override the layout <em>per page</em> by setting <code>_layout</code> on the pages you want to change.</p>
+
+<h2>Common Layouts</h2>
+
+<p>Most sites will have one or two layouts:
+- your site&#8217;s design
+- a blank layout for displaying RSS feeds or other code-accessed data</p>
+
+<p>There&#8217;s a good chance that you&#8217;ll only need one (your site&#8217;s design).
+Of course, you can create and use as many layouts as you&#8217;d like.
+</p>
+
+</div>
+
+<a id="templates" name="//apple_ref/cpp/Section/6. Templates" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Templates</h1>
+
+<p class="intro">Shaping different pages within your site.</p>
+
+<p>A <em>template</em> is the way one type of page is organized, and how page content is displayed within it.</p>
+
+<p>Templates sit between layouts and page content.
+Where a <a href="#layouts">layout</a> is the outer-shell of your website that doesn&#8217;t change page-to-page, templates are the inner-shell that tells Statamic how to render the content for a page.</p>
+
+<p>Statamic replaces the <code>{{ layout_content }}</code> tag in your layout with the chosen template for the page being viewed (and likewise, within that template, Statamic replaces each <a href="templating.html">tag</a> with the appropriate value from the page&#8217;s content).</p>
+
+<h2>An Example of Templates</h2>
+
+<p>You&#8217;ll usually create a template of each type of page that you want to display.
+A list of templates used by a standard blog might be:</p>
+
+<ul>
+<li>home page template</li>
+<li>blog post detail page template</li>
+<li>category list page template</li>
+<li>general static content page template</li>
+</ul>
+
+<p>With this list of templates, we have all of the ways content will be displayed on our site.
+Each page is told which template to use to correctly display the page&#8217;s content.</p>
+
+<h2>Placing Page Variables &amp; Content</h2>
+
+<p>You&#8217;ll use Statamic&#8217;s <a href="templating.html">templating system</a> to display page content exactly as you&#8217;d like.
+To get your page&#8217;s main content onto your template (everything below the second set of <code>---</code> in each your <a href="core-concepts.html#content-files">content files</a>), you&#8217;ll use the <code>{{ content }}</code> tag.</p>
+
+<p>An example of this in action might look something like this:</p>
+
+<pre class="prettyprint html">&lt;div class="columns"&gt;
+    &lt;article&gt;
+        {{ content }}
+    &lt;/article&gt;
+
+    &lt;aside class="sidebar"&gt;
+        &lt;!-- sidebar content would go here --&gt;
+    &lt;/aside&gt;
+&lt;/div&gt;
+</pre>
+
+<h2>Naming Templates</h2>
+
+<p>By default, Statamic will use the <code>default</code> template.
+This will be the code contained in <code>default.html</code> within your currently chosen theme&#8217;s <code>templates</code> folder.
+You can name your layouts whatever you&#8217;d like, but if you choose a name other than <code>default</code> for your default template, you&#8217;ll need to set that on every page (or within every folder as the default for each page within that folder).</p>
+
+<h2>Choosing a Template</h2>
+
+<h3>Per Page</h3>
+
+<p>To tell one page of your site to use a specific template, you just need to set <code>_template</code> in your page&#8217;s <a href="core-concepts.html#content-files">front-matter</a>. 
+For example, if you want to use the <code>blog-detail</code> template for a blog post, your entry&#8217;s front-matter might look like this:</p>
+
+<pre class="prettyprint yaml">---
+title: My Trip to Spain
+_template: blog-detail
+---
+It rained all over the plains the whole time I was there.
+</pre>
+
+<p>This will use code from <code>blog-detail.html</code> within your current theme&#8217;s <code>templates</code> folder.
+If that file doesn&#8217;t exist, Statamic will display an error.</p>
+
+<h3>Per Folder</h3>
+
+<p>If you want to change the template for an entire folder of your site, you can set <code>_default_folder_template</code> on the <code>page</code> file of that folder.
+Your folder&#8217;s page file might look something like this:</p>
+
+<pre class="prettyprint yaml">---
+title: My Blog
+_default_folder_template: blog-detail
+---
+Welcome to my blog!
+</pre>
+
+<p>Note that you can then override the template <em>per page</em> by setting <code>_template</code> on the pages you want to change.</p>
+
+</div>
+
+<a id="theme-helpers" name="//apple_ref/cpp/Section/7. Theme Helpers" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Theme Helpers</h1>
+
+<p class="intro">Quickly finding your theme files.</p>
+
+<p><em>Theme helpers</em> are Statamic tags that will help you find your template files quickly and easily.
+There are five helpers, each will find the type of file that you&#8217;re looking for and return the full web path to it.
+You can then stick these paths into their appropriate HTML tags within your <a href="#layouts">layouts</a> and <a href="#templates">templates</a>.</p>
+
+<h2 id="css">The CSS Helper</h2>
+
+<p>The following tag will print the full web path to the <code>style.css</code> file within the currently selected theme.</p>
+
+<pre class="prettyprint statamic">{{ theme:css src="style" }}
+</pre>
+
+<p>The <code>src</code> provided is the CSS file&#8217;s path that will be printed.
+In the <a href="#conventions">naming conventions</a> article, we said that your main stylesheet should be the same name as your theme.
+Doing this will let you leave off the <code>src</code> attribute.</p>
+
+<p>For example, if your theme is in the <code>flannel</code> folder, you can use this:</p>
+
+<pre class="prettyprint statamic">{{ theme:css }}
+</pre>
+
+<p>To get the path to your theme&#8217;s <code>flannel.css</code>, which will probably look something like this:</p>
+
+<pre class="prettyprint text">_themes/flannel/css/flannel.css
+</pre>
+
+<p>Remember that this tag does not print out the entire HTML <code>&lt;link&gt;</code> tag you&#8217;ll probably want to stick this in.
+We leave that to you so that you can set the other attributes as you wish.</p>
+
+<h2 id="js">The JS Helper</h2>
+
+<p>The following tag will print the full web path to the <code>action.js</code> file within the currently selected theme.</p>
+
+<pre class="prettyprint statamic">{{ theme:js src="action" }}
+</pre>
+
+<p>This tag works similarly to the CSS helper above, it will only print out the path to the file, not the full <code>&lt;script&gt;</code> tag you&#8217;ll probably want it in.
+Similarly, if you followed the <a href="#conventions">naming conventions</a>, and again your theme is called <code>flannel</code>, you can use this tag:</p>
+
+<pre class="prettyprint statamic">{{ theme:js }}
+</pre>
+
+<p>To get the path to the JavaScript theme file named after your theme, which will probably look something like this:</p>
+
+<pre class="prettyprint text">_themes/flannel/js/flannel.js
+</pre>
+
+<h2 id="images">The Image Helper</h2>
+
+<p>When you want to access an image from your theme&#8217;s <code>img</code> folder, you can use the theme image helper.
+The following tag will retrieve the full web path to the <code>tent.png</code> file in your current theme&#8217;s <code>img</code> folder:</p>
+
+<pre class="prettyprint statamic">{{ theme:img src="tent.png" }}
+</pre>
+
+<p>Like the other helpers, this only gets the full web page to the file, and doesn&#8217;t print out the <code>&lt;img&gt;</code> tag you&#8217;ll probably want it in.
+Also note that for this helper, you&#8217;ll need to include the extension of the file you&#8217;re attempting to retrieve.
+Where there is only one extension that CSS and JS files will be, images files can be one of many options.</p>
+
+<h2 id="assets">The Asset Helper</h2>
+
+<p>The assets helper lets you access other files that aren&#8217;t images or stylesheets or scripts.
+The <code>src</code> here can include subfolders within the currently selected theme, or access files right at its root level.</p>
+
+<pre class="prettyprint statamic">{{ theme:asset src="README.txt" }}</pre>
+
+<p>This only returns the path of the file requested in the <code>src</code> parameter, where you put the path is up to you.</p>
+
+<h2 id="partials">The Partial Helper</h2>
+
+<p>Finally, there is the partial helper, used to embed <a href="#partials">partials</a> on your page.
+This tag works similarly to the ones above, for example, to embed the <code>sidebar</code> partial, you would use the following code:</p>
+
+<pre class="prettyprint statamic">{{ theme:partial src="sidebar" }}</pre>
+
+<p><a href="#partials">Visit the partials article</a> to learn more about what partials do, how they work, and how the helper works.</p>
+
+</div>
+
+<a id="theme-configuration" name="//apple_ref/cpp/Section/8. Theme Configuration" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Theme Configuration</h1>
+
+<p class="intro">Create and configure theme-specific settings.</p>
+
+<p>Theme configuration files are a place to put theme-specific settings.
+A theme&#8217;s configuration file will be called <code>theme.yaml</code>, and will be found in the theme&#8217;s root folder.</p>
+
+<p>Letting you keep a configuration file in with your theme makes themes more portable for sharing and selling to others.
+If you have some specific options baked into your theme&#8217;s templates, you can include those settings in this file rather than having someone make their own within the <code>_config</code> directory.</p>
+
+<p>Theme configuration files are processed <em>after</em> your site settings, global variables, and environments, which means that within a theme you can override just about any setting.
+We recommend that you only store settings in this file that are absolutely tied to one specific theme.</p>
+
+</div>
+
+<a id="best-practices" name="//apple_ref/cpp/Section/9. Best Practices" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Best Practices</h1>
+
+<p class="intro">Theming guidelines worth following.</p>
+
+<p>Listed below are a couple of things we&#8217;ve found to be a good idea when building a theme.</p>
+
+<ul>
+	<li>Name your main CSS and JavaScript files the same name as your theme</li>
+	<li>Template and layout files should have <code>.html</code> extensions</li>
+	<li>Only put image files pertaining to your theme in your theme directory; content-related imagery should go the <code>assets</code> folder to properly maintain separation of content from style</li>
+	<li>Create as many templates and subdirectories as you&#8217;d like</li>
+	<li>Use relative paths in your CSS files, for example: <code>url(../img/bg.png);</code></li>
+	<li>Use lowercase filenames</li>
+	<li>When sharing, distributing, or selling a theme, feel free to include a directory for <code>_content</code> showing sample posts and pages that use your theme&#8217;s templates, etc.</li>
+</ul>
+
+</div>
+
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#103;&#101;&#110;&#116;&#108;&#101;&#109;&#101;&#110;&#64;&#x73;&#x74;&#97;t&#x61;&#x6d;i&#99;&#46;&#x63;&#x6f;&#x6d;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

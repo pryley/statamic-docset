@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Installing and Updating | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Installing and Updating" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+
+<h1>Installing and Updating</h1>
+
+<p>In this section, you&#8217;ll learn how to install Statamic and how to secure your installation.</p>
+
+<ul>
+	<li><a href="#installing">Installing Statamic</a></li>
+	<li><a href="#securing-your-site">Securing Your Site</a></li>
+	<li><a href="#updating">Updating Statamic</a></li>
+</ul>
+
+      </div>
+    </article>
+
+<a id="installing" name="//apple_ref/cpp/Section/1. Installing Statamic" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Installing Statamic</h1>
+
+<p class="intro">Get Statamic running on your server.</p>
+
+<p>Follow these steps after unzipping the Statamic folder you&#8217;ve <a href="getting-ready.html#acquiring">downloaded from your account</a>.</p>
+
+<h2>Standard Installation</h2>
+
+<p>This will install Statamic into your website&#8217;s document root.</p>
+
+<ol>
+<li>Copy the files within into your website’s document root</li>
+<li>Make sure that the following folders are writable by the server:
+	<ul>
+		<li><code>_cache</code> — this one’s a must</li>
+		<li><code>_logs</code> — if you want to enable <a href="advanced-features.html#message-logging">message logging</a></li>
+		<li><code>_content</code> &amp; <code>_config/users</code> — if you want to use the <a href="control-panel.html">Control Panel</a></li>
+	</ul>
+</li>
+</ol>
+
+<p>Statamic has now been installed.
+Simple as that.</p>
+
+<p>From here, we highly recommend that you <a href="#securing-your-site">secure your installation</a>.
+(It will also pretty-up your URLs.)</p>
+
+<h2>Installation into a Subdirectory</h2>
+
+<p><em>The below steps assume that your subdirectory is a folder named <code>statamic</code>.
+You can use any folder you’d like, so when following directions, update your folder name accordingly.</em></p>
+
+<ol>
+<li>Copy the files within into your <code>/statamic/</code> subdirectory</li>
+<li>Make sure that the following folders are writable by the server:
+
+<ul>
+<li><code>_cache</code> — this one’s a must</li>
+<li><code>_logs</code> — if you want to enable <a href="advanced-features.html#message-logging">message logging</a></li>
+<li><code>_content</code> &amp; <code>_config/users</code> — if you want to use the <a href="control-panel.html">Control Panel</a></li>
+</ul></li>
+<li>Update <code>_site_root</code> in your <code>settings.yaml</code> file to reflect the correct subdirectory: <code>_site_root: /statamic/</code></li>
+<li>Rename <code>sample.htaccess</code> to <code>.htaccess</code> and move the file to your website&#8217;s document root</li>
+<li>Change the <code>index.php</code> reference on the last line of your <code>.htaccess</code> file to point to the folder that Statamic will live in: <code>RewriteRule ^(.*)$ /statamic/index.php [QSA,L]</code></li>
+</ol>
+
+<p>Statamic has now been installed into the <code>/statamic/</code> subdirectory.
+Visit it in your browser and you should see your site.</p>
+
+<p>From here, we recommend that you <a href="#securing-your-site">secure your installation</a>.
+(It will also pretty-up your URLs.)</p>
+
+</div>
+
+<a id="securing-your-site" name="//apple_ref/cpp/Section/2. Securing Your Site" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Securing Your Site</h1>
+
+<p class="intro">Lock down your private files (and pretty-up URLs).</p>
+
+<p>Because there’s no database, you must take an additional step to protect your site.
+This step disallows <em>read</em> access to Statamic’s system folders (<code>_add-ons</code>, <code>_app</code>, <code>_config</code>, and <code>_content</code>) and YAML settings files through the browser.</p>
+
+<p>If this sounds hard, don’t fret. 
+We’ve got you covered.</p>
+
+<blockquote>
+  <p>note The server configuration files below will also remove the <code>/index.php</code> from your URLs, making them nice and clean.</p>
+</blockquote>
+
+<h2>Running on Apache</h2>
+
+<p>Most web servers run <a href="http://httpd.apache.org/">Apache</a>.
+If you aren&#8217;t sure which web server software you&#8217;re using, it&#8217;s most likely Apache.
+The easiest way to protect what needs protecting is by adding an <code>.htaccess</code> file to your website’s document root with a few rules telling your server what to do if someone tries to visit any of the protected files and folders via the web.</p>
+
+<p>We’ve included an <code>.htaccess</code> file in the zip file that will account for most Apache configurations.
+Simply rename the included <code>sample.htaccess</code> to <code>.htaccess</code> and you’re done (after confirming that you can’t access your system files via the web browser).</p>
+
+<h2>Running on Nginx</h2>
+
+<p>Download <a href="../_assets/docs/security/nginx.conf.sample.txt">this sample configuration</a> and rename it to <code>nginx.conf</code> to secure your nginx-based server.</p>
+
+<h2>Running on IIS (Windows)</h2>
+
+<p>Download <a href="../_assets/docs/security/web.config.sample.txt">this sample configuration</a> and rename it to <code>web.config</code> to secure your Windows-based server.</p>
+
+</div>
+
+<a id="updating" name="//apple_ref/cpp/Section/3. Updating Statamic" class="dashAnchor"></a>
+<div class="block content">
+
+<h1>Updating Statamic</h1>
+
+<p class="intro">Updating Statamic is easier than installing it.</p>
+
+<p>Keeping Statamic up-to-date will ensure that you have the fastest and most reliable version available.</p>
+
+<h2>Knowing when to update</h2>
+
+<p>If you’re using the Control Panel, your current version is displayed at the very bottom of each page.
+When there is an update available, a small notification will appear down there as well.</p>
+
+<p>If you&#8217;re <em>not</em> using the Control Panel, you can find your current version at the top of <code>_app/autoload.php</code> on line 3.</p>
+
+<h3>Stay in the loop</h3>
+
+<p>We announce new versions <a href="http://twitter.com/statamic">via Twitter</a>, and major releases <a href="#subscribe">by email</a>.
+You can also see what the current version is on our <a href="changelog.html">changelog</a>, including what’s changed.</p>
+
+<h2>Performing a core update</h2>
+
+<p>While you’re building websites, we’re hard at work adding new features, squishing bugs, and optimizing Statamic to be fast and reliable.
+There are going to be times when you’ll want to update your copy of Statamic to the latest version.
+Luckily, this process is painless.</p>
+
+<p>Follow these steps to update your copy of Statamic:</p>
+
+<ol>
+	<li>Download &amp; unzip the newest version zip file from your <a href="https://store.statamic.com/account">account</a></li>
+	<li>Replace your <code>_app</code> and <code>admin</code> folders with the ones from the new zip file</li>
+	<li>Clear the contents of your <code>_cache</code> folder.</li>
+</ol>
+
+<p>That&#8217;s it. You’re updated.</p>
+
+<p><strong>Note:</strong> Whenever you update Statamic, you’ll also want to review the included <code>settings.yaml.sample</code> file for any new settings that you might want to take advantage of.
+All settings have defaults, so your site won’t break if you’re missing anything.</p>
+
+<h2>Updating add-ons</h2>
+
+<p>You may also find that your add-ons need to be updated. In that event, you&#8217;ll want to download the latest copy and replace their respective folder in your <code>_add-ons</code> directory.</p>
+
+<h2>Updating from before v1.5</h2>
+
+<p>Statamic changed the list of files that needed updating at v1.5.
+If you’re using v1.4.2 or earlier and are upgrading to v1.5 or later, you’ll need to replace a couple more files:</p>
+
+<ol>
+	<li>Download &amp; unzip the newest version zip file from your Trading Post downloads</li>
+	<li>Replace your <code>_app</code> and <code>admin</code> folders with the ones from the new zip file</li>
+	<li>Replace the <code>index.php</code> and <code>admin.php</code> files in your document root</li>
+	<li>Replace folders in your <code>_add-ons</code> folder with folders in the <code>_add-ons</code> folder from the new zip file</li>
+</ol>
+
+<p>You only need step three if you’re going from a version before v1.5 to v1.5 (or later).
+Moving forward, you can follow the standard updating instructions above.</p>
+
+</div>
+
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#101;&#x6e;&#x74;l&#101;men&#x40;s&#116;&#x61;&#116;&#97;m&#105;c.&#99;o&#109;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

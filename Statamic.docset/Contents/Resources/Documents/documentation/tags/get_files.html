@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>get_files | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>get_files</h1>
+
+          		  <p class="intro">Retrieves a list of files.</p>
+  		  
+        <p></p>
+
+<h2>{{ get_files }}</h2>
+
+<p>Fetches <em>any</em> files from anywhere. Great for photo galleries or anything you can imagine. The tag loop with return filenames assigned to <code>{{ file }}</code>.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ get_files in="_assets/img" extension="jpg" file_size="&lt; 250K" }}
+  &lt;img src="{{ file }}" /&gt;
+{{ /get_files }}
+</pre>
+
+<h3>Parameters</h3>
+
+<hr />
+
+<h4><code>match</code></h4>
+
+<p>Restrict files through use of globs, strings, or regexes</p>
+
+<pre class="prettyprint html">{{ get_files match="/header/" }}
+</pre>
+
+<h4><code>exclude</code></h4>
+
+<p>The direct inverse of <code>match</code>. Excludes files based on globs, strings, or regexes</p>
+
+<pre class="prettyprint html">{{ get_files exclude="/thumbnail/" }}
+</pre>
+
+<h4><code>extension</code></h4>
+
+<p>Find files by file extensions.</p>
+
+<pre class="prettyprint html">{{ get_files extension="png" }}
+</pre>
+
+<h4><code>in</code></h4>
+
+<p>The folder you wish to fetch files from. Can be used recursively to drill through multiple folder levels.</p>
+
+<pre class="prettyprint html">{{ get_files in="_assets/img" }}
+</pre>
+
+<h4><code>not_in</code></h4>
+
+<p>Exclude folders from being traversed.</p>
+
+<pre class="prettyprint html">{{ get_files not_in="_assets/img/secrets" }}
+</pre>
+
+<h4><code>file_size</code></h4>
+
+<p>Restrict by size using any of the following comparison operators: >, >=, &lt;, &lt;=, ==,&#160;!=.</p>
+
+<pre class="prettyprint html">{{ get_files file_size="&lt; 500K" }}
+</pre>
+
+<h4><code>file_date</code></h4>
+
+<p>Restrict by last modified dates. The target value can be any date supported by PHP&#8217;s <a href="http://www.php.net/manual/en/datetime.formats.php">strtotime</a> function.</p>
+
+<pre class="prettyprint html">{{ get_files file_date="since Monday" }}
+</pre>
+
+<h4><code>depth</code></h4>
+
+<p>By default, Get Files recursively traverse directories. This lets you restrict the depth it will traverse.</p>
+
+<pre class="prettyprint html">{{ get_files depth="== 0" }}
+{{ get_files depth="&lt; 3" }}
+</pre>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#103;&#x65;n&#116;&#108;e&#109;&#x65;&#110;&#64;s&#116;a&#x74;&#97;&#x6d;i&#x63;&#x2e;c&#x6f;&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/tags/get_files">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>member | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>member</h1>
+
+          		  <p class="intro">Bring membership to the front-end of your site.</p>
+  		  
+        <p></p>
+
+<h2>{{ member:login }}</h2>
+
+<p>Easy to use member login form.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ member:login }}
+  &lt;input type="text" name="username" id="username" placeholder="Username" &gt;
+  &lt;input type="password" name="password" id="password" placeholder="Password" &gt;
+  &lt;input type="submit" value="Log in"&gt;
+{{ /member:login }}
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>return</code> — URL to return the user to once logged in</li>
+</ul>
+
+<h2>{{ member:logout }}</h2>
+
+<p>Logs a user out of the site.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ member:logout }}
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>return</code> — URL to return the user to once logged out</li>
+</ul>
+
+<h2>{{ member:profile }}</h2>
+
+<p>Display information about a given member.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ member:profile }}
+    Your name is {{ first_name }} {{ last_name }}.
+{{ /member:profile }}
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>member</code> — member&#8217;s profile to display</li>
+</ul>
+
+<h2>{{ member:listing }}</h2>
+
+<p>Display a list of members.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;ul&gt;
+    {{ member:listing }}
+        &lt;li&gt;{{ first_name }} {{ last_name }}&lt;/li&gt;
+    {{ /member:listing }}
+&lt;/ul&gt;
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>role</code> — limit the members listed to a given <code>role</code>, <code>false</code> by default (shows all)</li>
+<li><code>limit</code> — the maximum number of members to display, <code>null</code> (no limit) by default</li>
+<li><code>offset</code> — the number of members to skip over (after sorting has been applied) before displaying the first members in a listing, <code>0</code> by default</li>
+<li><code>sort_by</code> — the field to sort the member list on, <code>title</code> by default</li>
+<li><code>sort_dir</code> — the direction the sorting should happen, either <code>asc</code> or <code>desc</code>, <code>desc</code> by default</li>
+</ul>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#103;&#x65;n&#116;&#108;&#x65;m&#101;&#110;&#64;&#x73;&#x74;a&#x74;&#x61;&#x6d;&#x69;&#x63;&#x2e;&#99;o&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/tags/member">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

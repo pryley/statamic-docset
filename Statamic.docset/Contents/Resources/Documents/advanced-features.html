@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Advanced Features | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Advanced Features" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+		  
+<h1>Advanced Features</h1>
+
+<p>In this section you&#8217;ll learn about other advanced Statamic features. We say advanced, but that&#8217;s a relative term.</p>
+
+<ul>
+	<li><a href="#environments">Environments</a></li>
+	<li><a href="#message-logging">Message Logging</a></li>
+	<li><a href="#vanity-urls">Vanity URLs</a></li>
+	<li><a href="#routes">Routes</a></li>
+	<li><a href="#static-asset-pipeline">Static Asset Pipeline</a></li>
+	<li><a href="#caching">Caching</a></li>
+</ul>
+
+</div>
+</article>
+
+<a id="environments" name="//apple_ref/cpp/Section/1. Environments" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Environments</h1>
+
+<p class="intro">Alter your site based on the URL viewing it.</p>
+
+<p>Environments allow you to change settings based upon the URL accessing the site.
+This becomes helpful when using a multiple-server workflow.
+In that instance, environments would let you easily change values for your development, staging, and production servers.</p>
+
+<p>You define environments in your main <code>settings.yaml</code> file, like so:</p>
+
+<pre class="prettyprint yaml">_environments:
+    dev:
+        - 'http://localhost*'
+        - '*.dev'
+        - '*.localip'
+
+    staging:
+        - 'staging.mysite.com'
+</pre>
+
+<p>In this example, if you were to set up and view your website from the URL <code>http://mysite.dev</code>, the <code>dev</code> environment would be triggered.
+Likewise, viewing the site from <code>http://staging.mysite.com</code> would trigger the <code>staging</code> environment.</p>
+
+<p>Note that only one environment can be active at any one time, and Statamic will try to match environments from top to bottom.
+This means that in the above example, if a URL somehow matched an option in both <code>dev</code> and <code>staging</code>, the <code>dev</code> environment would be triggered because it was matched first.
+As soon as Statamic matches an environment in your list, it stops looking for more.</p>
+
+<p>Once an environment has been activated, two things become available:</p>
+
+<ol>
+	<li>The <code>is_[environment]</code> variable becomes <code>true</code>, where <code>[environment]</code> is the name of the environment you’ve defined &#8211; for example, it would be <code>is_dev</code> in your <code>dev</code> environment</li>
+	<li>Statamic will overwrite your settings and global variables with those defined in the related environment YAML file in your environments configuration folder (at <code>_config/environments/[environment].yaml</code>) where <code>[environment]</code> is the name of the environment you’ve defined</li>
+</ol>
+
+<h2>Best Practices</h2>
+
+<p>Best practice for environments is to have production-level values be the defaults for all of the settings in your main configuration files, overriding them as needed for other environments (such as <code>dev</code> or <code>staging</code>).</p>
+
+<p>Also, while <code>is_[environment]</code> variables will exist when an environment is activated, it’s a good idea to limit their use.
+If, for example, you wish to only have analytics running in production, wrap your analytics code in something that looks like this:</p>
+
+<pre class="prettyprint html">{{ if !disable_analytics }}
+    {{# your analytics code here #}}
+{{ endif }}
+</pre>
+
+<p>Then, in your <code>dev</code> and <code>staging</code> environment YAML files, add:</p>
+
+<pre class="prettyprint yaml">disable_analytics: true</pre>
+
+<p>This technique provides a number of advantages:</p>
+
+<ul>
+	<li>Production values default to <code>false</code>, which enables analytics</li>
+	<li>If you wish to enable analytics for <code>dev</code>, for example, maybe to test out something fishy with them, rather than searching through your code to find <code>is_dev</code> at the right spots, you can simply change your <code>disable_analytics</code> variables to <code>false</code> and be done with it</li>
+	<li>This is a similar practice to JavaScript capability testing instead of browser testing</li>
+</ul>
+
+</div>
+
+<a id="message-logging" name="//apple_ref/cpp/Section/2. Message Logging" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Message Logging</h1>
+
+<p class="intro">Keep an eye on what's happening in and around your site.</p>
+  		  
+<p>Messages are notifications that are automatically generated by different parts of your Statamic website.
+We’ve included a couple within the Statamic core itself (with more on the way), and every add-on has tools to log messages with helpful tidbits of information.</p>
+
+<p>These messages exist for two purposes:</p>
+
+<ul>
+	<li>Help you understand what’s happening behind the scenes</li>
+	<li>Making you aware of errors and other bad situations on your site</li>
+</ul>
+
+<p>A sample action that logs a message is when a page is not found.
+The site will record the severity level as <em>error</em>, the date and time of when it happened, the page the user tried to access unsuccessfully, and a message telling you if the user came directly to this page, or if they clicked on a bad link from another page (along with which page it was they came from).</p>
+
+<h2>Severity Levels</h2>
+
+<p>Every message that’s recorded to your site’s log has a <em>severity level</em> associated with it.
+The five levels (from least- to most-severe):</p>
+
+<ul>
+	<li>A <em>debug</em> message is the least serious of all severity levels, it’s used to mark points in the code where things happen to show you that they’re happening; production-level servers shouldn’t capture debug-level messages</li>
+	<li>An <em>info</em> message is a note explaining why something happened, but whatever that “thing” was isn’t something you need to be overly concerned about, more along the lines of something you’d want to know rather than need to know; production-level servers probably do not want to capture info-level messages</li>
+	<li>A <em>warn</em> message is essentially an error that the system automatically fixed for you, but is something you probably should look into when you have a chance; production-level servers should capture warn-level messages</li>
+	<li>An <em>error</em> message is an alert that something didn’t work as expected, and that the user’s experience may have been affected, these should be investigated as soon as possible; production-level servers should capture error-level messages</li>
+	<li>A <em>fatal</em> message is the most severe of notification, triggered when something has gone wrong and the user is absolutely stuck; these incidents should be looked into immediately; production-level servers should capture fatal-level messages</li>
+</ul>
+
+<h2>Configuring</h2>
+
+<p>There are four settings in your <code>settings.yaml</code> master configuration file to configure logging.</p>
+
+<ul>
+	<li><code>_log_enabled</code> will turn logging on or off</li>
+	<li><code>_log_level</code> is the lowest severity level to log for this server &#8211; this is another great place where using environments can come in handy &#8211; any messages that are lower than the <code>_log_level</code> defined will be ignored and not written to the logs</li>
+	<li><code>_log_file_path</code> is where log files will be kept</li>
+	<li><code>_log_file_prefix</code> helps name your log files &#8211; you might change this if you’re running a server with many sites on it and want all of your logs going into one folder, this prefix will separate each site’s logs from one another</li>
+</ul>
+
+<h2>Reading Logs</h2>
+
+<p>Log files are simple text files that can be read in virtually any text editor, but we’ve also created a nice interface in the <a href="control-panel.html">Control Panel</a> to help you stay alert on the go.</p>
+
+<p>The Logs page in the Control Panel color-codes your messages based on severity level, and also parses messages for <a href="http://daringfireball.net/projects/markdown/">Markdown</a> (allowing for easier-to-read messaging than with most other systems).
+You can also filter by severity level, or look through your log history to see what’s been happening in the last week, month, year, etc.</p>
+
+<p>The larger-screen table view for logs in the Control Panel has a number of columns with helpful information:</p>
+
+<ul>
+	<li><em>Level</em> indicates the severity level logged by the message</li>
+	<li><em>When</em> tells you the time that the message was logged</li>
+	<li><em>What Caused This</em> is a two-part-column, the first part is the general area of the code where things went wrong, the second part is a more specific region &#8211; this column becomes helpful when trying to debug an error, knowing which part of the internals logged the messages tells you who to ask for help</li>
+	<li><em>Page</em> is the URL that was hit causing the message</li>
+	<li><em>Message</em> is the message itself, hopefully written in a way that is helpful for understanding what happened</li>
+</ul>
+
+</div>
+
+<a id="vanity-urls" name="//apple_ref/cpp/Section/3. Vanity URLs" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Vanity URLs</h1>
+
+<p class="intro">Simple but powerful URL redirects.</p>
+  		  
+<p>Statamic allows you to quickly set up <em>vanity URLs</em>, which let you quickly forward one URL to another.</p>
+
+<p>As an example of when these might be used: perhaps your site is running a promotion but you want to use a short, catchy URL on your marketing campaign.
+Rather than having to tell someone something like <code>/events/2013-log-cutting-championships-afterparty</code>, you could create a <code>/party</code> vanity URL which will forward to your event detail page.</p>
+
+<h2>Defining Vanity URLs</h2>
+
+<p>All vanity URLs are defined in the <code>vanity.yaml</code> file within your <code>_config</code> directory.
+Statamic comes with a <code>vanity.yaml.sample</code> file to give you an example of what a file might look like.
+Feel free to rename this to <code>vanity.yaml</code> and use this file, or to create your own.</p>
+
+<p>Vanity URLs are simply a YAML file with instructions on how to forward specific URLs.
+There are two ways to define a vanity URL.</p>
+
+<h3>Simple Redirects</h3>
+
+<p>The simple redirect takes a URL that someone is going to type in, and the URL that the user should be forwarded to.
+It will look something like this:</p>
+
+<pre class="prettyprint yaml">/party: /my-long/page-name</pre>
+
+<p>This will forward <code>http://yoursite.com/party</code> to <code>http://yoursite.com/my-long/page-name</code>.
+Simple.</p>
+
+<h3>Detailed Redirects</h3>
+
+<p>A detailed redirect lets you set a couple of configuration options for more fine-grained control over how your redirect works.
+This is an example of a full detailed redirect:</p>
+
+<pre class="prettyprint yaml">/party:
+    start: "May 1, 2013 11:30pm"
+    until: "May 5, 2013 12:00am"
+    forward_query_string: true
+    url: /my-long/page-name
+    type: 302
+</pre>
+
+<p>As you can see, you can be much more specific with how and when vanity URLs work.
+Of the parameters listed above, only <code>url</code> is required.
+The rest work as follows:</p>
+
+<ul>
+	<li><code>start</code> is the date that the redirect <em>starts</em> working; leaving this empty will cause forwarding to have started</li>
+	<li><code>until</code> is the date that the redirect <em>stops</em> working; leaving this empty will cause the forwarding to not end until you remove this entry</li>
+	<li><code>forward_query_string</code> will merge the query string passed to the redirect along to the final URL — this can be helpful for tracking campaigns; <code>false</code> by default</li>
+	<li><code>url</code> is the URL to forward people to</li>
+	<li><code>type</code> is the type of redirect to perform, either <code>301</code> for a <em>permanent</em> redirect, or <code>302</code> for a <em>temporary</em> redirect; <code>302</code> by default</li>
+</ul>
+
+<h2>Best Practices</h2>
+
+<p>While it&#8217;s possible to create permanent redirects with the vanity URLs feature, it&#8217;s best practice to do this via an <code>.htaccess</code> file or similar method.
+Vanity URL redirects are going to be slower than server-level redirects (although the difference may not be noticeable in all situations).</p>
+
+</div>
+
+<a id="routes" name="//apple_ref/cpp/Section/4. Routes" class="dashAnchor"></a>
+
+<div class="block content">
+	
+<h1>Routes</h1>
+
+<p class="intro">Route requests.</p>
+  		  
+<p>If you ever need to map a URL to a simple template/layout view, you can do so without having to add a placeholder content file by using a routes file, <code>_config/routes.yaml</code>.
+Custom routed URLs will <strong>always</strong> override content URLs if there is a duplicate, so keep that in mind.
+Note the prefixed slash, it&#8217;s important.</p>
+
+<pre class="prettyprint yaml"># Visiting example.com/success will...
+# load the /templates/success.html template with the default layout
+
+/success: success
+</pre>
+
+<p>A more complex example:</p>
+
+<pre class="prettyprint yaml"># Visiting example.com/members/login will...
+# load the /templates/success.html template and use the 'system' layout
+
+/members/login:
+    template: success
+    layout: system
+</pre>
+
+<h2>Ignoring Segments</h2>
+
+<p>You can also add a list of segments that should be ignored if found in your URLs.
+For example, if you want to ignore any segments that are &#8220;gallery&#8221; or &#8220;details,&#8221; you can do so like this:</p>
+
+<pre class="prettyprint yaml"># ignore these segments
+ignore:
+    - gallery
+    - details
+</pre>
+
+<p>These values will still appear in your <code>{{ segment_n }}</code> variables, but will not factor into figuring out which content to render.
+This could be helpful if you have a second page with many sub-pages, but want to control them all from the one main page.
+You can ignore segments in the URL, but check of their presence in your template.</p>
+
+<p>Continuing the above example, you could still check for the following:</p>
+
+<pre class="prettyprint statamic">{{ if segment_3 == "gallery" }}
+    {{# show the gallery #}}
+{{ else }}
+    {{# show the overview page #}}
+{{ endif }}
+</pre>
+
+</div>
+
+<a id="static-asset-pipeline" name="//apple_ref/cpp/Section/5. Static Asset Pipeline" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Static Asset Pipeline</h1>
+
+<p class="intro">One path for all the things!</p>
+  		  
+<p>Statamic&#8217;s Static Asset Pipeline is a very simple thing and will only get better with time. So what is it?</p>
+
+<p>Simply reference your theme assets at the magic <code>/_assets/</code> path. Let&#8217;s look at an example:</p>
+
+<p>Let&#8217;s say you have a css file here: <code>_themes/awesome_theme/css/awesome.css</code>. You might be using the <a href="theming.html#theme-helpers">theme helper</a>, and that&#8217;s great! But what if you don&#8217;t like having to write that tag everytime. So much work, right?</p>
+
+<p>Well, now that same file will be loaded here: <code>/_assets/css/awesome.css</code>. That&#8217;s it! Statamic will automatically route everything after <code>/_assets/</code> into your theme folder.</p>
+
+<p>What about your actual <code>/_assets/</code> folder files? We thought of that too. If an actual file exists at any given path, that will be given priority. Easy!</p>
+
+</div>
+
+<a id="caching" name="//apple_ref/cpp/Section/6. Caching" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Caching</h1>
+
+<p class="intro">Speed up your site.</p>
+  		  
+<p>Most Statamic sites won&#8217;t amass a ton of pages over their lifetime. Even ambitious bloggers may only create one- or two-hundred pages over the course of a couple of years. However, there are a handful of folks that create <em>much</em> larger sites.</p>
+
+<p>In earlier versions of Statamic, large sites — that is, sites with hundreds of pages — started to see slow-downs when trying to render pages. Our testing found that at that scale, even a simple <a href="documentation/tags/entries.html#listing">entry-listing</a> was taking over a second to put together. For computers, that&#8217;s a long time. We had to do something about this.</p>
+
+<p>As of <a href="../../changelog/v1.5.html">v1.5</a>, Statamic comes with content caching built in.</p>
+
+<h2>How It Works</h2>
+
+<p>The very first time your site loads in a browser, Statamic reads all of your content files&#8217; <a href="core-concepts.html#front-matter">front-matter</a> and stores that information into a couple of well-organized lists within one cache file. When it comes time to find your content, rather than needing to dig through hundreds of files — opening the file, checking to see if it&#8217;s what we need, closing the file, repeat — Statamic only needs to open <em>one</em> file and get what it needs from that.</p>
+
+<p>On each subsequent visit to your site, Statamic examines all your content files to see if anything has changed. If something is different — whether that&#8217;s something new, updated, or gone — Statamic updates your cache file with just those changes. If you have hundreds of content files, you may see a small delay during your first visit, but each visit after that will be lightning quick. (Assuming you&#8217;re not changing hundreds of files before each page load, and even if for some reason you are, things are still much faster than without caching.)</p>
+
+<h2>Why It Works</h2>
+
+<p>Opening, reading, and closing a file from the filesystem isn&#8217;t a terribly time-consuming process by itself, but when you do it hundreds (or even thousands) of times for one page load, those little bits really start to stack up. By not needing to open up tons of files to build a page, rendering speeds increase dramatically, cutting page-load time by over two-thirds in some scenarios.</p>
+
+<p>This means that whether your site has tens or hundreds of files, every page load is quick while still being assembled dynamically.</p>
+
+<h2>What Gets Cached</h2>
+
+<p>Only your content&#8217;s <a href="core-concepts.html#front-matter">front-matter</a> gets stored into the content cache. We do this for average-use-case reasons. Our testing found that on average, front-matter was generally pretty small, while content-areas were generally pretty big. Storing <em>everything</em> into your cache made the cache file <em>huge</em> on big sites, to the point that opening that one large file and working with it was becoming just as slow as opening hundreds of files.</p>
+
+<p>Keeping your content out of the cache allows the cache file to stay a more manageable size for both working with and storing. Virtually all filtering and sorting happens with front-matter variables anyway; Statamic first finds the files needed to build the page being viewed and then <em>only</em> works with those files.</p>
+
+<p>Furthermore, Statamic&#8217;s content-display tags (like <code>{{ entries:listing }}</code> et al.) have been upgraded to only open content files when its absolutely necessary. If your listing tag never displays <code>{{ content }}</code>, Statamic doesn&#8217;t need to open the content file — everything can come straight from the cache. This makes things even faster.</p>
+
+<h2>Sounds Great, How Do I Enable Caching?</h2>
+
+<p>You don&#8217;t have to do anything, caching is on by default for every Statamic site running <a href="../../changelog/v1.5.html">v1.5</a> or later.</p>
+
+<p>We originally made it an option to turn caching on (or to turn it off if we had defaulted it to being on), but we quickly realized that this would mean needing to account for two scenarios for every content-retrieval action. That makes maintaining Statamic twice as hard for us, and when you&#8217;re getting the same end-result, we couldn&#8217;t see why anyone would want to choose to make things slower. So there&#8217;s nothing you need to do, caching is on.</p>
+
+<h3>Your Cache Files</h3>
+
+<p>Your cache file is stored here:</p>
+
+<pre class="prettyprint sh">/_cache/_app/content/</pre>
+
+<p>You will see two files in here:</p>
+
+<ul>
+	<li><code>content.php</code> contains your content cache</li>
+	<li><code>last.php</code> contains a UNIX timestamp of the last time the cache was updated, this is used to determine what&#8217;s changed and what needs updating within the cache</li>
+</ul>
+
+<h2>Gotchas</h2>
+
+<p>The caching system works quite well, but there may be times when you&#8217;ll need to clear your cache. Examples of when this might be needed:</p>
+
+<ul>
+	<li>you move your site — <code>_cache</code> folder and all — to a new server</li>
+	<li>you change site settings that change URL- or file-paths</li>
+	<li>you were manually editing the cache file for some reason — you shouldn&#8217;t be in there anyway</li>
+</ul>
+
+<blockquote>
+  <p>note If your site isn&#8217;t rendering quite as you&#8217;d expect, your first step should be to clear out the cache.</p>
+</blockquote>
+
+<h3>How to Clear the Cache</h3>
+
+<p>Perform the following steps:</p>
+
+<ul>
+	<li>Delete the <code>_cache/_app/content</code> folder</li>
+	<li>Visit your site in browser</li>
+</ul>
+
+<p>Statamic will see that you don&#8217;t have a content cache (or even the folder to hold the cache) and will completely rebuild it for you.</p>
+
+</div>
+
+<p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#101;nt&#108;emen&#64;&#x73;&#x74;a&#116;&#x61;m&#x69;&#99;&#x2e;c&#x6f;&#109;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+</div>
+
+  <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

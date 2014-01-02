@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Creating Add-Ons | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Creating Add-Ons" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+
+<h1>Creating Add-Ons</h1>
+
+<p>In this section you&#8217;ll learn how to create your own add-ons.</p>
+
+<ul>
+	<li><a href="#anatomy-of-an-add-on">Anatomy of an Add-On</a></li>
+	<li><a href="#namespacing">Namespacing</a></li>
+	<li><a href="#organization">Organization</a></li>
+	<li><a href="#plugins">Plugins</a></li>
+	<li><a href="#fieldtypes">Fieldtypes</a></li>
+	<li><a href="#hooks">Hooks</a></li>
+	<li><a href="#tasks">Tasks</a></li>
+	<li><a href="#api">The API</a></li>
+</ul>
+
+</div>
+</article>
+
+<a id="anatomy-of-an-add-on" name="//apple_ref/cpp/Section/1. Anatomy of an Add-On" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Anatomy of an Add-On</h1>
+
+<p class="intro">Getting familiar with Statamic's add-on architecture.</p>
+
+<p>An add-on is how you can extend the core functionality of Statamic.
+Rather than digging in and messing with core files, we&#8217;ve created a system where developers can easily build new features that are compatible with everyone&#8217;s Statamic installations.
+Add-ons can then be easily shared or sold to others to let them extend their Statamic installation.</p>
+
+<p>Where WordPress has <em>plugins</em> and Drupal has <em>modules</em>, Statamic has <em>add-ons</em>.</p>
+
+<h2>The Four Faces of Add-Ons</h2>
+
+<p>One add-on should be thought of as one new feature for your site.
+A “feature” can be something simple (such as a tag that returns the current time), or something large (such as Statamic’s form-builder, that builds, validates, and can process form-data).
+Although the complexity varies, each of those examples tackle one issue.</p>
+
+<p>An add-on contains up to four aspects:</p>
+
+<ul>
+	<li>plugins</li>
+	<li>fieldtypes</li>
+	<li>hooks</li>
+	<li>tasks</li>
+</ul>
+
+<p>Add-ons must have at least one of these aspects, otherwise it wouldn’t do anything, and each can use all four.
+Each aspect accomplishes different missions.</p>
+
+<ul>
+	<li><strong>plugins</strong> create tags for use within templates, this is the output aspect</li>
+	<li><strong>fieldtypes</strong> create new ways to ask for data in the Control Panel, this is the input aspect</li>
+	<li><strong>hooks</strong> connect add-on code with events that are happening with the system as they happen, this is the interconnectivity aspect</li>
+	<li><strong>tasks</strong> allow you to run code at set intervals without people needing to visit the website, this is the background processing aspect</li>
+</ul>
+
+<p>By using combinations of these aspects in your add-ons, you can create some truly fascinating results.
+And remember, all of these aspects are simply PHP, so anything you can do with PHP is possible here.
+The sky is the limit.</p>
+
+</div>
+
+<a id="namespacing" name="//apple_ref/cpp/Section/2. Namespacing" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Namespacing</h1>
+
+<p class="intro">Keeping you from stepping on toes.</p>
+
+<p>Each add-on is namespaced to its own area.
+You don&#8217;t have to do anything to enable this, it happens by default.
+Your add-on&#8217;s namespace is based on the folder name of your add-on.
+Have an add-on named <code>belt-buckles</code>?
+Great!
+You now rule the <code>belt-buckles</code> namespace on any site that your add-on is installed on.</p>
+
+<p>There are some restrictions to this.
+Statamic comes with a number of bundled first-party “core add-ons” that take precedent (like <code>entries</code> and <code>pages</code>), however, there’s a good chance you won’t run into those.</p>
+
+<p>The way that Statamic’s add-on system is structured, each aspect of your add-on can see the entire scope of your namespace.
+This means that all aspects of your add-on can work together to create something wholly awesome.</p>
+
+<p>Finally, with the helpers that we’ve built in, you’ll never actually need to reference your namespace anywhere.
+As long as you stick with our helper methods and objects, we’ll handle the namespacing for you.
+All you need to do is come up with great ideas and implement them.</p>
+
+</div>
+
+<a id="organization" name="//apple_ref/cpp/Section/3. Organization" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Organization</h1>
+
+<p class="intro">Constructed to let you build amazing things.</p>
+
+<p>Statamic&#8217;s add-on system is built upon five objects that will let you create each of the aspects of your add-on.
+We&#8217;ll get more into the specifics of each object in another section, but first it&#8217;s best to understand the architecture of how these objects work together.</p>
+
+<p>First, each of your add-on aspects will extend an object specific to that aspect:</p>
+
+<ul>
+	<li>A <em>plugin</em> will extend <code>Plugin</code></li>
+	<li>A <em>fieldtype</em> will extend <code>Fieldtype</code></li>
+	<li><em>Hooks</em> will extend <code>Hooks</code></li>
+	<li><em>Tasks</em> will extend <code>Tasks</code></li>
+</ul>
+
+<p>Each of these aspect objects (<code>Plugin</code>, <code>Fieldtype</code>, <code>Hooks</code>, and <code>Tasks</code>) extends the <code>AddOn</code> object.
+This <code>AddOn</code> object is at the top of the chain and holds a set of helper methods and objects for use in your add-on.
+These helpers are available in all aspects of your add-on.</p>
+
+<h2>The Helpers</h2>
+
+<p>The helper methods and objects allow all of your add-on&#8217;s aspects to work closely together.
+These helpers let you share variables and data throughout your add-on, allowing you to have complete control over your add-on, all within the comfort of your add-on&#8217;s namespace.</p>
+
+<p><strong>Note:</strong> the most important thing to remember when using helpers is that <em>all</em> aspects share the same data.
+Data stored in one aspect can be retrieved in another.
+This is where the magic happens.</p>
+
+<h3>Message Logging</h3>
+
+<p>There will be times when you&#8217;ll want to record messages for the site&#8217;s owner to see and understand, whether those are strictly informative, or more-pressing error messages.
+The <code>$this-&gt;log</code> object will help you with this.</p>
+
+<p><code>$this-&gt;log</code> is a reference to a contextual logging object.
+That&#8217;s a fancy way of saying that <code>$this-&gt;log</code> is an object that you can use to create messages that automatically show themselves as coming from your add-on&#8217;s namespace.
+This will let site owners know where a logged message has come from so that if they <em>do</em> need help, they&#8217;ll know where to go to get it.</p>
+
+<p>To write an error message to the log originating from your add-on, simply use this helper&#8217;s <code>error</code> method:</p>
+
+<pre class="prettyprint php">$this-&gt;log-&gt;error("Something has gone pear-shaped.");</pre>
+
+<p>In the log, this message will record itself as coming from your add-on (and will also say which which aspect within your add-on was responsible).
+For example, if your plugin is the object that has caused this message to be written, the <em>What Caused This</em> column will show users <code>plugin : your-add-on-name</code>.
+This will be helpful when it comes to debugging your add-on&#8217;s users&#8217; errors later on should it come to that.</p>
+
+<p>There are five log methods available, each of which correspond to the severity-level of message you intend to log:</p>
+
+<pre class="prettyprint php">$this-&gt;log-&gt;debug("This is a debug message.");
+$this-&gt;log-&gt;info("This is an info message.");
+$this-&gt;log-&gt;warn("This is a warn message.");
+$this-&gt;log-&gt;error("This is an error message.");
+$this-&gt;log-&gt;fatal("This is a fatal message.");
+</pre>
+
+<h3>Scripts, Stylesheets &amp; Assets</h3>
+
+<p>Your add-on may require including JavaScript, loading CSS, or linking to assets that you&#8217;ve included with your aspect files.
+These helper objects will help you find these and work with these files.</p>
+
+<h4>Folder Structure</h4>
+
+<p>Each of these file-finding helpers has a set list of locations that they&#8217;ll look for files.
+The first place they&#8217;ll look is on the root-level of your add-on&#8217;s folder.
+This makes including one or two quick files easy without having to deal with the tedium of folders.
+If the file it&#8217;s looking for isn&#8217;t found there, it will look into the appropriate folder as laid out below:</p>
+
+<pre class="prettyprint sh">your-add-on/
+    css/
+    js/
+    _assets/
+</pre>
+
+<p>We recommend using this folder structure as a best practice for your helper files anyway, but if you want to use the included helper objects (which, again, is recommended), you&#8217;ll need to follow this naming convention.</p>
+
+<h4>CSS</h4>
+
+<p>We&#8217;ve included three helper methods for accessing and creating CSS for your add-on, each of which are found on the <code>$this-&gt;css</code> helper object.
+To get the path of one of your CSS files, you would do the following:</p>
+
+<pre class="prettyprint php">$css_file = $this-&gt;css-&gt;get("my-css.css");</pre>
+
+<p>This will set the full webpath of <code>my-css.css</code> to <code>$css_file</code>.
+You should use this helper to locate your CSS files because of the difference in settings from site-to-site. This method is guaranteed to find your files.</p>
+
+<p>If you want to get the full HTML to include a stylesheet, you can use the <code>link</code> method, like so:</p>
+
+<pre class="prettyprint php">$html = $this-&gt;css-&gt;link("my-css.css");</pre>
+
+<p>This will return an HTML <code>&lt;link&gt;</code> tag for use with your add-on.
+This method can also accept an array of stylesheets, so if you have a couple of different stylesheets to include, it&#8217;s even easier.</p>
+
+<p>Finally, if you want to create some inline CSS, you can do that with the <code>inline</code> method:</p>
+
+<pre class="prettyprint php">$style = $this-&gt;css-&gt;inline("h1 { font-weight: bold; }");</pre>
+
+<p>Statamic will return your passed-in CSS wrapped in a simple HTML <code>style</code> tag.</p>
+
+<h4>JavaScript</h4>
+
+<p>The JavaScript helper is similar to the CSS helper, except that it handles JavaScript instead of stylesheets.
+That makes sense.
+To get the full web-path to a script in your add-on, do the following:</p>
+
+<pre class="prettyprint php">$js_file = $this-&gt;js-&gt;get("my-script.js");</pre>
+
+<p>To get the full HTML tag for including your script, you would use:</p>
+
+<pre class="prettyprint php">$html = $this-&gt;js-&gt;link("my-script.js");</pre>
+
+<p>And again, this method can also accept an array for including multiple scripts.
+This is probably more helpful here than it will be with CSS.</p>
+
+<p>Of course, we wanted to also let you write inline JS, so we provide you with:</p>
+
+<pre class="prettyprint php">$js = $this-&gt;js-&gt;inline('document.write("Don't use document.write.");');</pre>
+
+<p>This simply wraps your inline JavaScript in a <code>&lt;script&gt;</code> tag for convenience.</p>
+
+<h4>Assets</h4>
+
+<p>The assets helper will let you locate pretty much any other file that you&#8217;ve packaged with your add-on.
+We&#8217;ve named this folder <code>assets</code> so that you didn&#8217;t feel that you were limited to simple images.
+If you want to include other types of files, feel free to do that.</p>
+
+<p>This helper object only has one method:</p>
+
+<pre class="prettyprint php">$img = $this-&gt;assets-&gt;get('handsome-man.jpg');</pre>
+
+<p>This, like the others, will look at the root-level of your add-on for <code>handsome-man.jpg</code>, and will then look inside of the <code>assets</code> folder in your add-on&#8217;s root-level folder (if it exists) for your file.
+If it finds it, you&#8217;ll get back the full path.
+Otherwise, you&#8217;ll get back an empty string and a message will log an error that the file couldn&#8217;t be found.</p>
+
+<p>Something to keep in mind: you can sub-divide your assets folder further if you&#8217;d like, so if for example your add-on folder structure looked like this:</p>
+
+<pre class="prettyprint sh">your-add-on/
+    _assets/
+        img/
+            handsome-man.jpg
+</pre>
+
+<p>You can find this with a call of:</p>
+
+<pre class="prettyprint php">$img = $this-&gt;assets-&gt;get('img/handsome-man.jpg');</pre>
+
+<h3>Session Variables</h3>
+
+<p>Session variables allow you to store temporary data that follows a user around from page to page.
+This data will be erased once the user&#8217;s <em>session</em> ends. (Read up about <a href="http://php.net/sessions">sessions on PHP&#8217;s site</a> to learn more about what will end a user&#8217;s session.)</p>
+
+<p>As an add-on developer, you don&#8217;t have to worry about starting or ending sessions — they&#8217;ll be there and ready for you when you want them.
+By using the <code>$this-&gt;session</code> helper object, you can check for, create, read, and delete variables in the user&#8217;s session that are nicely namespaced for just your add-on.</p>
+
+<p>As an example, below is how you would create a <code>has_flannel_shirt</code> session variable:</p>
+
+<pre class="prettyprint php">$this-&gt;session-&gt;set('has_flannel_shirt', true);</pre>
+
+<p>This variable is set and will follow the user around until either you overwrite it, delete it, or their session ends.</p>
+
+<p>Want to check to see if a user has a flannel shirt?
+Simply do the following:</p>
+
+<pre class="prettyprint php">$this-&gt;session-&gt;get('has_flannel_shirt');</pre>
+
+<p>You don&#8217;t need to worry about checking to see if a session variable already exists before looking up its value.
+Statamic will return <code>null</code> if the session variable you&#8217;re looking for hasn&#8217;t yet been set.
+That being said, you <em>can</em> check to see if a session variable is set like so:</p>
+
+<pre class="prettyprint php">$this-&gt;session-&gt;exists('has_flannel_shirt');</pre>
+
+<p>When you want to delete one of your session variables, you can do so with the <code>delete</code> method:</p>
+
+<pre class="prettyprint php">$this-&gt;session-&gt;delete('has_flannel_shirt');</pre>
+
+<p>This will unset the variable so that if you were to <code>get</code> it again, you&#8217;ll simply have <code>null</code> returned.</p>
+
+<p>Finally, we&#8217;ve created a method to completely remove all of the session variables you&#8217;ve set:</p>
+
+<pre class="prettyprint php">$this-&gt;session-&gt;destroy();</pre>
+
+<p>This will <em>only</em> affect your namespace, so you don&#8217;t have to worry about removing other people&#8217;s hard work if they&#8217;ve been using sessions too.</p>
+
+<p>And remember, all aspects of your add-on can use these methods, and they all share the same data sources.
+This means that you could set <code>has_flannel_shirt</code> on one of your pages, and have a hook that destroys the session when a user logs out, for example.
+The value of <code>has_flanel_shirt</code> is the same to your plugins as it is to your fieldtypes, hooks, and tasks. Simple and convenient.</p>
+
+<h3>Your Data Cache</h3>
+
+<p>Where session variables are a short-term data storage technique, your add-on&#8217;s data cache is a long-term solution.
+The <code>$this-&gt;cache</code> helper object lets you create, maintain, manipulate, and delete files with your add-on&#8217;s namespaced cache folder.
+This folder is intended for long-term data storage, and is not available publicly via a URL.</p>
+
+<p>This helper object has a lot of methods that let you do quite a bit of file manipulation without too much effort.</p>
+
+<p>First, let&#8217;s look at storing data to a file.
+Let&#8217;s say that you want to store a timestamp of the last time that your add-on did some action.
+We can store that into a data file for safe keeping like so:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;put('last-check', $timestamp);</pre>
+
+<p>This will save the value of <code>$timestamp</code> to the <code>last-check</code> file in your object&#8217;s long-term data store.</p>
+
+<p>Remember that technically, this is just creating a <code>last-check</code> file.
+You can use an extension if that makes you feel more comfortable, something like <code>last-check.txt</code> if you&#8217;d like, but you don&#8217;t have to.
+You&#8217;ll be using this helper&#8217;s methods to read and write to these files, so you shouldn&#8217;t ever have to worry about file extensions if you don&#8217;t want to.
+Like most things in Statamic, we leave it up to you.</p>
+
+<p>When it&#8217;s time to read the timestamp of that <code>last-check</code>, you&#8217;ll do this:</p>
+
+<pre class="prettyprint php">$timestamp = $this-&gt;cache-&gt;get('last-check');</pre>
+
+<p>This will set the contents of your <code>last-check</code> file to $timestamp for use in your add-on.
+Again, don&#8217;t worry about checking to see if this file exists, Statamic will return <code>null</code> if no file was found (and actually, you can pass it a second parameter that will be returned if the file can&#8217;t be found).
+Also again, you can check to see if a given file exists in your data cache with the following:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;exists('last-check');</pre>
+
+<p>Not necessary in most circumstances, but helpful in some.</p>
+
+<p>Sometimes you won&#8217;t want to just write data to a file, but you&#8217;ll want to add to what&#8217;s already there.
+We&#8217;ve given you two methods to do just that:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;append('my-file', 'FIN');
+$this-&gt;cache-&gt;prepend('my-file', 'But I digress… ');
+</pre>
+
+<p>Easy enough: <code>append</code> appends, <code>prepend</code> prepends.</p>
+
+<p>Because you&#8217;re interacting with files, we&#8217;ve created a couple of methods to help you do filesystem-like things.
+First, <code>listAll</code> lets you see what&#8217;s in your cache.</p>
+
+<pre class="prettyprint php">$files = $this-&gt;cache-&gt;listAll();</pre>
+
+<p>This returns an array of all files in your cache.</p>
+
+<p>If you wish to move a file in your cache, that can be done with the <code>move</code> method:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;move('last-check', 'new-last-check');</pre>
+
+<p>In this example, the <code>last-check</code> file becomes <code>new-last-check</code>.
+Of course, if you don&#8217;t want to just move, you can use this method&#8217;s sister method <code>copy</code>:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;copy('last-check', 'also-last-check');</pre>
+
+<p>This example will copy the contents of <code>last-check</code> into the <code>also-last-check</code> file, so that you end up with two files in your data cache.</p>
+
+<h4>Subfolders</h4>
+
+<p>You don&#8217;t have to keep all of your cache files in one area.
+When you name your files with <code>put</code>, <code>move</code>, or <code>copy</code>, you can include subfolders as well:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;move('last-check', 'old/last-check');</pre>
+
+<p>This will create an <code>old</code> folder within your cache&#8217;s data storage, and will move the contents of <code>last-check</code> into a <code>last-check</code> folder <em>within</em> the <code>old</code> folder.
+Neat, right?
+And you can create as many subfolders as you&#8217;d like.
+Any parameter that accepts a filename can accept a subfolder path like in the example above, and it can be as many levels deep as you&#8217;d like.</p>
+
+<p>And that includes <code>listAll</code>.
+If you only want to see the contents of a given folder, pass that to <code>listAll</code>:</p>
+
+<pre class="prettyprint php">$old_files = $this-&gt;cache-&gt;listAll('old/');</pre>
+
+<p>Perhaps you want to move a file to the <code>old</code> folder once it hasn&#8217;t been touched for more than a set period of time.
+This can be done with the help of <code>getAge</code>:</p>
+
+<pre class="prettyprint php">if ($this-&gt;cache-&gt;getAge('last-check') &gt;= 60) {
+    $this-&gt;cache-&gt;move('last-check', 'old/last-check');
+}
+</pre>
+
+<p>The above example will move <code>last-check</code> into the <code>old</code> folder if it hasn&#8217;t been touched for more than <code>60</code> seconds.</p>
+
+<h4>Deleting Files</h4>
+
+<p>There are a couple of different ways that you can delete files from your add-on&#8217;s data cache.
+First, there&#8217;s the straight-forward file deletion:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;delete('last-check');</pre>
+
+<p>This will delete the <code>last-check</code> file if it exists.
+Next, there&#8217;s the bit-more-brash <code>destroy</code> method that will delete entire folders:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;destroy();</pre>
+
+<p>The above example will delete <em>all</em> files within your cache.
+If you want to just destroy one particular folder (and everything within it), you can do that with:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;destroy('old');</pre>
+
+<p>There goes the <code>old</code> folder.</p>
+
+<p>Rather than making you check <code>getAge</code> to purge older files, we&#8217;ve also added two methods to help you do this faster.
+First, you can delete all files that haven&#8217;t been modified since before a given date:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;purgeFromBefore("December 25, 2012");</pre>
+
+<p>Second, you can delete all files that haven&#8217;t been modified in a given number of seconds:</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;purgeOlderThan("60");</pre>
+
+<p>By default, both of these methods will act on the root folder, but both take a second parameter to let you specify which folder to purge from.</p>
+
+<h4>We Love YAML</h4>
+
+<p>You may be thinking that these methods are all well-and-good, but storing one value per file is going to get cumbersome rather quickly.
+Fear not!
+We&#8217;ve got you covered.</p>
+
+<p>There are two additional methods to help you store large amounts of organized data into files for use later on.
+Let&#8217;s say that your add-on has a task that collects your tweets from the Twitter API.
+You want to store this information for use later on by a plugin so that you can get those tweets onto your page.</p>
+
+<p>For this example, let&#8217;s assume that your task has packaged up tweets into a PHP array called <code>$tweets</code>.
+To store this data as YAML, use the <code>putYAML</code> method.</p>
+
+<pre class="prettyprint php">$this-&gt;cache-&gt;putYAML('tweets', $tweets);</pre>
+
+<p>This method will convert <code>$tweets</code> — a PHP array — into YAML before it stores it to the file.
+If you were to look at this file, it will be plain-old YAML.</p>
+
+<p>Next, your plugin will need to use this data to get it into a template.
+Since all aspects within an add-on share the same data storage, that&#8217;s a simple matter of grabbing it with <code>getYAML</code>:</p>
+
+<pre class="prettyprint php">$tweets = $this-&gt;cache-&gt;getYAML('tweets');</pre>
+
+<p>This method will read the contents of your <code>tweets</code> file and will run it through the YAML parser, returning a PHP array into <code>$tweets</code>.
+And that&#8217;s that.
+Simple complex data storage that&#8217;s also easily human-readable when stored.</p>
+
+<h3>Tasks</h3>
+
+<p><a href="#tasks">Tasks</a> are one of the aspects of your add-on.
+While not all Statamic installations are guaranteed to support Tasks, that doesn&#8217;t mean that using a Tasks file is a bad idea.</p>
+
+<p>All other aspects in your add-on (which would be plugin, fieldtype, and hooks) will have access to your add-on&#8217;s Task object via <code>$this-&gt;tasks</code>.
+This is a simple reference to the Task object itself.
+This accomplishes a couple of things:</p>
+
+<ul>
+	<li>If you <em>do</em> intend to use Tasks with your add-on, this object will probably hold most of the heavy lifting methods for your add-on</li>
+	<li>We recommend that any object using Tasks should have a back-up plan in case an installation can&#8217;t use Tasks automatically — including your add-on&#8217;s Tasks object allows you easy-access to its methods inside for triggering at other times, whether that&#8217;s at run-time or through hooks</li>
+	<li>It may be a good idea to keep all of your add-on&#8217;s processing methods (as in, any method your add-on needs to process information to do what it&#8217;s supposed to do) in a Tasks object and access it through the <code>$this-&gt;tasks</code> helper — this will keep your code <a href="http://wikipedia.org/wiki/Don't_repeat_yourself">DRY</a> and will make your add-on easier to convert to one that uses automated Tasks in the future</li>
+</ul>
+
+<p>The Tasks object itself doesn&#8217;t get a <code>$this-&gt;tasks</code> helper, because it would reference itself, and inside that would be a reference to itself — the dreaded infinite loop.
+
+</div>
+
+<a id="plugins" name="//apple_ref/cpp/Section/4. Plugins" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Plugins</h1>
+
+<p class="intro">Create tags for templates.</p>
+
+<p>A <em>plugin</em> lets you create tags to display output into templates.
+For example, <code>{{ entries:listing }}</code> is a plugin — a first-party one, but a plugin nonetheless.
+A plugin tag is made up of two parts:</p>
+
+<ul>
+	<li>the name of the add-on where the plugin can be found</li>
+	<li>the method within the plugin object to call</li>
+</ul>
+
+<p>The <code>{{ entries:listing }}</code> tag will display the result of the <code>listing</code> method in the <code>entries</code> plugin object.</p>
+
+<h2>Creating a Basic Plugin</h2>
+
+<p>The first step in creating a plugin is creating the file containing the object that will hold all of your tag&#8217;s methods.
+The file itself will be named after your add-on, for example, if your add-on is in a folder called <code>flannelize</code>, your plugin file will be <code>pi.flannelize.php</code>.
+The <code>pi</code> is for <code>plugin</code>.
+This file goes on the root-level of your add-on&#8217;s folder.</p>
+
+<p>Next, within that file we need to create an object that extends Statamic&#8217;s <code>Plugin</code> object.
+The name of the object must be <code>Plugin_</code> followed by the name of your add-on, like so:</p>
+
+<pre class="prettyprint php">class Plugin_flannelize extends Plugin
+{
+
+}
+</pre>
+
+<p>Finally, we need to create callable tags.
+This object by itself won&#8217;t do anything, as there are no methods within it to call.
+Let&#8217;s create a <code>plaid</code> method, which will become a callable tag by using <code>{{ flannelize:plaid }}</code>.</p>
+
+<pre class="prettyprint php">class Plugin_flannelize extends Plugin
+{
+    public function plaid()
+    {
+        return "PLAID!"
+    }
+}
+</pre>
+
+<p>There, you&#8217;ve just made your first plugin.
+This is the most basic of examples, and is relatively useless, but serves to illustrate how simple creating new tags can be.
+We&#8217;re just returning a string here, but remember that this is just PHP, and you can do <em>anything</em> that PHP can do.</p>
+
+<h2>Getting Input</h2>
+
+<p>Plugins, like all add-on aspects, have access to the add-ons configuration file (if one exists).
+You can look up values from your configuration file with the <code>$this-&gt;fetchConfig</code> method.
+Configuration files are a great place to store default values, especially for values that a user may want to change site-wide.</p>
+
+<p>However, plugins also have a second way to gather input from users: through parameters passed on the tag itself.
+When you use <code>{{ entries:listing }}</code> for example, you&#8217;ll usually supply a <code>folder</code> to tell the tag which folder you want to look in.
+Your plugin can access these values with the <code>$this-&gt;fetchParam</code> method.</p>
+
+<p>For example, if your user creates a tag that looks like this:</p>
+
+<pre class="prettyprint php">{{ flannelize:plaid exclaim="Yeeehaw!" }}</pre>
+
+<p>You can retrieve that value in your plugin&#8217;s method like so:</p>
+
+<pre class="prettyprint php">class Plugin_flannelize extends Plugin
+{
+    public function plaid()
+    {
+        $exclaim = $this-&gt;fetchParam("exclaim");
+    }
+}
+</pre>
+
+<p>In some cases, you may want to provide a default value in your add-on&#8217;s configuration while letting users optionally override that value as a parameter.
+Rather than checking for one and then the other, we&#8217;ve set up <code>$this-&gt;fetch</code> as a helper for you.</p>
+
+<p>This method will look in the user-set parameters and will return that value if its found, otherwise, it will look in your configuration and return <em>that</em> value if its found.
+If none are found, it will return <code>null</code>.</p>
+
+<h2>Single Tags vs. Tag Pairs</h2>
+
+<p>To create a single tag, something that stands alone by itself and doesn&#8217;t require a closing tag, your tag method must return a string.
+Within a template, your tag will be replaced with that returned string.</p>
+
+<p>Creating a tag-pair is equally as straight-forward; rather than returning a string, your tag must return an associative array, where the name of each key will become a tag usable within your tag-pair.
+For example, if your method returns an array that looks like this:</p>
+
+<pre class="prettyprint php">Array(
+    "tree" =&gt; "maple",
+    "path" =&gt; "dirt",
+    "sky" =&gt; "blue"
+);
+</pre>
+
+<p>The <code>{{ tree }}</code>, <code>{{ path }}</code>, and <code>{{ sky }}</code> tags will be available within your tag-pair — they will be replaced by the values you return, so <code>tree</code> will become <code>maple</code>, etc.</p>
+
+<h3>An Advanced Technique for Tag Pairs</h3>
+
+<p>Returning an array from a tag-pair method will cause Statamic to automatically process the content between the tags, replacing values as needed.
+However, a tag-pair doesn&#8217;t <em>need</em> to return an array.</p>
+
+<p>The value of what a user has entered within your tag-pair is stored in <code>$this-&gt;content</code> in your Plugin object.
+If you need to do something like loop through the content a couple of times (as <code>entries:listing</code> does), you can use <code>$this-&gt;content</code> with <code>Parse::template</code> to manually parse your tag-pair&#8217;s content.
+Using <code>Parse::template</code> will return a string, which you can then return from your tag-pair.</p>
+
+<p>This probably won&#8217;t be necessary most of the time, but it&#8217;s worth knowing that it <em>is</em> possible if you need to do it.
+Just remember, returning a string from a tag-pair means no automatic content-parsing from Statamic.</p>
+
+<h2>Everything Works Together</h2>
+
+<p>Finally, remember that your plugin object shares the same namespace as any other aspect of your add-on, and can get and set data just like the rest of them.
+You may not always need to store or retrieve data to make useful tags, but remember that you can do so quite easily.</p>
+
+</div>
+
+<a id="fieldtypes" name="//apple_ref/cpp/Section/5. Fieldtypes" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Fieldtypes</h1>
+
+<p class="intro">Create new ways for admins to enter data.</p>
+
+<p>A <em>fieldtype</em> lets you create a way for users to input data into the Control Panel.
+For example, <code>location</code> is an add-on with a fieldtype.
+This aspect is the most complex of the four, as it has the most requirements and things to understand.</p>
+
+<h2>Creating a Fieldtype</h2>
+
+<p>The first step to creating a fieldtype is creating the file containing the object that will define the fieldtype itself.
+This file will be named after your add-on, for example, if your add-on is in a folder called <code>backpack</code>, your fieldtype file will be <code>ft.backpack.php</code>.
+The <code>ft</code> is for <code>fieldtype</code>.
+This file goes into the root-level of your add-on&#8217;s folder.</p>
+
+<p>Next, within that file we need to create an object that extends Statamic&#8217;s <code>Fieldtype</code> object.
+The name of the object must be <code>Fieldtype_</code> followed by the name of your add-on, like so:</p>
+
+<pre class="prettyprint php">class Fieldtype_backpack extends Fieldtype
+{
+
+}
+</pre>
+
+<h2>How Fields are Rendered</h2>
+
+<p>A fieldtype is rendered by combining four different parts:</p>
+
+<ol>
+	<li>The field&#8217;s label</li>
+	<li>The field&#8217;s &#8220;above&#8221; instructions</li>
+	<li>The field itself</li>
+	<li>The field&#8217;s &#8220;below&#8221; instructions</li>
+</ol>
+
+<p>The only thing that you <em>must</em> define is how the field itself will render.
+The rest of these options come with default values that you can optionally overwrite.</p>
+
+<h3>Rendering Labels</h3>
+
+<p>To render your own field label, you&#8217;ll define the <code>render_label</code> method.
+By default, this method returns an HTML <code>label</code> tag using <code>$this-&gt;field_id</code> as the <code>for</code> attribute.
+The text within will be what was set for this field&#8217;s <code>display</code> configuration (as set in the fieldset).</p>
+
+<h3>Rendering Instructions</h3>
+
+<p>You&#8217;re probably best leaving the instructions-rendering alone.
+There are two methods that handle rendering instructions: <code>render_instructions_above</code> and <code>render_instructions_below</code>.
+The tricky part comes in where Statamic allows users to enter either instructions as a named-list (with &#8220;above&#8221; and &#8220;below&#8221;), or just define instructions as a string, in which case this value will be used as &#8220;above&#8221; instructions.</p>
+
+<h3>Rendering Your Field</h3>
+
+<p>This is the only required method to define for a fieldtype.
+Defining your field is done by returning the HTML for your fields from the the <code>render</code> method.</p>
+
+<pre class="prettyprint php">class Fieldtype_backpack extends Fieldtype
+{
+    public function render()
+    {
+
+    }
+}
+</pre>
+
+<p><code>Fieldtype</code> comes with a couple of properties that you may find to be quite useful.</p>
+
+<ul>
+	<li><code>$this-&gt;field_id</code> is a random string that can be used as the HTML <code>id</code> of your field, the <code>render_label</code> method will use this value by default</li>
+	<li><code>$this-&gt;field_data</code> is the current value of your field — it will be null on a new form, and will contain the saved value during a form edit</li>
+</ul>
+
+<h3>Render Order</h3>
+
+<p>The <code>render_field</code> method is essentially a wrapper that determines the order of the items rendered for a given fieldtype.
+The default order is listed above, but can be altered per fieldtype.
+To do this, overwrite <code>render_field</code> in your fieldtype returning the items in the order you choose, for example:</p>
+
+<pre class="prettyprint php">public function render_field()
+{
+    return $this-&gt;render_instructions_above() .
+        $this-&gt;render_label() .
+        $this-&gt;render() .
+        $this-&gt;render_instructions_below();
+}
+</pre>
+
+<p>The above code would print the label after your &#8220;above&#8221; instructions, but just for your fieldtype.
+Best practice is to leave the default order unless you have a very good reason to do so.</p>
+
+</div>
+
+<a id="hooks" name="//apple_ref/cpp/Section/6. Hooks" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Hooks</h1>
+
+<p class="intro">Letting add-ons connect to events within Statamic.</p>
+
+<p>A <em>hook</em> allows you to run arbitrary code when certain events happen in Statamic.
+Hooks give you a clean way to interact with the system (as well as other add-ons) without needing to hack things in a way that might break later.</p>
+
+<h2>Hooking Into Events</h2>
+
+<p>The first step to adding hooks to your add-on is to create the file that will contain your hooks.
+This file will be named after your add-on, for example, if your add-on is in a folder called <code>hiking_boots</code>, your hooks file will be <code>hooks.hiking_boots.php</code>.
+This file goes into the root-level of your add-on&#8217;s folder.</p>
+
+<p>Next, within that file we need to create an object that extends Statamic&#8217;s <code>Hooks</code> object.
+The name of the object must be <code>Hooks_</code> followed by the name of your add-on, like so:</p>
+
+<pre class="prettyprint php">class Hooks_hiking_boots extends Hooks
+{
+
+}
+</pre>
+
+<p>There are no required methods to add within your <code>Hooks</code> object, you&#8217;ll simply add a function for each hook you want to listen for, which will contain the code you want to perform when it happens.</p>
+
+<p>As an example, let&#8217;s say that you want to add some CSS to the head of the Control Panel for your add-on.
+You can do this by hooking into the <code>control_panel__add_to_head</code> hook, like so:</p>
+
+<pre class="prettyprint php">class Hooks_hiking_boots extends Hooks
+{
+    return $this-&gt;css-&gt;link('hiking_boots.css');
+}
+</pre>
+
+<p>This command will add an HTML <code>link</code> tag for your add-on&#8217;s <code>hiking_boots.css</code> file.
+This hook is going to print out whatever is returned into the <code>head</code> tag of the Control Panel.</p>
+
+<p>Statamic comes with <a href="documentation/hooks.html">a number of hooks available to you</a>.
+Each one can do something different, so for example, returning HTML won&#8217;t work every time.
+Consult the hook&#8217;s documentation for information on how each will work and what you need to do to use it properly.</p>
+
+<h2>Creating Your Own Hookable Events</h2>
+
+<p>Creating hookable events isn&#8217;t something reserved for Statamic&#8217;s core, you can have your add-on trigger hooks as well.
+To do so, you&#8217;ll use <code>$this-&gt;runHook()</code> within any aspect of your add-on.</p>
+
+<p>For example, to create a <code>kick</code> hook for your <code>hiking_boots</code> add-on, you would do the following:</p>
+
+<pre class="prettyprint php">$this-&gt;runHook('kick');</pre>
+
+<p>This is the simplest form of a hook.
+To hook into this event, another add-on would use the hook method <code>hiking_boots__kick</code>.
+As you can see, hook names are automatically namespaced with your add-on&#8217;s name, letting you not worry about stepping on toes with your hook names.</p>
+
+<h2>Hook Types</h2>
+
+<p>There are three types of hooks that you can create:</p>
+
+<ul>
+	<li>A <code>call</code> hook (the default type) will simply call each of the hooks that it finds for a given event, not passing any resulting data along if more than one hook is found</li>
+	<li>A <code>cumulative</code> hook will merge together the results of each called hook method, giving you one big value at the end; if an array is being returned each time, you&#8217;ll have one big array at the end; if a string is being returned, you&#8217;ll end up with a long, concatenated string</li>
+	<li>A <code>replace</code> hook will overwrite the passed data with each call hook method, which means your final output from running a hook will be the last hook method called in the chain</li>
+</ul>
+
+<p>Which you use is up to you, and will depend on what your hook is attempting to accomplish.</p>
+
+</div>
+
+<a id="tasks" name="//apple_ref/cpp/Section/7. Tasks" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Tasks</h1>
+
+<p class="intro">Automating work in the background for you.</p>
+
+<p>A <em>task</em> acts a bit like a <a href="#hooks">hook</a>, except that instead of a system event triggering your code to run, the code is run at a set interval.
+Tasks rely on a user having access to <code>crontab</code> on their server, which means that not everyone will be able to use tasks out of the box.
+We&#8217;ve tried to make the use of <code>cron</code> as small as possible, so even if you don&#8217;t have command-line access to it, there&#8217;s a chance that your server&#8217;s support team can set it up for you.</p>
+
+<h2>Using Tasks</h2>
+
+<p>To enable tasks, add the following line to your server&#8217;s crontab:</p>
+
+<pre class="prettyprint sh">* * * * * curl --silent http://example.com/TRIGGER/tasks/tick &gt; /dev/null 2&gt;&amp;1</pre>
+
+<p>You&#8217;ll want to replace <code>example.com</code> in the above code with your site&#8217;s URL.
+Once this line is in place, tasks should start running.
+Tasks will write a debug-level message to your log each time it fires if you have it enabled.
+It will also log messages about attempting to call tasks and whether or not it was capable.</p>
+
+<h2>Setting Up Tasks</h2>
+
+<p>To set up tasks for your add-on, first you&#8217;ll need to create the file that will hold your Tasks object.
+The file itself will be named after your add-on, for example, if your add-on is a folder called <code>crank</code>, your tasks file will be <code>tasks.crank.php</code>.
+This file goes into the root-level of your add-on&#8217;s folder.</p>
+
+<p>Next, we need to create the object within the file. This object will extend Statamic&#8217;s <code>Tasks</code> object and must be named <code>Tasks_</code> followed by the name of your add-on, like so:</p>
+
+<pre class="prettyprint php">class Tasks_crank extends Tasks
+{
+
+}
+</pre>
+
+<p>There is one <em>required</em> method to get tasks to work, although you&#8217;ll end up with two to create a task that does anything.
+Use the <code>define</code> method to define each of your add-on&#8217;s tasks as well as the interval (in minutes) that they should run at.</p>
+
+<pre class="prettyprint php">class Tasks_crank extends Tasks
+{
+    public function define()
+    {
+        // call the `kickIt` method every 5 minutes:
+        $this-&gt;add(5, 'kickIt');
+    }
+}
+</pre>
+
+<p>As mentioned earlier, <code>define</code> is the only required method, but as you can see in the above example, without now defining the <code>kickIt</code> method, your Tasks file is a bit useless.
+So let&#8217;s create that method:</p>
+
+<pre class="prettyprint php">class Tasks_crank extends Tasks
+{
+    public function define()
+    {
+        // call the `kickIt` method every 5 minutes:
+        $this-&gt;add(5, 'kickIt');
+    }
+
+    public function kickIt()
+    {
+        $this-&gt;cache-&gt;put('last_run', time());
+        return true;
+    }
+}
+</pre>
+
+<p>Tasks are smart enough to only run the appropriate methods when its time to do so.
+Each task method is expected to return either <code>true</code> or <code>false</code> based upon whether whatever your tasks was supposed to do was successful.
+Returning <code>true</code> means that your task ran successfully.
+Returning <code>false</code> indicates that something went wrong.
+This will trigger a warning-message to be logged, and will cause Tasks to re-try running your task the next time tasks are run (about a minute later).
+So when you set a task to be <em>every 5 minutes</em>, it will try to run successfully every 5 minutes, running more frequently if needed.</p>
+
+<p>The above example isn&#8217;t doing a whole lot of useful things, but remember that you can do virtually anything PHP can do in these methods.
+Also remember, your defined methods become available in <code>$this-&gt;tasks</code> within the other aspects of your add-on.
+So if you want to call <code>kickIt</code> within your <code>crank</code> add-on&#8217;s plugin file, you can do so like this:</p>
+
+<pre class="prettyprint php">$this-&gt;tasks-&gt;kickIt();</pre>
+
+</div>
+
+<a id="api" name="//apple_ref/cpp/Section/8. The API" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>The API</h1>
+
+<p class="intro">An internal abstraction layer that lets you do many things easily.</p>
+
+<p>Statamic&#8217;s internal API is made up of over 100 methods spread across 22 objects.
+These objects and methods let you do a number of things, including file manipulation, URL examining, template parsing, and much more.
+This API is the very same that is used in Statamic&#8217;s core files.
+With everyone using the same API, you can rest assured that it&#8217;s well-maintained, relevant, and becoming more useful with each release.</p>
+
+<h2>Why Use the API</h2>
+
+<p>If you&#8217;re developing add-ons, it&#8217;s considered best practice to use the internal API for any tasks that you can.
+Although some methods are simply wrappers for standard PHP functions, many are not.
+The API gives developers a lot of power, and saves the core Statamic team from worrying about breaking add-ons with future updates.</p>
+
+<p>The interface for API methods will mostly remain the same, although the underlying code may get refactored or reworked in some releases.
+By using the API, your add-on will automatically remain up-to-date and will instantly benefit from the refactored underlying code.</p>
+
+<p>And if there comes a time where we <em>do</em> need to change the interface of existing API methods or objects, nothing will break right away.
+The core team will deprecate old methods with helpful information on how to update your code.
+As a developer, you will have a couple of Statamic core updates to update your add-ons before anything gets removed.
+We don&#8217;t anticipate this happening very often, but if it does, you should know that we&#8217;re still looking out for everyone.</p>
+
+<h2>Static Methods &amp; Objects</h2>
+
+<p>The API is comprised entirely of static methods within objects.
+Objects are logical groupings of the methods they contain.
+For example, the <code>File</code> API object contains methods relating to file creation, manipulation, and removal.</p>
+
+<p>Consult the <a href="documentation.html">API Documentation</a> for a full list of objects and methods.</p>
+
+</div>
+
+    <p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#101;&#x6e;&#116;&#x6c;em&#101;&#110;&#x40;&#115;&#x74;at&#x61;m&#x69;&#x63;&#46;&#99;o&#x6d;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Location | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>Location</h1>
+
+          		  <p class="intro">Do some amazing things with coordinates, distances, and maps.</p>
+  		  
+        <p></p>
+
+<p>Connect your entries to points on a map with the new <code>location</code> first-party add-on.
+This add-on comes with a couple of parts which will let you do some amazing things with coordinates, distances, and maps.</p>
+
+<p>First things first, you&#8217;ll want to let people connect entries to a spot on a map.
+This is where the fieldtype comes in.</p>
+
+<h2>Configuration</h2>
+
+<p>This add-on comes with a bunch of configurable settings to control how the fieldtype works in your Control Panel. All of these options are settable in the add-on&#8217;s configuration file, and then can be individually overwritten in your fieldsets per location-field.</p>
+
+<h3>Default Map Look</h3>
+
+<p>Set the starting latitude, longitude, and zoom with the <code>starting_</code> options:</p>
+
+<pre class="prettyprint yaml">starting_latitude: 44.33
+starting_logitude: -68.21
+starting_zoom: 16
+</pre>
+
+<p>Define the highest and lowest levels of zoom the user can use in the map view:</p>
+
+<pre class="prettyprint yaml">min_zoom: 4
+max_zoom: 18
+</pre>
+
+<p>Determine how precise you want the latitude and longitude fields to be when showing decimal points, the higher then number, the more precise:</p>
+
+<pre class="prettyprint yaml">float_precision: 5
+</pre>
+
+<h3>Geolocation</h3>
+
+<p>Users will be presented with the option to locate them if their device and browser supports geolocation (if a user&#8217;s set-up can&#8217;t do geolocation, the link won&#8217;t show up). You can enable or disable this feature all together with:</p>
+
+<pre class="prettyprint yaml">allow_geolocation: true/false
+</pre>
+
+<p>You can also set a default zoom-level for when a user is geolocated:</p>
+
+<pre class="prettyprint yaml">geolocation_zoom: 17
+</pre>
+
+<p>We&#8217;ve optionally given you the ability to use a FourSquare API key to automatically populate the <em>name</em> field of the nearest venue when a user geolocates. We&#8217;ve included our sample development key as an example, but you&#8217;ll want to grab your own from FourSquare (they&#8217;re free) if you want to use this feature.</p>
+
+<p>To turn on FourSquare look-up, set <code>use_foursquare</code> to true and put in your <code>client_id</code> and <code>client_secret</code>:</p>
+
+<pre class="prettyprint yaml">use_foursquare: true/false
+foursquare_client_id: AAAAAAAAAA  # get this from FourSquare
+foursquare_client_secret: BBBBBBBBB  # also get this from FourSquare
+</pre>
+
+<p>You can also define the maximum radius around the user&#8217;s current coordinates for FourSquare to look for a venue. Do so with this value (in meters):</p>
+
+<pre class="prettyprint yaml">foursquare_radius: 200
+</pre>
+
+<h3>Map Interaction</h3>
+
+<p>The maps we&#8217;re using come with a number of ways that users can interact with them, but they&#8217;re not always going to be what you want. You can set those options with the <code>interaction</code> setting:</p>
+
+<pre class="prettyprint yaml">interaction:
+  scroll_wheel_zoom: true/false
+  double_click_zoom: true/false
+  box_zoom: true/false
+  touch_zoom: true/false
+  draggable: true/false
+</pre>
+
+<p>Use <code>scroll_wheel_zoom</code> to let users scroll with their mouse&#8217;s wheel (or a track-pad gesture). Use <code>double_click_zoom</code> to let users double-click to zoom in. Use <code>box_zoom</code> to let users hold <code>shift</code> on their keyboards while drawing a box in the map of where they wish to zoom to. Use <code>touch_zoom</code> to let users pinch-zoom on touch devices. Finally, use <code>draggable</code> to let users pan the map.</p>
+
+<h3>Map Style</h3>
+
+<p>We&#8217;re using <a href="http://leafletjs.com">LeafletJS</a> as our mapping solution of choice, which connects nicely to CloudMade&#8217;s mapping API. We&#8217;ve given you a CloudMade API key that you can use, or you can sign up for your own (for free) at <a href="http://cloudmade.com">CloudMade&#8217;s website</a>.</p>
+
+<p>Set your CloudMade API key:</p>
+
+<pre class="prettyprint yaml">cloudmade_api_key: AAAAAAAA
+</pre>
+
+<p>You can also style your maps to your liking with CloudMade&#8217;s style library. Turn layers on and off, set colors however you&#8217;d like, or choose from a bunch of pre-made options that others have created. When you find an ID of a map style that you like, you can plugin that in here:</p>
+
+<pre class="prettyprint yaml">cloudmade_tile_set_id: 997  # this is the default set of map tiles
+</pre>
+
+<p>LeafletJS comes with a mode that will detect high-density displays and will serve the next-zoomed-in-level at 50% the size to hopefully make things high-res. This has admittedly mixed results, but we wanted to provide the option and let you decide:</p>
+
+<pre class="prettyprint yaml">detect_retina: true/false
+</pre>
+
+<h3>Common Places</h3>
+
+<p>You can create a list of common places that users can choose from in addition to picking a location on a map. This pop-up will be helpful if you have a set list of locations that you want to use over and over again, either as an end point or as a starting point for a draggable map marker.</p>
+
+<p>Create a list of places in your configuration like so:</p>
+
+<pre class="prettyprint yaml">common_locations:
+  -
+    name: Acadia National Park
+    latitude: 44.33
+    longitude: -68.21
+    zoom: 12
+  -
+    name: Badlands National Park
+    latitude: 43.75
+    longitude: -102.50
+    zoom: 12
+  -
+    name: Denali National Park
+    latitude: 63.33
+    longitude: -150.5
+    zoom: 12
+</pre>
+
+<p>Don&#8217;t set any <code>common_locations</code> if you don&#8217;t want the link to show up.</p>
+
+<h2>Using Locations in Listings</h2>
+
+<p>Statamic&#8217;s core <code>{{ entries:listing }}</code> tag has been update to play with the new features of <code>location</code>.</p>
+
+<h3>Enabling Location</h3>
+
+<p>In addition to saving location information with a <code>location</code> fieldtype, you&#8217;ll also need to inform the listing tag that you want to use location features. To do this, set the <code>locate_with</code> parameter to the field that contains each entry&#8217;s location information. For example, if you named your <code>location</code> field <code>spot</code>, you would do this:</p>
+
+<pre class="prettyprint yaml">{{ entries:listing folder="stores" locate_with="spot" }}
+
+{{ /entries:listing }}
+</pre>
+
+<p>This listing tag now is ready to do things with that location information. Entries that have the <code>spot</code> field will now have access to a couple of extra tags within the tag pair:</p>
+
+<ul>
+<li><code>latitude</code> is the entry&#8217;s latitude</li>
+<li><code>longitude</code> is the entry&#8217;s longitude</li>
+<li><code>coordinates</code> is the entry&#8217;s latitude and longitude as comma-sepearted coordinates</li>
+</ul>
+
+<p>With <code>{{ coordinates }}</code>, you can use the variable modifiers <code>distance_in_mi_from</code> and <code>distance_in_km_from</code>. These modifiers take one parameter, another location, and will return the distance between your entry and the coordinate given in the format that you ask for. <em>Note:</em> make sure there is no space in your cooridinates.</p>
+
+<pre class="prettyprint yaml">{{ entries:listing folder="stores" locate_with="spot" }}
+   {{ title }}, 
+   {{ coordinates|distance_in_mi_from:44.33,-68.21 }} mi from basecamp
+   &lt;br&gt;
+{{ /entries:listing }}
+</pre>
+
+<p>We&#8217;ve added some precision modifiers in v1.5 to help you reign in those calculations. You can use <code>floor</code>, <code>ceil</code>, or <code>round</code> (with <code>round</code> you can also optionally specify the precision to use) with your distances. Remember, you can chain modifiers together:</p>
+
+<pre class="prettyprint yaml">{{ entries:listing folder="stores" locate_with="spot" }}
+   {{ title }}, 
+   {{ coordinates|distance_in_mi_from:44.33,-68.21|round:2 }} mi from basecamp
+   &lt;br&gt;
+{{ /entries:listing }}
+</pre>
+
+<p>There&#8217;s a second way to get distance information out of an <code>{{ entries:listing }}</code> tag, and that&#8217;s with the <code>center_point</code> parameter. Give that a set of coordinates and each entry will do a bit more work for you:</p>
+
+<pre class="prettyprint yaml">{{ entries:listing folder="stores" locate_with="spot" center_point="44.33,-68.21" }}
+
+{{ /entries:listing }}
+</pre>
+
+<p>In addition to <code>latitude</code>, <code>longitude</code>, and <code>coordinates</code> that the <code>locate_with</code> parameter enabled, you can also use <code>distance_mi</code> and <code>distance_km</code> to get the calculated distance that your entry is from the <code>center_point</code>. As before, you can still use variable modifiers to round those calculations into something more manageable:</p>
+
+<pre class="prettyprint yaml">{{ entries:listing folder="stores" locate_with="spot" center_point="44.33,-68.21" }}
+   {{ title }} is just {{ distance_km|round:1 }}km away.
+{{ /entries:listing }}
+</pre>
+
+<p>Further, when specifying both <code>locate_with</code> and <code>center_point</code>, you can sort your entry listings by distance, either from closest-to-farthest or farthest-to-closest:</p>
+
+<pre class="prettyprint yaml">{{ entries:listing folder="stores" locate_with="spot" center_point="44.33,-68.21" sort_by="distance" sort_dir="asc" }}
+   {{ if first }}
+      &lt;h2&gt;Closest Stores&lt;/h2&gt;
+      &lt;ul&gt;
+   {{ endif }}
+
+   &lt;li&gt;
+      &lt;strong&gt;{{ title }}&lt;/strong&gt;&lt;br&gt;
+      {{ distance_mi|round:2 }}mi away
+   &lt;/li&gt;
+
+   {{ if last }}
+      &lt;/ul&gt;
+   {{ endif }}
+{{ /entries:listing }}
+</pre>
+
+<h2>Entry Maps</h2>
+
+<p>We&#8217;ve also given you a quick way to show maps with the new <code>{{ entries:map }}</code> tag. This tag works similarly to <code>{{ entries:listing }}</code>, and even shares the same two new parameters above — <code>locate_with</code> and <code>center_point</code>. The difference is that the output will be a map instead of a list.</p>
+
+<p>To enable maps, you&#8217;ll need to use <code>location</code>&#8217;s <code>start_maps</code> tag at the footer of your page. The easiest thing is to put it at the bottom of your layout file:</p>
+
+<pre class="prettyprint yaml">{{ location:start_maps }}
+</pre>
+
+<p>This will include the needed JavaScript to make the new tag work. Worth noting: we&#8217;ve gone our of our way to not require jQuery with these maps. You can still use jQuery however you want, but we know some people don&#8217;t want to. Now you don&#8217;t have to.</p>
+
+<p>Using the same example set-up as above:</p>
+
+<pre class="prettyprint yaml">{{ entries:map folder="stores" locate_with="spot" center_point="44.33,-68.21" }}
+
+{{ /entries:map }}
+</pre>
+
+<p>This will generate a map (with HTML class <code>map</code>) on your page. Be sure to set a width and a height for all <code>.map</code> elements in your CSS. You can certainly use percentages, and the maps are responsive out of the box, but they need you to supply a size so that you&#8217;ll see them.</p>
+
+<p>For this tag, <code>center_point</code> determines the actual center of the map that is displayed. The <code>locate_with</code> parameter is still telling Statamic which field to use as location information. You can also set the starting zoom-level with <code>zoom</code>, and choose to enable marker clustering (which means, when markers are close enough together they&#8217;ll group into one new marker that shows how many markers are there) with <code>clusters</code>:</p>
+
+<pre class="prettyprint yaml">{{ entries:map folder="stores" locate_with="spot" center_point="44.33,-68.21" zoom="15" clusters="true" }}
+
+{{ /entries:map }}
+</pre>
+
+<h3>Defining the Marker Pop-Up Template</h3>
+
+<p>You can define what the marker pop-up will use for HTML by defining the template right inside of the map&#8217;s tag pair, like so:</p>
+
+<pre class="prettyprint yaml">{{ entries:map folder="stores" locate_with="spot" center_point="44.33,-68.21" zoom="15" clusters="true" }}
+   {{ pop_up }}
+      &lt;h2&gt;{{ title }}&lt;/h2&gt;
+      &lt;p&gt;{{ description }}&lt;/p&gt;
+   {{ /pop_up }}
+{{ /entries:map }}
+</pre>
+
+<p>Within the <code>{{ pop_up }}</code> tag you can use any of the entry&#8217;s usual values, giving you the ultimate freedom in styling your marker pop-ups. One of the main reasons we chose LeafletJS is how easy it becomes to style your maps and markers after the fact. Just use CSS and you can do everything you need to.</p>
+
+<p>This initial launch of <code>location</code> is only scratching the surface of what&#8217;s possible, not just with mapping and connecting entries to locations, but what you can do with the new add-on architecture.</p>
+
+<p></p>
+      </div>
+    </article>
+
+    
+<div class="block content">
+	<h1>Fieldtypes</h1>
+	<p>Fieldtypes let you create different types of fields to collect data in the Control Panel.</p>
+	<ul>
+		<li><a href="checkbox.html">Checkbox</a></li>
+		<li><a href="color.html">Color</a></li>
+		<li><a href="date.html">Date</a></li>
+		<li><a href="file.html">File</a></li>
+		<li><a href="grid.html">Grid</a></li>
+		<li><a href="hidden.html">Hidden</a></li>
+		<li><a href="location.html">Location</a></li>
+		<li><a href="markitup.html">Markitup</a></li>
+		<li><a href="radio.html">Radio</a></li>
+		<li><a href="redactor.html">Redactor</a></li>
+		<li><a href="section.html">Section</a></li>
+		<li><a href="select.html">Select</a></li>
+		<li><a href="suggest.html">Suggest</a></li>
+		<li><a href="tags.html">Tags</a></li>
+		<li><a href="templates.html">Templates</a></li>
+		<li><a href="text.html">Text</a></li>
+		<li><a href="textarea.html">Textarea</a></li>
+		<li><a href="time.html">Time</a></li>
+		<li><a href="users.html">Users</a></li>
+	</ul>
+</div>
+    
+    <p class="muted subtext centered-text module">This article was last updated on December 18th, 2013. Find an error? <a href="mailto:gen&#x74;&#108;&#101;&#109;e&#110;&#64;&#x73;&#116;&#x61;&#x74;&#97;&#109;ic.com?subject=Found an issue on http://statamic.com/learn/documentation/fieldtypes/location">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

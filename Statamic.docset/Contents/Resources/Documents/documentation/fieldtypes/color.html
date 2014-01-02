@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Color | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>Color</h1>
+
+        
+        <p>The <code>color</code> fieldtype lets you add a color-picker to your Control Panel forms.
+Users choose colors through a Photoshop-like interface, and values can get stored in either hexidecimal, RGB, or named-color format.</p>
+
+<p>For a seemingly simple field, <code>color</code> comes with many different settable options.
+All options can be set globally in the fieldtype&#8217;s configuration file, and then overridden on a field-by-field basis in your fieldset definitions.</p>
+
+<h2>Color Options</h2>
+
+<p>Choose to use a drop-down or have the color picker right in line:</p>
+
+<pre class="prettyprint yaml">select_on_page: true/false
+</pre>
+
+<p>Choose the default starting color (selected before a user triggers the pop-up):</p>
+
+<pre class="prettyprint yaml">starting_color: '#fff'
+</pre>
+
+<p>Include an input field where users can type in a value:</p>
+
+<pre class="prettyprint yaml">show_input: true/false
+</pre>
+
+<p>Choose to show the initial color in the pop-up:</p>
+
+<pre class="prettyprint yaml">show_initial: true/false
+</pre>
+
+<p>Show an alpha slider:</p>
+
+<pre class="prettyprint yaml">show_alpha: true/false
+</pre>
+
+<p>Set the words to pick a color or cancel:</p>
+
+<pre class="prettyprint yaml">choose_text: "Pick"
+cancel_text: "Cancel"
+</pre>
+
+<p>Choose your preferred format to use:</p>
+
+<pre class="prettyprint yaml">preferred_format: "hex"/"hsl"/"rgb"/"name"
+</pre>
+
+<h2>Palette Options</h2>
+
+<p>Show a color palette of pre-defined colors:</p>
+
+<pre class="prettyprint yaml">show_palette: true/false
+</pre>
+
+<p><em>Only</em> show the color palette (hide the color picker)</p>
+
+<pre class="prettyprint yaml">show_palette_only: true/false
+</pre>
+
+<p>Define a list of colors to display in the pop-up palette, you can also do lists of lists if you wish to have a couple of different color palettes.</p>
+
+<pre class="prettyprint yaml">palette:
+  - '#fff'
+  - '#ccc'
+  - '#999'
+</pre>
+
+<p>Enable a palette that will hold color selections made by the user:</p>
+
+<pre class="prettyprint yaml">show_selection_palette: true/false
+</pre>
+
+<p>Set the maximum number of user-made color selections that will show up in the selection palette:</p>
+
+<pre class="prettyprint yaml">max_selection_size: 10
+</pre>
+
+<p>Finally, you can define a key to use so that multiple color pickers will share the same selection palette. All fields that use the same key will use the same selection palette:</p>
+
+<pre class="prettyprint yaml">local_storage_key: ""
+</pre>
+      </div>
+    </article>
+
+    
+<div class="block content">
+	<h1>Fieldtypes</h1>
+	<p>Fieldtypes let you create different types of fields to collect data in the Control Panel.</p>
+	<ul>
+		<li><a href="checkbox.html">Checkbox</a></li>
+		<li><a href="color.html">Color</a></li>
+		<li><a href="date.html">Date</a></li>
+		<li><a href="file.html">File</a></li>
+		<li><a href="grid.html">Grid</a></li>
+		<li><a href="hidden.html">Hidden</a></li>
+		<li><a href="location.html">Location</a></li>
+		<li><a href="markitup.html">Markitup</a></li>
+		<li><a href="radio.html">Radio</a></li>
+		<li><a href="redactor.html">Redactor</a></li>
+		<li><a href="section.html">Section</a></li>
+		<li><a href="select.html">Select</a></li>
+		<li><a href="suggest.html">Suggest</a></li>
+		<li><a href="tags.html">Tags</a></li>
+		<li><a href="templates.html">Templates</a></li>
+		<li><a href="text.html">Text</a></li>
+		<li><a href="textarea.html">Textarea</a></li>
+		<li><a href="time.html">Time</a></li>
+		<li><a href="users.html">Users</a></li>
+	</ul>
+</div>
+    
+    <p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#x65;n&#x74;l&#x65;&#x6d;e&#110;&#64;&#115;&#x74;&#x61;&#x74;&#x61;&#x6d;&#x69;&#x63;&#46;c&#111;m?subject=Found an issue on http://statamic.com/learn/documentation/fieldtypes/color">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

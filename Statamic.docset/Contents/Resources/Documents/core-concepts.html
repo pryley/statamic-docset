@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Creating Add-Ons | Statamic</title>
+  <link rel="stylesheet" href="_assets/css/statamic.css">
+  <script src="_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<a name="//apple_ref/cpp/Section/__ Core Concepts" class="dashAnchor"></a>
+
+<div class="row logo">
+  <a href="index.html" id="statamic-logo"><img src="_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+
+<h1>Core Concepts</h1>
+
+<p>In this section you&#8217;ll learn the core concepts of how Statamic works.
+This section is important; learning everything here will help make Statamic easier to figure out in the long run.</p>
+
+<ul>
+	<li><a href="#url-structure-and-your-content-directory">URL Structure & Your Content Directory</a></li>
+	<li><a href="#pages-and-entries">Pages & Entries</a></li>
+	<li><a href="#content-files">Content Files</a></li>
+	<li><a href="#global-variables">Global Variables</a></li>
+	<li><a href="#how-pages-are-built">How Pages are Built</a></li>
+	<li><a href="#folder-tour">Folder Tour</a></li>
+	<li><a href="#taxonomies">Taxonomies</a></li>
+</ul>
+
+</div>
+</article>
+
+<a id="url-structure-and-your-content-directory" name="//apple_ref/cpp/Section/1. URL Structure & Your Content Directory" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>URL Structure & Your Content Directory</h1>
+
+<p class="intro">How URLs are made.</p>
+
+<h2>Your Content Directory</h2>
+
+<p>Your site&#8217;s content folder (<code>_content</code> by default, although this can be changed in your <a href="configuring.html#general-site-settings">general site settings</a>) is where you&#8217;ll keep all of your content.
+Statamic will look in this folder and use the files within to generate your pages.</p>
+
+<h2>URL Structure</h2>
+
+<p>Your website’s URL structure is the same as the structure of your <code>_content</code> folder — just like a standard static site.
+The difference in Statamic is that instead of <code>index.html</code> being your default folder file, it’s <code>page.md</code> (or whichever <code>_content_type</code> you’ve set in your <a href="configuring.html#general-site-settings">general site settings</a>).</p>
+
+<p>Want to create an about page, for example?
+Make an <em>about</em> folder in your <code>_content</code> folder and add a <code>page.md</code> file to it.
+Boom, done.
+Of course, you&#8217;ll want to add some content to this page, but that&#8217;s how easy it is to create new pages.</p>
+
+</div>
+
+<a id="pages-and-entries" name="//apple_ref/cpp/Section/2. Pages & Entries" class="dashAnchor"></a>
+
+<div class="block content">
+	
+<h1>Pages & Entries</h1>
+
+<p class="intro">The two primary types of content in Statamic.</p>
+
+<p>Every piece of content you create for your website is either a <em><strong>page</strong></em> or an <em><strong>entry</strong></em>.
+Let&#8217;s learn the difference between the two.</p>
+
+<h2 id="pages">Pages</h2>
+
+<p>A <em>page</em> is intended to be a mostly static webpage.
+You may change the content within a page from time to time, but aside from cross-links in content and appearing in your site&#8217;s navigation, a page pretty much just lives where it lives.</p>
+
+<p>Great examples of common uses for pages:</p>
+
+<ul>
+	<li>Your Homepage</li>
+	<li>About Us</li>
+	<li>Contact Us</li>
+	<li>Our Team</li>
+	<li>Legal Pages</li>
+</ul>
+
+<p>Pages are indicated by their filename.
+They will either have no ordering mechanism (<code>page.md</code>) or will use numbers as an ordering mechanism (<code>1.about.md</code>).</p>
+
+<p>The URL for a page named <code>page.md</code> is the folder that that file lives in.
+For example, <code>_content/about/page.md</code> would be <code>/about</code> on your website.
+If you use a name other than <code>page.md</code>, that filename also becomes part of the URL.
+For example <code>_content/about/team.md</code> would be <code>/about/team</code> on your website.</p>
+
+<h3>Ordering Pages &amp; Folders</h3>
+
+<p>Folders and pages can be given a specific order by putting an index number in front of them, followed by either a period (<code>.</code>), hyphen (<code>-</code>), or underscore (<code>_</code>).
+Ordering your site’s folders would have your content directory look something like this:</p>
+
+<pre class="prettyprint sh">/
+    /1-blog
+    /2-services
+    /3-about
+    /4-contact
+</pre>
+
+<p>We&#8217;re discussing ordering folders because using <code>page.md</code> within each folder will enable that folder to be a URL.
+So having <code>page.md</code> in <code>1-blog</code> from the example above will create <code>http://example.com/blog</code> as a page on your site.</p>
+
+<p>Ordering pages within folders works the same way.</p>
+
+<pre class="prettyprint text">/3-about
+    /1-overview.md
+    /2-team.md
+    /3-clients.md
+</pre>
+
+<p>Although pages are generally static things, this page-ordering becomes helpful when using the <a href="documentation/tags/nav.html">nav tag</a>.</p>
+
+<h2 id="entries">Entries</h2>
+
+<p>An <em>entry</em> is any other content that&#8217;s not a page.
+These are the &#8220;dynamic&#8221; bits of your content intended to be one post within a series of similar posts.
+Viewing an entry is essentially viewing a &#8220;detail page&#8221; from a bigger set of content.
+Some examples:</p>
+
+<ul>
+	<li>a blog post</li>
+	<li>a calendar event</li>
+	<li>a product detail page</li>
+</ul>
+
+<p>Sets of blog posts, for example, would probably make a pretty good list somewhere else on your site.</p>
+
+<h3>Ordering Entries</h3>
+
+<p>Entries can be ordered in three ways:</p>
+
+<ul>
+	<li><strong>Alphabetical</strong> ordering uses the alphabetical order of the filename, nothing additional is needed.</li>
+	<li><strong>Date-</strong> or <strong>date/time-based</strong> ordering is used when entries are prefixed with a date (plus an optional time).
+To use date-based ordering, start your entry filenames with the date they apply to in the format <code>YYYY-MM-DD</code>.
+Date/time-based is similar, using the format <code>YYYY-MM-DD-HHMM</code>.</li>
+	<li><strong>Index-based</strong> ordering is used when entries are prefixed with a number followed by a period (<code>.</code>).</li>
+</ul>
+
+<p>No matter what ordering mechanism you use, Statamic will strip that part out for your URL.
+So your <code>_content/blog/2013-01-15-high-fiveathon.md</code> blog post is simply <code>/blog/high-fiveathon</code> on your site.</p>
+
+<p><strong>Note:</strong> For best results, entries in the same folder should use the same ordering method, but which one you use is completely up to you.
+Learn more about when this comes into play when you use the <a href="documentation/tags/entries.html">entries tag</a>.</p>
+
+<h2>A Tiny Overlap</h2>
+
+<p>You may have noticed that pages and entries have a small overlapping area: both can be ordered by using an index number.
+Because of this, you&#8217;ll want to make sure not to combine the two methods in one folder, or you&#8217;ll end up with unexpected results.</p>
+
+<p>Our official recommendation: don&#8217;t use ordered-pages in the same folder that contains entries ordered by number.
+We think you&#8217;ll find that most of the time you didn&#8217;t need to do so anyway.</p>
+
+</div>
+
+<a id="content-files" name="//apple_ref/cpp/Section/3. Content Files" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Content Files</h1>
+
+<p class="intro">Content files are broken into two sections.</p>
+
+<p>Every content file you create — whether you make them manually or through the <a href="control-panel.html">Control Panel</a> — is broken into two parts: YAML front matter (or <em>the variables</em>) and the page’s content.
+Each section starts with a three-hyphen divider (<code>---</code>), so that a full file would look something like this:</p>
+
+<pre class="prettyprint yaml">---
+title: About Us
+description: Learn a little bit about our company.
+---
+We are a team of strong individuals.
+We also greatly enjoy scotch.
+We consume alcohol as a team.
+</pre>
+
+<h2 id="front-matter">YAML Front Matter</h2>
+
+<p>Your <em>YAML front matter</em> is everything after the first hyphen-divider (<code>---</code>) and before the second.
+This is where you define variables per page.
+You can create new variables here for use in your templates or overwrite ones defined in your site settings.</p>
+
+<p>This section is parsed as YAML (like the name suggests), so anything you can do with YAML is possible here.
+It&#8217;s called <em>front matter</em> because it&#8217;s listed <em>in front</em> of your content.</p>
+
+<blockquote>
+  <p>note Names that you use for variables are <em>case-sensitive</em>.<br />
+  <br />
+  For example, <code>title</code> and <code>Title</code> are seen as <em>two different variables</em>. Because of this, we recommend using all-lowercase names for your variables. You don&#8217;t have to, but mixing and matching may lead to confusion down the road.</p>
+</blockquote>
+
+<h2>Content</h2>
+
+<p>Your <em>content</em> is everything after the second hyphen-divider.
+This data will be placed within the <code>{{ content }}</code> tag for use within templates.
+Whatever you enter into this area will be run through the content markup parser you&#8217;ve chosen with the <code>_content_type</code> settings in your <a href="configuring.html#general-site-settings">general site settings</a>.
+If your setting is <code>markdown</code>, this area will be parsed for Markdown, etc.</p>
+
+<h3>Using Statamic Tags in your Content</h3>
+
+<p>It&#8217;s possible to use Statamic tags within your <em>content</em> area, but when doing this, it&#8217;s important to keep in mind the <em>parse order</em>.
+You can define the order in which Statamic parses your content with the <code>_parse_order</code> setting in your <code>settings.yaml</code> file.</p>
+
+<p>Ordering your <code>_parse_order</code> to parse <code>content</code> before <code>tags</code> (the default order), Statamic will parse your content for Markdown or Textile first, and <em>then</em> it replaces your Statamic tags with their values.
+Flipping the order to be <code>tags</code> first and <code>content</code> second, Statamic replaces tags in your content with their values, and <em>then</em> parses it for Markdown or Textile.</p>
+
+<blockquote>
+	<p>note Unless you absolutely need to change this, we recommend leaving the parse order alone.</p>
+</blockquote>
+
+</div>
+
+<a id="global-variables" name="//apple_ref/cpp/Section/4. Global Variables" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Global Variables</h1>
+
+<p class="intro">Create reusable variables for use everywhere.</p>
+
+<p>Statamic parses any <code>.yaml</code> files that it finds in your <code>_config</code> directory and puts their contents into the list of global variables.
+These variables all become tags in your templates.</p>
+
+<p>So for example, you could create a <code>globals.yaml</code> file, or break them up into groups with numerous <code>.yaml</code> files and organize them how you&#8217;d like.</p>
+
+<h2>Displaying Variables</h2>
+
+<p>Let&#8217;s say you have a <code>globals.yaml</code> file like this:</p>
+
+<pre class="prettyprint yaml">twitter_name: @statamic
+support_email: help@example.com
+</pre>
+
+<p>In your templates, you can use these with appropriately-named tags:</p>
+
+<pre class="prettyprint statamic">Find us on Twitter at {{ twitter_name }}, or email us
+at &lt;a href="mailto:{{ support_email }}"&gt;{{ support_email }}&lt;/a&gt;
+</pre>
+
+<p>Any variable you create in any of your <code>_config</code> folder&#8217;s <code>.yaml</code> files will become a tag available for use (even all of your site settings).</p>
+
+</div>
+
+<a id="how-pages-are-built" name="//apple_ref/cpp/Section/5. How Pages are Built" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>How Pages are Built</h1>
+
+<p class="intro">Statamic combines layouts, templates, and content to create your pages.</p>
+
+<p>Statamic uses a combination of <em>layouts</em>, <em>templates</em>, and <em>tags</em> to build your pages.
+The important first step is understand what each is and what they do.</p>
+
+<h2>Layouts</h2>
+
+<p>A <em><strong>layout</strong></em> is the outer-most shell of your website.
+It should contain all of the parts that aren&#8217;t the main content rendering area.
+Within a layout, you must place one (and only one) <code>{{ layout_content }}</code> tag.
+Statamic will replace this tag with the correct <em>template</em> for whichever page it is that you&#8217;re viewing.</p>
+
+<p>For most sites that you build, you&#8217;ll probably only have one layout: the default layout.
+In this, you&#8217;ll probably put your <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code> tags, along with other elements that won&#8217;t change page-to-page (such as your site&#8217;s navigation and footer).</p>
+
+<h2>Templates</h2>
+
+<p>A <em><strong>template</strong></em> is the inner shell of your website.
+Each time you need the main content area of your page to be structured differently, you&#8217;ll use a new <em>template</em> for each.</p>
+
+<p>Within each template, you must place one (and only one) <code>{{ content }}</code> tag.
+Statamic will replace this tag with the <em>content</em> data from the content file that matches up with the current URL being viewed.</p>
+
+<p>Whereas layouts don&#8217;t really change that much from page-to-page, templates are where you can get creative.
+All templates can use and display <a href="#global-variables">global variables</a>, <a href="#front-matter">page-level variables</a>, <a href="theming.html#partials">partials</a>, <a href="templating.html">tags</a>, and other static content that you write right into the template itself.</p>
+
+<h2>An Example</h2>
+
+<p>Let&#8217;s look at an example using everything you&#8217;ve learned up to this point.
+For this example, your user navigates to your team page, located at <code>http://example.com/about/team</code>.</p>
+
+<p>The content defining your team page lives on your server at <code>_content/about/team.md</code>.
+This file looks something like this:</p>
+
+<pre class="prettyprint yaml">---
+title: About Us
+_template: about
+---
+## John Appleseed, President
+John enjoys scotch and praising employees.
+</pre>
+
+<p>This file defines the <code>_template</code> to use, the <code>title</code> of the page, and everything below the second <code>---</code> becomes the <code>content</code>.</p>
+
+<h3>Putting the Page Together</h3>
+
+<p>Seeing that we didn&#8217;t specify which layout to use in our file&#8217;s <a href="#front-matter">YAML front matter</a>, Statamic will use the default layout (the one called <code>default</code>).
+Since we specified which template to use to build this page in our front matter, Statamic will use the value of <code>_template</code> as the template (in this case, the <code>about</code> template).</p>
+
+<p>The page is constructed a bit like an onion: layer-by-layer.
+As described above, the <em>layout</em> is the outer shell, with the <em>template</em> inside of it, and your page&#8217;s <em>content</em> inside of that.</p>
+
+<p>This system&#8217;s greatest strength is its flexibility.
+You can completely alter the way a page looks with a simple switch of the <code>_template</code> variable in your page.</p>
+
+</div>
+
+<a id="folder-tour" name="//apple_ref/cpp/Section/6. Folder Tour" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Folder Tour</h1>
+
+<p class="intro">Take a walk through the wonderful world of Statamic.</p>
+
+<p>Statamic&#8217;s base folder structure looks like this:</p>
+
+<pre class="prettyprint text">_add-ons/
+_app/
+_cache/
+_config/
+_content/
+_logs/
+_themes/
+admin/
+_assets/
+admin.php
+index.php
+</pre>
+
+<h2>What Each Folder Does</h2>
+
+<ul>
+	<li><code>_add-ons</code> is where you keep add-ons that you want to use in Statamic. Installing an add-on is simply a matter of dropping the add-on folder into your <code>_add-ons</code> folder.</li>
+	<li><code>_app</code> is where all of our core files are kept. You shouldn&#8217;t need to touch anything in here.</li>
+	<li><code>_cache</code> is where Statamic&#8217;s core and other add-ons can store files for data management. You probably don&#8217;t need to touch anything in this folder either, the system will do that for you.</li>
+	<li><code>_config</code> is where you <a href="configuring.html">configure Statamic</a> and set <a href="#global-variables">global variables</a>.</li>
+	<li><code>_content</code> is where all of your <a href="#content-files">content files</a> are. Simple as that.</li>
+	<li><code>_logs</code> is where <a href="advanced-features.html#message-logging">messages are logged</a> to by default. This can be <a href="configuring.html#development-settings">changed in your configuration</a>.</li>
+	<li><code>_themes</code> is where you&#8217;ll put the files defining how your site looks and feels. If you&#8217;re using a theme that someone else made, you would drop their theme folder in this folder.</li>
+	<li><code>admin</code> holds all of the <a href="control-panel.html">Control Panel</a> files. If you don&#8217;t want to use the Control Panel, you can delete this folder.</li>
+	<li><code>assets</code> is where we recommend putting site images, scripts, and downloadable files, but this folder isn&#8217;t used by system files at all. Just a helper to get you started.</li>
+</ul>
+
+<h2>What Each File Does</h2>
+
+<ul>
+	<li><code>admin.php</code> powers the <a href="control-panel.html">Control Panel</a>. If you don&#8217;t want to use the Control Panel, you can delete this file as well.</li>
+	<li><code>index.php</code> powers the public-facing part of your site. You shouldn&#8217;t need to touch this file, but it needs to be there.</li>
+</ul>
+
+</div>
+
+<a id="taxonomies" name="//apple_ref/cpp/Section/7. Taxonomies" class="dashAnchor"></a>
+
+<div class="block content">
+
+<h1>Taxonomies</h1>
+
+<p class="intro">Breaking your content into logical groups.</p>
+
+<p>A taxonomy is a way of grouping your content together into logical bits.
+You can define as many taxonomies as you&#8217;d like within your <code>settings.yaml</code> file, like so:</p>
+
+<pre class="prettyprint yaml">taxonomies: [ categories, tags ]
+</pre>
+
+<p>This above example (which is what Statamic comes with by default) will let Statamic know that you&#8217;ll be using <code>categories</code> and <code>tags</code> fields as taxonomies in your content files.</p>
+
+<p>Adding tags to a piece of content is a simple YAML list, like so:</p>
+
+<pre class="prettyprint yaml">---
+title: My Blog Post
+tags: [ bears, whips, adventure ]
+---
+My adventures in the woods…
+</pre>
+
+<h2>Listing Used Taxonomies</h2>
+
+<p>Let&#8217;s say that you want to list out all of the tags used in your blog. 
+You can use the <code>taxonomy</code> tag to display a list of those used.</p>
+
+<pre class="prettyprint statamic">{{ taxonomy:listing folder="blog" type="tags" }}
+    {{ if first }}
+        &lt;ul&gt;
+    {{ endif }}
+
+    &lt;li&gt;
+        &lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;
+    &lt;/li&gt;
+
+    {{ if last }}
+        &lt;/ul&gt;
+    {{ endif }}
+{{ /taxonomy:listing }}
+</pre>
+
+<p>You can order your list results too.</p>
+
+<h2>Showing Entries in a Taxonomy</h2>
+
+<p>Taxonomies can also be displayed with their own special template.
+By default, a taxonomy listing will use the <code>taxonomies.html</code> template, but you can override the template for each type of taxonomy by using its name.
+For example, if you create a <code>tags.html</code> template, that will be used when displaying listings based upon <code>tags</code>.</p>
+
+<p>Within your taxonomy template (whether you&#8217;re using the default one, or the named one), you&#8217;ll want to display a list of entries with the <code>taxonomy</code> parameter set to <code>true</code>.
+This will dynamically find the appropriate taxonomy from the current URL doing the hard work for you.</p>
+
+</div>
+
+<p class="muted subtext centered-text">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#x67;&#x65;&#110;&#116;&#x6c;&#101;&#x6d;e&#x6e;&#64;s&#116;a&#x74;&#97;&#x6d;i&#99;&#x2e;&#x63;&#x6f;m">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+    <!-- End Main Content and Sidebar -->
+
+  <script src="_assets/js/prettify.min.js"></script>
+  <script src="_assets/js/statamic.min.js"></script>
+  </body>
+</html>

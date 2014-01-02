@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Redactor | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>Redactor</h1>
+
+        
+        <p>The Redactor fieldtype is a lighting fast, retina-ready WYSIWYG editor fieldtype. It&#8217;s lightweight, customizable, and powerful.</p>
+
+<h2>Customizing Redactor</h2>
+
+<p>The <code>redactor.yaml</code> config file lets you set any of the available <a href="http://imperavi.com/redactor/docs/settings/">Redactor settings</a> to create your default configuration.
+Most notable are the <code>buttons</code>, <code>colors</code>, and <code>wym</code> options.</p>
+
+<h2>Image Browsing, Uploading, and Resizing</h2>
+
+<p>When configuring your fieldset, you can set the <code>image_dir</code> setting to tell Redactor where to look for images, allowing you to browse and drop in images from any folder in your site.</p>
+
+<p>Additionally, you can choose to resize and/or manipulate all uploaded images. If you don&#8217;t add a <code>resize</code> option everything will be uploaded &#8220;as-is&#8221;. Available (optional) parameters:</p>
+
+<ul>
+<li><code>width</code>: Maxiumum width</li>
+<li><code>height</code>: Maximum height</li>
+<li><code>quality</code>: Between 1 and 100 (default is 75)</li>
+<li><code>upsize</code>: Whether to blow up an image to fit the desired image specs (defaults to false)</li>
+</ul>
+
+<pre class="prettyprint yaml">content:
+  display: Content
+  type: redactor
+  image_dir: _assets/img/
+  resize:
+    width: 500
+    height: 300
+    quality: 60
+    upsize: false
+</pre>
+      </div>
+    </article>
+
+    
+<div class="block content">
+	<h1>Fieldtypes</h1>
+	<p>Fieldtypes let you create different types of fields to collect data in the Control Panel.</p>
+	<ul>
+		<li><a href="checkbox.html">Checkbox</a></li>
+		<li><a href="color.html">Color</a></li>
+		<li><a href="date.html">Date</a></li>
+		<li><a href="file.html">File</a></li>
+		<li><a href="grid.html">Grid</a></li>
+		<li><a href="hidden.html">Hidden</a></li>
+		<li><a href="location.html">Location</a></li>
+		<li><a href="markitup.html">Markitup</a></li>
+		<li><a href="radio.html">Radio</a></li>
+		<li><a href="redactor.html">Redactor</a></li>
+		<li><a href="section.html">Section</a></li>
+		<li><a href="select.html">Select</a></li>
+		<li><a href="suggest.html">Suggest</a></li>
+		<li><a href="tags.html">Tags</a></li>
+		<li><a href="templates.html">Templates</a></li>
+		<li><a href="text.html">Text</a></li>
+		<li><a href="textarea.html">Textarea</a></li>
+		<li><a href="time.html">Time</a></li>
+		<li><a href="users.html">Users</a></li>
+	</ul>
+</div>
+    
+    <p class="muted subtext centered-text module">This article was last updated on December 3rd, 2013. Find an error? <a href="mailto:&#103;&#101;&#110;t&#x6c;&#101;&#x6d;e&#110;&#x40;stat&#97;&#x6d;&#105;c&#x2e;&#99;&#x6f;&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/fieldtypes/redactor">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

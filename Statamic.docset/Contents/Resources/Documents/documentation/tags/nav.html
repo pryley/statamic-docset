@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>nav | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>nav</h1>
+
+          		  <p class="intro">Display site navigations.</p>
+  		  
+        <p></p>
+
+<h2>{{ nav }}</h2>
+
+<p>Displays a list of folders and pages.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;ul class="nav"&gt;
+  {{ nav from="/" max_depth="2" }}
+  &lt;li&gt;
+    &lt;a href="{{ url }}" {{ if is_current }} class="current"{{ endif }}&gt;
+        {{ title }}
+    &lt;/a&gt;
+  &lt;/li&gt;
+  {{ /nav }}
+&lt;/ul&gt;
+
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>from</code> — the folder from where to start looking for folders, the current URL by default</li>
+<li><code>exclude</code> — a pipe-separated list of folders to exclude</li>
+<li><code>max_depth</code> — maximum number of subdirectory levels to traverse, <code>1</code> by default</li>
+<li><code>include_entries</code> — a boolean as to whether this tag should show entries, <code>false</code> by default</li>
+<li><code>folders_only</code> — a boolean as to whether this tag should only show <code>page</code> pages within folders, <code>true</code> by default</li>
+<li><code>include_content</code> — whether to make <strong>all</strong> fields in the respective pages available or not. <code>false</code> by default</li>
+</ul>
+
+<h3>Available Tags</h3>
+
+<p>The following tags are available within the tag-pair:</p>
+
+<ul>
+<li><code>is_current</code> — a boolean as to whether the item in the current iteration of the loop matches the URL being viewed</li>
+<li><code>is_parent</code> — a boolean as to whether the item in the current iteration of the loop is a parent of the URL being viewed</li>
+<li><code>url</code> — the URL to this folder</li>
+<li><code>title</code> — the name of this folder, as pulled from the <code>page</code> file within it</li>
+<li><code>children</code> — if there are subdirectories found, a list of subdirectories within this folder</li>
+</ul>
+
+<h2>{{ nav:count }}</h2>
+
+<p>Counts the number of items in the navigation.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">{{ nav:count }}
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>from</code> — the folder from where to start looking for folders</li>
+<li><code>max_depth</code> — maximum number of subdirectory levels to traverse, <code>1</code> by default</li>
+</ul>
+
+<h2>{{ nav:breadcrumbs }}</h2>
+
+<p>Displays a list of breadcrumbs that lead to a given page.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;nav class="breadcrumbs"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        {{ nav:breadcrumbs include_home="no" }}
+            {{ if is_current }}
+                &lt;li&gt;{{ title }}&lt;/li&gt;
+            {{ else }}
+                &lt;li&gt;&lt;a href="{{ url }}"&gt;{{ title }}&lt;/a&gt;&lt;/li&gt;
+            {{ endif }}
+        {{ /nav:breadcrumbs }}
+    &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>url</code> — URL to target with the breadcrumbs, the current URL by default</li>
+<li><code>include_home</code> — a boolean as to whether the breadcrumb list should include the homepage or not, <code>true</code> by default</li>
+<li><code>reverse</code> — a boolean as to whether the breadcrumb order should be reversed, in order of the target <code>url</code> back towards the homepage, <code>false</code> by default</li>
+<li><code>backspace</code> — the number of characters to remove from the last breadcrumb listing, <code>0</code> by default</li>
+</ul>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#103;&#x65;&#x6e;t&#108;e&#x6d;&#x65;n&#64;&#115;t&#x61;&#x74;&#97;&#109;i&#x63;&#46;&#x63;&#111;&#x6d;?subject=Found an issue on http://statamic.com/learn/documentation/tags/nav">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

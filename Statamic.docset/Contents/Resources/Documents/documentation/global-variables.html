@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Global Variables | Statamic</title>
+  <link rel="stylesheet" href="../_assets/css/statamic.css">
+  <script src="../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../index.html" id="statamic-logo"><img src="../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+				<h1>Global Variables</h1>
+
+				<p></p>
+
+<p>Statamic turns any variables set your <code>_config</code> folder&#8217;s YAML files into global variables. This allows you to use, as an example, <code>{{ _site_root }}</code> from your <code>settings.yaml</code> file in your templates. Variables prefixed with an underscore generally indicate they are also used by the system in some way.</p>
+
+<p>Additionally, all the content fields of your current page are available as global-type variables. There are no loops needed to fetch your single page/entry variables. This means <code>{{ title }}</code>, <code>{{ content }}</code> and so on are available in your layouts as well, which makes setting meta tags a breeze.</p>
+
+<p>All global variables can be used in conditionals without extra braces. Example: <code>{{ if logged_in }}</code>.
+</p>
+
+<p></div></article><article class="block"><div class="content"></p>
+
+<h2>List of All Global Variables</h2>
+
+<p></p>
+
+<h4><code>current_date</code></h4>
+
+<p><p>Display the current server date/time formatted by your <code>_date_format</code> setting. Accepts the <code>format</code> parameter.</p>
+
+</p>
+
+<h4><code>current_url</code></h4>
+
+<p><p>The URL of your current page. Example: <code>/about/team</code></p>
+
+</p>
+
+<h4><code>environment</code></h4>
+
+<p><p>The name of your current environment if set.</p>
+
+</p>
+
+<h4><code>homepage</code></h4>
+
+<p><p>The URL to your homepage. Example: <code>/</code>.</p>
+
+</p>
+
+<h4><code>is_admin</code></h4>
+
+<p><p>Returns TRUE if the user is logged in with admin privileges.</p>
+
+</p>
+
+<h4><code>is_{environment_name}</code></h4>
+
+<p><p>Where "{environment_name}" is the name of the environment you wish to check for. Useful in conditions. Example if is_dev.</p>
+
+</p>
+
+<h4><code>last_modified</code></h4>
+
+<p><p>The last modified timestamp of the current page/entry. Accepts the <code>format</code> parameter.</p>
+
+</p>
+
+<h4><code>last_segment</code></h4>
+
+<p><p>The last segment in your URL.</p>
+
+</p>
+
+<h4><code>logged_in</code></h4>
+
+<p><p>returns TRUE/FALSE on whether the current user is logged in.</p>
+
+</p>
+
+<h4><code>next</code></h4>
+
+<p><p>If on an entry page, the URL to the next entry.</p>
+
+</p>
+
+<h4><code>page_url</code></h4>
+
+<p><p>The URL of your current page. Example: <code>/about/team</code></p>
+
+</p>
+
+<h4><code>permalink</code></h4>
+
+<p><p>The fully qualified URL of your current page. Example: <code>http://example.com/about/team</code></p>
+
+</p>
+
+<h4><code>prev</code></h4>
+
+<p><p>If on an entry page, the URL to the previous entry.</p>
+
+</p>
+
+<h4><code>segment_x</code></h4>
+
+<p><p>Where "x" is any segment number. Returns the value of any given URL segment if present. Example: with a URL of /about/team/jack-london, <code>segment_2</code> would return team.</p>
+
+</p>
+
+<h4><code>taxonomy_name</code></h4>
+
+<p><p>If on a taxonomy URL returns the taxonomy name.</p>
+
+</p>
+
+<h4><code>taxonomy_slug</code></h4>
+
+<p><p>If on a taxonomy URL returns the URL slug containing the taxonomy name.</p>
+
+</p>
+
+<h4><code>theme_path</code></h4>
+
+<p><p>Path to your current theme: Example: <code>_themes/denali/</code></p>
+
+</p>
+
+<h4><code>username</code></h4>
+
+<p><p>If logged in, the username of the current user.</p>
+
+</p>
+
+				<ul>
+											
+											
+				</ul>
+      </div>
+    </article>
+
+    
+    <p class="muted subtext centered-text">This article was last updated on October 28th, 2013. Find an error? <a href="mailto:gen&#116;l&#x65;&#109;&#x65;n&#64;&#115;&#116;&#97;&#x74;&#x61;&#x6d;&#x69;&#x63;&#46;&#x63;&#x6f;&#x6d;">Please let us know!</a></p>
+
+  </div>
+
+  <!-- End Main Content -->
+
+    </div>
+
+  <script src="../_assets/js/prettify.min.js"></script>
+  <script src="../_assets/js/statamic.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>taxonomy | Statamic</title>
+  <link rel="stylesheet" href="../../_assets/css/statamic.css">
+  <script src="../../_assets/js/jquery.min.js"></script>
+  <link rel="shortcut icon" href="../../_assets/favicon.ico">
+</head>
+<body id="" class="on-light">
+
+<div class="row logo">
+  <a href="../../index.html" id="statamic-logo"><img src="../../_assets/img/statamic-mark@2x.png" alt="Statamic" width="55" /></a>
+</div>
+
+<div class="row margintop">
+
+  <!-- Main Blog Content -->
+  <div class="small-12 large-12 columns" role="content">
+
+    <article class="block">
+      <div class="content">
+    		<h1>taxonomy</h1>
+
+          		  <p class="intro">Display a list of taxonomy values.</p>
+  		  
+        <p></p>
+
+<h2>{{ taxonomy:listing }}</h2>
+
+<p>Shows a listing of taxonomy values that have been used for the given parameters.</p>
+
+<h3>Sample Usage</h3>
+
+<pre class="prettyprint html">&lt;h2&gt;Categories&lt;/h2&gt;
+
+&lt;ul&gt;
+    {{ taxonomy:listing }}
+        &lt;li&gt;&lt;a href="{{ url }}"&gt;{{ name }}&lt;/a&gt;&lt;/li&gt;     
+    {{ /taxonomy:listing }}
+&lt;/ul&gt;
+</pre>
+
+<h3>Parameters</h3>
+
+<p>This tag accepts the following parameters:</p>
+
+<ul>
+<li><code>type</code> — <strong>required</strong> — the taxonomy field to look for</li>
+<li><code>folder</code> — the folder (or folders) to look through to find taxonomy values, defaults to the current URL; <strong>as of v1.5.3:</strong> you can use a <code>*</code> character at the end of your folder to select any entry whose folder starts with the text before the <code>*</code>, this will let you look in all subfolders easily</li>
+<li><code>min_count</code> — the minimum number of matching entries a value must have to show up in the list</li>
+<li><code>sort_by</code> — the field to sort the taxonomy list on, <code>name</code> by default</li>
+<li><code>sort_dir</code> — the direction the sorting should happen, either <code>asc</code> or <code>desc</code>, <code>asc</code> by default</li>
+<li><code>limit</code> — the maximum number of taxonomy values to display, <code>null</code> (no limit) by default</li>
+</ul>
+
+<h3>Available Tags</h3>
+
+<ul>
+<li><code>name</code> — the taxonomy value</li>
+<li><code>url</code> — URL to view the taxonomy page for this value, based on the folder given</li>
+<li><code>slug</code> — the slug specifying this taxonomy&#8217;s folder and value</li>
+<li><code>count</code> — an iterator for the number of values displayed</li>
+<li><code>first</code> — a boolean as to whether or not the current loop is the first pass through or not</li>
+<li><code>last</code> — a boolean as to whether or not the current loop is the last pass through or not</li>
+<li><code>results</code> — the total number of content pieces found matching this taxonomy and folder</li>
+<li><code>total_results</code> — the total number of taxonomy values found with the given parameters</li>
+</ul>
+
+<p></p>
+      </div>
+    </article>
+
+    
+    <div class="block content">
+	<h1>Tags</h1>
+	<p>Here is a list of all first-party tags.</p>
+	<ul>
+		<li><a href="current_date.html">current_date</a></li>
+		<li><a href="entries.html">entries</a></li>
+		<li><a href="get.html">get</a></li>
+		<li><a href="get_content.html">get_content</a></li>
+		<li><a href="get_files.html">get_files</a></li>
+		<li><a href="get_post.html">get_post</a></li>
+		<li><a href="member.html">member</a></li>
+		<li><a href="nav.html">nav</a></li>
+		<li><a href="obfuscate.html">obfuscate</a></li>
+		<li><a href="pages.html">pages</a></li>
+		<li><a href="path.html">path</a></li>
+		<li><a href="post.html">post</a></li>
+		<li><a href="redirect.html">redirect</a></li>
+		<li><a href="switch.html">switch</a></li>
+		<li><a href="taxonomy.html">taxonomy</a></li>
+		<li><a href="theme.html">theme</a></li>
+		<li><a href="transform.html">transform</a></li>
+	</ul>
+</div>
+
+<p class="muted subtext centered-text module">This article was last updated on September 27th, 2013. Find an error? <a href="mailto:&#103;&#x65;n&#116;l&#x65;m&#x65;n&#x40;s&#x74;&#97;t&#x61;&#x6d;&#x69;c&#x2e;com?subject=Found an issue on http://statamic.com/learn/documentation/tags/taxonomy">Please let us know!</a></p>
+
+  </div>
+  <!-- End Main Content -->
+
+  </div>
+
+  <script src="../../_assets/js/prettify.min.js"></script>
+  <script src="../../_assets/js/statamic.min.js"></script>
+  </body>
+</html>
