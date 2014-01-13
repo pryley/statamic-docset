@@ -10,7 +10,7 @@
 <key>dashIndexFilePath</key>
 <string>index.html</string>
 <key>DashDocSetFamily</key>
-<string>dashtoc</string>
+<string>dashtoc2</string>
 <key>isDashDocset</key><true/>
 <key>isJavaScriptEnabled</key><true/>
 </dict>

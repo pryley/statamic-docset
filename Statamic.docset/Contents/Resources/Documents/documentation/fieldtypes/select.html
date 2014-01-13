@@ -26,8 +26,8 @@
         <p>The select fieldtype respects the <code>option</code> parameter, allowing you to set a list of possible default values for the user to pick from.</p>
 
 <pre class="prettyprint yaml">dinner:
-  display: Dinner Choices
   type: select
+  display: Dinner Choices
   options:
     - Beans
     - Fish
@@ -38,6 +38,7 @@
 <p>You can customize the <strong>value</strong> and <strong>label</strong> separately by using named keys, as shown below:</p>
 
 <pre class="prettyprint yaml">dinner:
+  type: select
   display: Dinner Choices
   options:
     beans: Baked Beans
